@@ -80,6 +80,9 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 - `ESTÁNDAR OFICIAL`: todo ado/do público debe iniciar con `version`.
 - `ESTÁNDAR OFICIAL`: el comando principal debe usar `program qresid, rclass` salvo rediseño aprobado.
 - `ESTÁNDAR OFICIAL`: usar `syntax`; no usar macros posicionales para la API pública.
+- `ESTÁNDAR OFICIAL`: la API pública Fase 1 es `qresid newvarname [if] [in], options`; no aceptar `generate()` ni interfaz híbrida.
+- `ESTÁNDAR OFICIAL`: `replace` no forma parte de Fase 1; si la variable de salida ya existe, fallar con error claro.
+- `ESTÁNDAR OFICIAL`: `family()` es opción condicional; no debe contradecir `e(family)`.
 - `ESTÁNDAR OFICIAL`: usar `marksample` y cruzar con `e(sample)`.
 - `ESTÁNDAR OFICIAL`: usar `tempvar`, `tempname` y `tempfile` para objetos internos.
 - `ESTÁNDAR OFICIAL`: crear `mu`, `xb`, `pr`, `n`, `F_low`, `F_high`, `V`, `U` y residuos como `double`.
@@ -113,7 +116,7 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 - Bernoulli/binomial: `logit`, `logistic`, `binreg`, `glm`.
 - Poisson: `poisson`, `glm`.
 - Negative binomial: `nbreg`, `glm` solo con validación de `alpha/theta/k` y NB1/NB2.
-- Gamma: gate Fase 1/Fase 1b hasta cerrar forma, escala y tests CDF.
+- Gamma: Fase 1 activa con gate técnico de `phi`, forma/escala, CDF y benchmark R.
 
 ### Fase 2 postergada
 
@@ -169,7 +172,32 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 
 ---
 
-## 13. Limpieza editorial
+## 13. Post-change documentation synchronization
+
+- `ESTANDAR OFICIAL`: despues de cualquier cambio, ejecutar `04_RETRIEVAL_CONTEXT/POST_CHANGE_DOCUMENTATION_SYNC.md`.
+- `ESTANDAR OFICIAL`: revisar si cambiaron codigo, API, familias, benchmarks, tests, retrieval, lifecycle, MCP, help, changelog o readiness.
+- `ESTANDAR OFICIAL`: no actualizar snapshots historicos como si fueran fuentes vivas; actualizar registry o crear resolution log.
+- `ESTANDAR OFICIAL`: si no se ejecutaron tests, Stata, R o MCP, no marcar readiness como `READY`; usar `READY_PENDING_EXECUTION` o `NOT_VERIFIED`.
+- `RECOMENDACION OPERATIVA`: si el unico cambio fue metadata lifecycle/registry/sync, no iniciar otro ciclo de actualizacion salvo inconsistencia directa.
+
+Checklist post-cambio:
+
+- [ ] Cambio codigo?
+- [ ] Cambio API?
+- [ ] Cambio familia soportada?
+- [ ] Cambio benchmark?
+- [ ] Cambio testing?
+- [ ] Cambio retrieval?
+- [ ] Cambio lifecycle status?
+- [ ] Debe actualizarse changelog?
+- [ ] Debe actualizarse help?
+- [ ] Debe actualizarse readiness checklist?
+- [ ] Debe marcarse algun review como superseded?
+- [ ] Debe crearse resolution log?
+
+---
+
+## 14. Limpieza editorial
 
 - `ESTÁNDAR OFICIAL`: el paquete final no debe contener prompts.
 - `ESTÁNDAR OFICIAL`: el paquete final no debe contener traces, razonamientos internos, notas de agentes ni texto de desarrollo asistido.
@@ -181,7 +209,7 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 
 ---
 
-## 14. Reglas de detención
+## 15. Reglas de detención
 
 Detenerse y no modificar código si:
 
@@ -189,19 +217,20 @@ Detenerse y no modificar código si:
 - `EVIDENCIA PENDIENTE`: no se puede extraer un parámetro esencial con `predict` o `e()`.
 - `EVIDENCIA PENDIENTE`: parametrización R-Stata no está alineada.
 - `EVIDENCIA PENDIENTE`: fuente documental clave está pendiente o restringida.
-- `HUMAN_DECISION_REQUIRED`: Gamma debe clasificarse como Fase 1 o Fase 1b.
+- `ESTÁNDAR OFICIAL`: Gamma es Fase 1, pero no puede publicarse sin tests CDF y benchmark R.
 - `HUMAN_DECISION_REQUIRED`: NB requiere decisión `alpha/theta/k` o NB1/NB2.
 - `HUMAN_DECISION_REQUIRED`: pesos requieren regla final por familia.
-- `HUMAN_DECISION_REQUIRED`: API pública requiere decidir `family()`, `replace`, `savev()` o alias.
+- `ESTÁNDAR OFICIAL`: API pública Fase 1 está cerrada; cambios futuros requieren aprobación humana y actualización de help/examples/tests/changelog.
 - `ESTÁNDAR OFICIAL`: si un benchmark falla antes de CDF/PIT, no ajustar el residuo final para ocultar el fallo.
 
 Crear issue o nota de revisión cuando el bloqueo sea reproducible, tenga archivo/familia/comando claro y no pueda resolverse con los documentos actuales.
 
 ---
 
-## 15. Checklist antes de entregar cambios
+## 16. Checklist antes de entregar cambios
 
 - [ ] Se leyó el contexto mínimo requerido.
+- [ ] Se ejecuto el checklist post-cambio si hubo modificaciones.
 - [ ] Se identificó familia, comando, fase y estado de evidencia.
 - [ ] No se modificó `qresid/` fuera del alcance.
 - [ ] No se agregó soporte nuevo sin tests.
@@ -216,7 +245,7 @@ Crear issue o nota de revisión cuando el bloqueo sea reproducible, tenga archiv
 
 ---
 
-## 16. Tabla situacional
+## 17. Tabla situacional
 
 | Situación | Acción obligatoria | Documentos a consultar | ¿Se permite modificar código? |
 |---|---|---|---|
@@ -230,20 +259,18 @@ Crear issue o nota de revisión cuando el bloqueo sea reproducible, tenga archiv
 | Help o examples | Verificar soporte certificado | `STATA_PACKAGE_STYLE_RULES.md`, `09` | Sí, solo documentación |
 | Familia fuera de Fase 1 | Crear error controlado o issue | `09`, archivo de familia, retrieval map | No, salvo stub aprobado |
 | NB `alpha/theta/k` ambiguo | Marcar bloqueo | count rules, benchmark mapping, numerical rules | No |
-| Gamma Fase 1 vs Fase 1b | Pedir revisión humana | `09`, numerical rules, testing rules | No para claim público |
-| Pesos sin regla cerrada | No activar transformación final | extraction rules, numerical rules, testing rules | No |
+| Gamma Fase 1 | Validar parametrización y benchmarks antes de claim público | `09`, numerical rules, testing rules | Sí, solo con tests |
+| Pesos sin regla cerrada | No activar transformación final ni `sqrt(w_i)` global | extraction rules, numerical rules, testing rules, weights evidence review | No |
 | Archivo público contiene material interno | Remover antes de release | style rules, `AGENTS.md` | Sí, documentación |
 | Fuente externa requerida | Revisar licencia y trazabilidad | source log, external repo rules si aplican | No copiar código |
 
 ---
 
-## 17. Gaps y contradicciones registradas
+## 18. Gaps y contradicciones registradas
 
-- `HUMAN_DECISION_REQUIRED`: Gamma figura como Fase 1 en reglas de testing y como Fase 1b/gate en arquitectura; no publicar claim hasta resolver.
+- `ESTÁNDAR OFICIAL`: Gamma queda resuelto como Fase 1; falta validación técnica de `phi`, forma/escala, CDF y benchmark antes de soporte estable.
 - `HUMAN_DECISION_REQUIRED`: NB requiere decisión estable sobre `alpha/theta/k`, NB1/NB2 y CDF exacta.
-- `HUMAN_DECISION_REQUIRED`: pesos requieren regla final por familia antes de activar transformación del residuo.
-- `HUMAN_DECISION_REQUIRED`: `family()` requiere decisión de API; usarla sin contradecir `e(family)`.
-- `HUMAN_DECISION_REQUIRED`: `replace` no está cerrado como opción pública.
-- `HUMAN_DECISION_REQUIRED`: separación `savev()` vs `saveu()` debe confirmarse antes de help público.
+- `HUMAN_DECISION_REQUIRED`: pesos requieren regla final por familia antes de activar transformación del residuo; no usar `sqrt(w_i)` global.
+- `ESTÁNDAR OFICIAL`: API pública Fase 1 resuelta: `newvarname`, `family()` condicional, sin `replace`, sin `generate()` y `savev()` separado de `saveu()`.
 
 `ESTÁNDAR OFICIAL`: estos gaps no bloquean documentación interna, pero bloquean claims públicos, soporte estable y release.

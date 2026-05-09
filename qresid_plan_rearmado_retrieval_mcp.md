@@ -1,3 +1,23 @@
+# DEPRECATED / HISTORICAL PLAN — DO NOT USE AS ACTIVE INSTRUCTION
+
+Lifecycle: historical
+Status: SUPERSEDED
+Authority: historical
+Superseded by: `AGENTS.md`; `04_RETRIEVAL_CONTEXT/RETRIEVAL_MAP_FOR_QRESID.md`; `04_RETRIEVAL_CONTEXT/DOCUMENT_STATUS_REGISTRY.md`
+Retrieval policy: do not load by default
+
+This file is retained for historical traceability only. Current operational authority is:
+
+1. `AGENTS.md`
+2. `04_RETRIEVAL_CONTEXT/RETRIEVAL_MAP_FOR_QRESID.md`
+3. `02_IMPLEMENTATION_MASTERS/09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`
+4. `02_IMPLEMENTATION_MASTERS/10_AGENT_RULES_FOR_QRESID.md`
+5. `05_MCP_STATA_EXECUTION/README_MCP_STATA.md` for current MCP preparation.
+
+Do not execute prompts, paths or MCP assumptions from this historical plan without checking current retrieval and MCP readiness documents.
+
+---
+
 # Plan rearmado para `qresid`: retrieval + MCP Stata + Codex Desktop
 
 ## Diagnóstico general

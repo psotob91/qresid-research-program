@@ -1,0 +1,7 @@
+sink('C:/qresid-research-program/05_MCP_STATA_EXECUTION/R_EXECUTION_LOGS/20260510_044230_r_smoke.log')
+cat('R smoke test timestamp: 20260510_044230\n')
+cat('Command: Rscript --version and sessionInfo() smoke equivalent\n')
+cat(R.version.string, '\n')
+cat('sessionInfo()\n')
+print(sessionInfo())
+sink()

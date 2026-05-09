@@ -24,8 +24,8 @@ Regla central: no afirmar que una fuente fue leída si solo está listada. Este 
 
 | source_id | source_type | title | local_path_or_url | access_status | license_or_access_note | used_by_md | last_checked | notes |
 |---|---|---|---|---|---|---|---|---|
-| INT-001 | internal_md | PROJECT_BRIEF_QRESID.md | `04_RETRIEVAL_CONTEXT/PROJECT_BRIEF_QRESID.md` | AVAILABLE | Proyecto interno | Todos | 2026-05-10 | Alcance, fases, reglas editoriales y trazabilidad |
-| INT-002 | internal_md | RETRIEVAL_MAP_FOR_QRESID.md | `04_RETRIEVAL_CONTEXT/RETRIEVAL_MAP_FOR_QRESID.md` | AVAILABLE | Proyecto interno | Retrieval | 2026-05-10 | Debe actualizarse para incluir estos 4 MD |
+| INT-001 | internal_md | PROJECT_BRIEF_QRESID.md | `00_PROJECT_CONTEXT/PROJECT_BRIEF_QRESID.md` | AVAILABLE | Proyecto interno | Todos | 2026-05-10 | Alcance, fases, reglas editoriales y trazabilidad |
+| INT-002 | internal_md | RETRIEVAL_MAP_FOR_QRESID.md | `04_RETRIEVAL_CONTEXT/RETRIEVAL_MAP_FOR_QRESID.md` | AVAILABLE | Proyecto interno | Retrieval | 2026-05-10 | Incluye router, 09 y 10; debe incluir reportes `DOCUMENT_*` para auditoria repo |
 | INT-003 | internal_md | STATA_MODEL_EXTRACTION_RULES.md | `04_RETRIEVAL_CONTEXT/STATA_MODEL_EXTRACTION_RULES.md` | AVAILABLE | Proyecto interno | Builtins, extracción | 2026-05-10 | Reglas generales `predict`, `e()`, `e(sample)` |
 | INT-004 | internal_md | GLM_POSTESTIMATION_RULES.md | `04_RETRIEVAL_CONTEXT/GLM_POSTESTIMATION_RULES.md` | AVAILABLE | Proyecto interno | Builtins, estabilidad | 2026-05-10 | GLM, regress, logit, logistic, binreg |
 | INT-005 | internal_md | COUNT_MODELS_EXTRACTION_RULES.md | `04_RETRIEVAL_CONTEXT/COUNT_MODELS_EXTRACTION_RULES.md` | AVAILABLE | Proyecto interno | Builtins, estabilidad | 2026-05-10 | Poisson, NB, ZIP/ZINB y modelos de conteo |
@@ -33,8 +33,8 @@ Regla central: no afirmar que una fuente fue leída si solo está listada. Este 
 | INT-007 | internal_md | STATA_MINIMAL_PROGRAMMING_NOTES.md | `04_RETRIEVAL_CONTEXT/STATA_MINIMAL_PROGRAMMING_NOTES.md` | AVAILABLE | Proyecto interno | Builtins, style, estabilidad | 2026-05-10 | Ado/Mata, syntax, RNG, logs |
 | INT-008 | internal_md | STATA_R_BENCHMARK_MAPPING.md | `04_RETRIEVAL_CONTEXT/STATA_R_BENCHMARK_MAPPING.md` | AVAILABLE | Proyecto interno | Estabilidad, style | 2026-05-10 | Comparación R–Stata por capas |
 | INT-009 | internal_md | STATA_TESTING_CERTIFICATION_RULES.md | `04_RETRIEVAL_CONTEXT/STATA_TESTING_CERTIFICATION_RULES.md` | AVAILABLE | Proyecto interno | Style, estabilidad | 2026-05-10 | Tests, logs, certificación |
-| INT-010 | internal_md | 07_ALGORITHM_PSEUDOCODE_MASTER.md | `04_RETRIEVAL_CONTEXT/07_ALGORITHM_PSEUDOCODE_MASTER.md` | AVAILABLE | Proyecto interno | Estabilidad | 2026-05-10 | Algoritmos RQR, endpoints y familias |
-| INT-011 | internal_md | 08_TESTING_QC_BENCHMARK_MASTER.md | `04_RETRIEVAL_CONTEXT/08_TESTING_QC_BENCHMARK_MASTER.md` | AVAILABLE | Proyecto interno | Estabilidad, style | 2026-05-10 | QC, tolerancias y benchmarking |
+| INT-010 | internal_md | 07_ALGORITHM_PSEUDOCODE_MASTER.md | `02_IMPLEMENTATION_MASTERS/07_ALGORITHM_PSEUDOCODE_MASTER.md` | AVAILABLE | Proyecto interno | Estabilidad | 2026-05-10 | Algoritmos RQR, endpoints y familias |
+| INT-011 | internal_md | 08_TESTING_QC_BENCHMARK_MASTER.md | `02_IMPLEMENTATION_MASTERS/08_TESTING_QC_BENCHMARK_MASTER.md` | AVAILABLE | Proyecto interno | Estabilidad, style | 2026-05-10 | QC, tolerancias y benchmarking |
 | INT-012 | internal_md | STATA_BUILTIN_COMMANDS_MAP.md | `04_RETRIEVAL_CONTEXT/STATA_BUILTIN_COMMANDS_MAP.md` | AVAILABLE | Proyecto interno | Retrieval futuro | 2026-05-10 | Nuevo mapa de capacidades Stata |
 | INT-013 | internal_md | STATA_NUMERICAL_STABILITY_RULES.md | `04_RETRIEVAL_CONTEXT/STATA_NUMERICAL_STABILITY_RULES.md` | AVAILABLE | Proyecto interno | Retrieval futuro | 2026-05-10 | Nuevo estándar numérico |
 | INT-014 | internal_md | SOURCE_ACCESS_LOG.md | `04_RETRIEVAL_CONTEXT/SOURCE_ACCESS_LOG.md` | AVAILABLE | Proyecto interno | Retrieval futuro | 2026-05-10 | Este registro |

@@ -1,5 +1,11 @@
 # RETRIEVAL_MAP_FOR_QRESID.md
 
+Nota operativa 2026-05-10: antes de auditar `qresid/`, consultar `04_RETRIEVAL_CONTEXT/DOCUMENT_STATUS_REGISTRY.md` y cargar solo reportes `03_REPO_REVIEW/` marcados `ACTIVE` o `PARTIALLY_ACTIVE` para la tarea. Para readiness pre-MCP usar primero `03_REPO_REVIEW/PRE_MCP_FINAL_AUDIT.md`, `PRE_MCP_DECISION_QUEUE.md`, `PRE_MCP_PATCH_QUEUE.md` y `PRE_MCP_RESOLUTION_STATUS.md`.
+
+Nota pre-MCP 2026-05-10: para preparar MCP, leer `03_REPO_REVIEW/PRE_MCP_RESOLUTION_LOG.md`, `03_REPO_REVIEW/MCP_READINESS_CHECKLIST.md`, `04_RETRIEVAL_CONTEXT/CANONICAL_TERMINOLOGY_FOR_QRESID.md` y los protocolos en `05_MCP_STATA_EXECUTION/`. `qresid_plan_rearmado_retrieval_mcp.md` es historico/deprecated y no se carga por defecto como instruccion activa.
+
+Nota lifecycle 2026-05-10: antes de cargar cualquier `03_REPO_REVIEW/*.md`, consultar `04_RETRIEVAL_CONTEXT/DOCUMENT_STATUS_REGISTRY.md`. No cargar documentos `SUPERSEDED`, `ARCHIVED`, `OBSOLETE` o `DRAFT` salvo auditoria historica explicita.
+
 ## 0. Propósito
 
 Documento operativo para decidir qué archivos de contexto leer antes de modificar, auditar, testear o documentar `qresid`.
@@ -27,6 +33,9 @@ Regla central: leer el mínimo contexto suficiente, priorizar documentos Markdow
 | `STATA_NUMERICAL_STABILITY_RULES.md` | Reglas de estabilidad numérica, clipping, validación PIT/CDF, tolerancias y control RNG | Leer antes de modificar CDF, PIT, uniformización o transformaciones normales |
 | `SOURCE_ACCESS_LOG.md` | Registro de fuentes disponibles, pendientes, restringidas o superseded usadas por retrieval y benchmarking | Leer antes de afirmar soporte documental o agregar nuevas referencias |
 | `STATA_PACKAGE_STYLE_RULES.md` | Reglas editoriales, estructura SSC/Stata Journal, packaging y limpieza pública del repositorio | Leer antes de editar `.ado`, `.sthlp`, examples, certification o releases |
+| `CANONICAL_TERMINOLOGY_FOR_QRESID.md` | Glosario operativo y terminos canonicos para fases, soporte, benchmark, RQR/PIT, extraction y MCP | Leer ante ambiguedad semantica o preparacion MCP |
+| `DOCUMENT_LIFECYCLE_RULES.md` | Reglas de lifecycle, estados, superseding, anti-drift y anti-loop retrieval | Leer antes de crear auditorias, reviews, roadmaps o snapshots |
+| `DOCUMENT_STATUS_REGISTRY.md` | Registro vigente de status, autoridad, superseding y politica de retrieval por documento | Leer antes de cargar snapshots, reportes `03_REPO_REVIEW/` o planes historicos |
 
 ---
 
@@ -43,6 +52,9 @@ Regla central: leer el mínimo contexto suficiente, priorizar documentos Markdow
 - `RECOMENDACIÓN OPERATIVA`: no leer `STATA_NUMERICAL_STABILITY_RULES.md` para revisiones editoriales sin cálculos numéricos.
 - `RECOMENDACIÓN OPERATIVA`: no leer `STATA_BUILTIN_COMMANDS_MAP.md` para tareas exclusivamente narrativas o conceptuales.
 - `ESTÁNDAR OFICIAL`: si hay conflicto entre documentos, detenerse, reportar la contradicción y no decidir por fecha, preferencia o conveniencia.
+- `ESTÁNDAR OFICIAL`: antes de cargar reportes `03_REPO_REVIEW/*.md`, revisar `DOCUMENT_STATUS_REGISTRY.md`.
+- `ESTÁNDAR OFICIAL`: no cargar documentos `SUPERSEDED`, `ARCHIVED`, `OBSOLETE` o `DRAFT` salvo auditoria historica explicita.
+- `RECOMENDACIÓN OPERATIVA`: cargar snapshots `PARTIALLY_ACTIVE` solo por el tema registrado en el registry.
 
 ---
 
@@ -71,6 +83,7 @@ Regla central: leer el mínimo contexto suficiente, priorizar documentos Markdow
 | Revisión SSC/Stata Journal | `PROJECT_BRIEF_QRESID.md`, `STATA_MINIMAL_PROGRAMMING_NOTES.md`, `08_TESTING_QC_BENCHMARK_MASTER.md`, `STATA_PACKAGE_STYLE_RULES.md` | archivos por familia implementada | teoría no usada |
 | Agregar soporte a nuevo comando Stata | `STATA_BUILTIN_COMMANDS_MAP.md`, `STATA_MODEL_EXTRACTION_RULES.md`, archivo de familia correspondiente | `08_TESTING_QC_BENCHMARK_MASTER.md` | teoría extensa |
 | Auditar estabilidad numérica | `STATA_NUMERICAL_STABILITY_RULES.md`, `07_ALGORITHM_PSEUDOCODE_MASTER.md` | archivo de familia | documentación editorial |
+| Preparar MCP / readiness | `AGENTS.md`, `RETRIEVAL_MAP_FOR_QRESID.md`, `CANONICAL_TERMINOLOGY_FOR_QRESID.md`, `03_REPO_REVIEW/MCP_READINESS_CHECKLIST.md`, `03_REPO_REVIEW/PRE_MCP_RESOLUTION_LOG.md`, `05_MCP_STATA_EXECUTION/README_MCP_STATA.md` | protocolos Stata/R/Codex si se ejecutara localmente | `qresid_plan_rearmado_retrieval_mcp.md` salvo auditoria historica |
 | Verificar trazabilidad documental | `SOURCE_ACCESS_LOG.md`, `PROJECT_BRIEF_QRESID.md` | documentos metodológicos específicos | tests y benchmarking |
 | Preparar release público | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`, `STATA_PACKAGE_STYLE_RULES.md`, `PROJECT_BRIEF_QRESID.md`, `08_TESTING_QC_BENCHMARK_MASTER.md` | archivos implementados por familia | teoría no usada |
 
@@ -233,6 +246,7 @@ Detener implementación y abrir issue/stub cuando ocurra cualquiera de estos cas
 | Iniciar tarea nueva | `AGENTS.md`, `PROJECT_BRIEF_QRESID.md`, `RETRIEVAL_MAP_FOR_QRESID.md` |
 | Modificar código ado/Mata | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `STATA_MINIMAL_PROGRAMMING_NOTES.md`, archivo específico de familia |
 | Cambiar arquitectura, API, dispatcher, outputs o returned results | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`, `STATA_PACKAGE_STYLE_RULES.md` |
+| Auditar `qresid/` tras auditoria documental | `AGENTS.md`, `RETRIEVAL_MAP_FOR_QRESID.md`, `DOCUMENT_STATUS_REGISTRY.md`, `09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`, `10_AGENT_RULES_FOR_QRESID.md`, reportes `03_REPO_REVIEW/` marcados `ACTIVE` o `PARTIALLY_ACTIVE` para la tarea |
 | Crear dispatcher de comandos soportados | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`, `PROJECT_BRIEF_QRESID.md`, `STATA_MODEL_EXTRACTION_RULES.md`, `STATA_BUILTIN_COMMANDS_MAP.md`, `STATA_MINIMAL_PROGRAMMING_NOTES.md` |
 | Implementar `qresid` para `poisson` | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`, `07_ALGORITHM_PSEUDOCODE_MASTER.md`, `COUNT_MODELS_EXTRACTION_RULES.md`, `STATA_MINIMAL_PROGRAMMING_NOTES.md`, `STATA_NUMERICAL_STABILITY_RULES.md` |
 | Implementar `qresid` para `nbreg` | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`, `07_ALGORITHM_PSEUDOCODE_MASTER.md`, `COUNT_MODELS_EXTRACTION_RULES.md`, `STATA_MODEL_EXTRACTION_RULES.md`, `STATA_NUMERICAL_STABILITY_RULES.md` |
@@ -240,6 +254,7 @@ Detener implementación y abrir issue/stub cuando ocurra cualquiera de estos cas
 | Implementar `qresid` para Gaussian/regress | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`, `07_ALGORITHM_PSEUDOCODE_MASTER.md`, `GLM_POSTESTIMATION_RULES.md`, `STATA_MINIMAL_PROGRAMMING_NOTES.md`, `STATA_NUMERICAL_STABILITY_RULES.md` |
 | Implementar `qresid` para binomial/logit/binreg | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`, `07_ALGORITHM_PSEUDOCODE_MASTER.md`, `GLM_POSTESTIMATION_RULES.md`, `STATA_MODEL_EXTRACTION_RULES.md`, `STATA_NUMERICAL_STABILITY_RULES.md` |
 | Implementar `qresid` para Gamma | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`, `07_ALGORITHM_PSEUDOCODE_MASTER.md`, `GLM_POSTESTIMATION_RULES.md`, `STATA_MODEL_EXTRACTION_RULES.md`, `STATA_NUMERICAL_STABILITY_RULES.md` |
+| Explorar pesos/RQR | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `03_REPO_REVIEW/WEIGHTS_RQR_EVIDENCE_REVIEW.md`, `STATA_MODEL_EXTRACTION_RULES.md`, `STATA_R_BENCHMARK_MAPPING.md`, `STATA_NUMERICAL_STABILITY_RULES.md` |
 | Tests unitarios o integración | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `STATA_TESTING_CERTIFICATION_RULES.md`, `08_TESTING_QC_BENCHMARK_MASTER.md`, archivo específico de familia, `STATA_NUMERICAL_STABILITY_RULES.md` |
 | Benchmark R–Stata | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `STATA_R_BENCHMARK_MAPPING.md`, `08_TESTING_QC_BENCHMARK_MASTER.md`, `STATA_MODEL_EXTRACTION_RULES.md`, archivo específico de familia |
 | Documentación pública, examples o release | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`, `STATA_PACKAGE_STYLE_RULES.md`, `PROJECT_BRIEF_QRESID.md` |

@@ -142,6 +142,7 @@ Detener la tarea si:
 ## 12. Checklist antes de commit
 
 - Se leyeron los archivos de contexto aplicables.
+- After any change, run the post-change documentation sync checklist in `04_RETRIEVAL_CONTEXT/POST_CHANGE_DOCUMENTATION_SYNC.md`.
 - No se modifico codigo fuera del alcance.
 - No se calculan residuos fuera de `e(sample)`.
 - CDF, PIT y residuos usan `double`.

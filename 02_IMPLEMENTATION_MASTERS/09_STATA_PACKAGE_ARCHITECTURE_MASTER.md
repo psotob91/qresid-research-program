@@ -22,7 +22,7 @@ Familias objetivo:
 - Bernoulli/binomial.
 - Poisson.
 - Negative binomial con validación explícita de parametrización.
-- Gamma como Fase 1b o Fase 1 con gate de validación.
+- Gamma como Fase 1 activa con gate técnico obligatorio de validación.
 
 ### Fase 2
 
@@ -79,9 +79,11 @@ Flujo interno esperado:
 
 ---
 
-## 5. API pública propuesta
+## 5. API pública final Fase 1
 
-Sintaxis recomendada:
+`ESTÁNDAR OFICIAL`: la API pública Fase 1 usa la opción A del brief `PRE_MCP_HUMAN_DECISION_BRIEF.md`: `newvarname` como argumento principal. No exponer `generate()` ni una interfaz híbrida en Fase 1.
+
+Sintaxis final:
 
 ```stata
 qresid newvarname [if] [in] [, seed(integer) uvar(varname numeric) ///
@@ -94,11 +96,15 @@ Opciones:
 |---|---|---|
 | `seed(integer)` | Fase 1 | `ESTÁNDAR OFICIAL`: reproducibilidad interna en Stata; no implica igualdad con R. |
 | `uvar(varname numeric)` | Fase 1 | `ESTÁNDAR OFICIAL`: uniformes externos para benchmarks exactos R-Stata. |
-| `savev(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar uniforme base `V` usado en discretas. |
+| `savev(name)` | Fase 1 | `ESTÁNDAR OFICIAL`: guardar uniforme base `V` usado en discretas; se mantiene separado de `saveu()`. |
 | `saveflo(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar `F_low`. |
 | `savefhi(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar `F_high`. |
-| `saveu(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar `U` final antes de `invnormal()`. |
-| `family(string)` | Condicional | `RECOMENDACIÓN OPERATIVA`: permitir solo si el comando activo no permite inferencia segura; no contradecir `e(family)`. |
+| `saveu(name)` | Fase 1 | `ESTÁNDAR OFICIAL`: guardar `U` final antes de `invnormal()`; no es alias de `savev()`. |
+| `family(string)` | Fase 1 condicional | `ESTÁNDAR OFICIAL`: permitir solo si el comando activo no permite inferencia segura; nunca debe contradecir `e(family)`. |
+
+`ESTÁNDAR OFICIAL`: `replace` no forma parte de la API pública Fase 1. Si `newvarname` o una variable solicitada con `save*()` ya existe, el comando debe fallar con error claro.
+
+`ESTÁNDAR OFICIAL`: `generate(newvarname)` y la interfaz híbrida quedan fuera de Fase 1. Reconsiderarlas requiere nueva decisión humana y actualización de help, examples, tests y changelog.
 
 `ESTÁNDAR OFICIAL`: no cambiar la API pública sin actualizar `.sthlp`, examples, tests y changelog.
 
@@ -112,7 +118,7 @@ Opciones:
 | Bernoulli/binomial | `logit`, `logistic`, `binreg`, `glm` | 1 | `ESTÁNDAR OFICIAL` |
 | Poisson | `poisson`, `glm` | 1 | `ESTÁNDAR OFICIAL` |
 | Negative binomial | `nbreg`, `glm` si aplica | 1 | `RECOMENDACIÓN OPERATIVA`: requiere validar NB1/NB2, `alpha/theta/k`. |
-| Gamma | `glm` | 1b | `RECOMENDACIÓN OPERATIVA`: aceptar tras validar `phi`, forma/escala y CDF. |
+| Gamma | `glm` | 1 | `ESTÁNDAR OFICIAL`: Fase 1 activa; requiere validar `y > 0`, `mu > 0`, `phi > 0`, `shape = 1/phi`, `scale = mu*phi`, CDF y benchmark R. |
 | Inverse Gaussian | `glm` | futura | `EVIDENCIA PENDIENTE`: CDF Stata nativa no validada. |
 | Tweedie | `glm`/externos | futura | `EVIDENCIA PENDIENTE`: CDF aproximada/no cerrada. |
 | ZIP/ZINB | `zip`, `zinb` | 2 | `RECOMENDACIÓN OPERATIVA`: no Fase 1. |
@@ -160,7 +166,7 @@ Opciones:
 
 ### Weights
 
-`RECOMENDACIÓN OPERATIVA`: detectar `e(wtype)` y `e(wexp)`. La regla de transformación del residuo ponderado debe documentarse y testearse antes de activarse.
+`ESTÁNDAR OFICIAL`: detectar `e(wtype)` y `e(wexp)`. No aplicar una regla global `sqrt(w_i)` al residuo final. Los pesos solo se activan cuando su semántica por familia esté documentada y testeada; ver `03_REPO_REVIEW/WEIGHTS_RQR_EVIDENCE_REVIEW.md`.
 
 ### Factor variables
 
@@ -322,7 +328,7 @@ No iniciar implementación Fase 1 hasta que:
 - `ESTÁNDAR OFICIAL`: existan tests unitarios planificados por familia.
 - `ESTÁNDAR OFICIAL`: exista estrategia `uvar()` para discretas.
 - `ESTÁNDAR OFICIAL`: tolerancias estén fijadas.
-- `RECOMENDACIÓN OPERATIVA`: Gamma se marque Fase 1b si forma/escala o CDF no están cerradas en pruebas.
+- `ESTÁNDAR OFICIAL`: Gamma Fase 1 tenga cerrados soporte, `phi`, forma/escala, CDF y benchmark R antes de claim público.
 - `EVIDENCIA PENDIENTE`: NB no se declara estable hasta alinear `alpha/theta/k` con R.
 
 ---
@@ -354,11 +360,9 @@ No iniciar implementación Fase 1 hasta que:
 `EVIDENCIA PENDIENTE`:
 
 - Confirmar extracción estable de `alpha/theta/k` para `nbreg` y equivalencia con R.
-- Confirmar si Gamma entra Fase 1 o Fase 1b tras pruebas de forma/escala.
-- Confirmar uso y transformación final de pesos por familia.
-- Confirmar sintaxis exacta de `family()` o decidir no exponerla en Fase 1.
-- Confirmar política de `replace` para sobrescribir variables existentes.
-- Confirmar si `savev()` se mantiene separado de `saveu()` en la API pública.
+- Gamma queda decidido como Fase 1; queda pendiente cerrar evidencia técnica de forma/escala, CDF y benchmark antes de publicarlo como soporte estable.
+- Confirmar uso y transformación final de pesos por familia; no activar `sqrt(w_i)` global.
+- API pública Fase 1 queda cerrada: `qresid newvarname [if] [in], ...`; `family()` es condicional, `replace` no se expone, y `savev()` queda separado de `saveu()`.
 - Confirmar CDF inverse Gaussian antes de cualquier soporte.
 - Confirmar estrategia para Tweedie, COM-Poisson y generalized Poisson.
 - Confirmar diseño Fase 2 para ZIP/ZINB/hurdle/truncados.

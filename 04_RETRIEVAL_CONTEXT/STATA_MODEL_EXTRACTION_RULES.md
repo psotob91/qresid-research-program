@@ -29,7 +29,7 @@
 3. **Manejo de estimadores compuestos (multinivel/gsem):** 
    - Revisar si es `gsem`. Si lo es, iterar sobre `e(depvar)` o exigir al usuario el parámetro `outcome()` para saber de qué variable dependiente calcular la CDF.
    - En modelos `me*` y `gsem`, decidir si el `predict` usará medias empíricas de Bayes (RECOMENDACIÓN OPERATIVA: evaluar `predict, conditional(ebmeans)` o `fixedonly`).
-4. **Captura de Weights:** Identificar si `e(wtype)` y `e(wexp)` existen. De ser así, aplicar `replace r_i = sqrt(w_i) * r_i` en la etapa final de normalización del residuo.
+4. **Captura de Weights:** Identificar si `e(wtype)` y `e(wexp)` existen. No aplicar `sqrt(w_i)` global en la etapa final; registrar tipo/expresión y activar pesos solo con regla por familia validada.
 5. **Cálculo de Límites CDF (\(\hat{a}_i\) y \(\hat{b}_i\)):** Extraer el `mu` o los predictores lineales. **No existe una opción universal de Stata para predecir la CDF**. Debes calcular numéricamente `F(y)` y `F(y^-)` usando las funciones de Mata o Stata (`poisson()`, `binomial()`, `nbinomial()`, `gammap()`, etc.) alimentadas con el `mu` extraído.
 
 ---
@@ -108,7 +108,7 @@ if "`model'" == "melogit" {
 **Debe validarse con tests (QC/Benchmarking):**
 - **Manejo de RNG:** La secuencia de valores uniformes para el "jittering" de la CDF discreta. Stata y R difieren en sus RNG. Debe validarse introduciendo una secuencia uniforme predeterminada `V_i` desde R vía una opción operativa (como `uvar()`) y comprobar que el RQR final coincide uno a uno con el de `statmod`.
 - **Tolerancias de límites:** Validar las fronteras CDF (`F(y)` y `F(y^-)`). En modelos continuos deben tener una exactitud de `1e-12`. Para distribuciones discretas (Poisson, NB), tolerancia de `1e-8`.
-- **Pesos e interceptos (Offsets):** Definir un modelo Poisson con `exposure` y pesos fraccionales en R. Importar los parámetros en Stata y comprobar que, apagando el offset, los residuos cambian drásticamente. Validar que la salida esté ajustada por `sqrt(w_i)`.
+- **Pesos y offsets/exposure:** Definir modelos con `exposure` y pesos por tipo. Validar que `predict` incorpora correctamente offset/exposure y que los pesos cambian la CDF solo cuando la semántica por familia lo exige; no validar contra un `sqrt(w_i)` global.
 
 # Extra summary
 
@@ -126,11 +126,12 @@ La implementación de residuos cuantílicos aleatorizados exige extraer sistemá
 
 ### 3. Offsets y Exposiciones
 *   **ESTÁNDAR OFICIAL:** Variables especificadas como `offset()` o `exposure()` en el modelo original son registradas en los macros `e(offset)` o como parte de los resultados matriciales.
-*   **RECOMENDACIÓN OPERATIVA:** Si se calcula la función de media manualmente desde $x_i\beta$, sumar el `offset` (o el logaritmo de la exposición) antes de aplicar el enlace inverso. 
+*   **ESTÁNDAR OFICIAL:** Usar el valor final de `predict` como fuente primaria para medias/probabilidades con offset/exposure ya incorporado.
+*   **RECOMENDACIÓN OPERATIVA:** Si se calcula la función de media manualmente desde $x_i\beta$, sumar el `offset` (o el logaritmo de la exposición) solo como fallback auditado y con test de no duplicación.
 
 ### 4. Pesos (Weights)
 *   **ESTÁNDAR OFICIAL:** El tipo y la expresión de los pesos se alojan en los macros `e(wtype)` y `e(wexp)`.
-*   **RECOMENDACIÓN OPERATIVA:** Cuando apliquen `fweights`, `iweights` o `pweights`, el residuo normalizado final $\hat{r}_i$ debe multiplicarse empíricamente por $\sqrt{w_i}$ durante el ciclo principal de normalización.
+*   **ESTÁNDAR OFICIAL:** No existe regla universal para multiplicar el residuo final por $\sqrt{w_i}$. Distinguir `fweights`, `iweights`, `pweights`, `aweights`, prior weights, trials/frequency weights y semántica de familia antes de activar pesos.
 
 ### 5. Stored Results Clave (`e()`)
 *   **ESTÁNDAR OFICIAL:** Validar la existencia de `e(cmd)` al inicio; un modelo nulo o vacío debe provocar un aborto controlado (`exit 198`). 

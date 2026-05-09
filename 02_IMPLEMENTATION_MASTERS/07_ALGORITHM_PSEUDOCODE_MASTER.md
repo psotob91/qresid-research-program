@@ -27,8 +27,8 @@ para cada observación i en 1..n
         asignar r_i = missing
         continuar al siguiente i
     fin si
-    calcular predictor lineal eta_i = x_i * beta_hat + offset_i
-    derivar parámetros de la distribución a partir de eta_i (ej.: mu_i = g^{-1}(eta_i), theta_hat)
+    obtener mu_i/pr_i/n_i mediante predict final cuando exista
+    derivar parámetros de la distribución desde la predicción final y parámetros accesorios
     calcular F_i_low  = F_i(y_i - epsilon; theta_hat)  // límite izquierdo (y_i^-)
     calcular F_i_high = F_i(y_i; theta_hat)
     si F_i_high < F_i_low entonces // validación numérica
@@ -43,7 +43,7 @@ para cada observación i en 1..n
     fin si
     r_i = inverse_normal_cdf(U_i)
     si se usan pesos w_i entonces
-        r_i = sqrt(w_i) * r_i  // conforme a la convención de beta-regresión
+        aplicar solo la regla por familia validada; por defecto no transformar r_i
     fin si
 fin para
 ```
@@ -52,7 +52,7 @@ fin para
 
 1. **Dominio de la CDF:** \(F_i\) debe estar en \([0,1]\).  Si alguna evaluación numérica produce valores fuera de este intervalo, debe truncarse y emitirse advertencia.
 2. **Compatibilidad de parámetros:** la implementación debe verificar que los parámetros estimados respetan restricciones (p. ej. dispersión positiva).
-3. **Integridad de `offset` y `weight`:** el `offset` debe sumarse a la parte lineal antes de invertir el enlace, y los pesos se aplican multiplicando por \(\sqrt{w_i}\) cuando así lo define la familia.
+3. **Integridad de `offset` y `weight`:** en Stata debe preferirse `predict` final (`mu`, `n`, `pr`) para evitar duplicar offset/exposure. Los pesos no tienen una regla universal; solo entran a la CDF, parametrización o transformación final cuando la familia lo justifique y esté testeado.
 4. **Ausencia de valores faltantes:** si \(\hat\mu_i\) no puede calcularse porque \(\mathbf{x}_i\) o \(\hat\theta\) están incompletos, el residuo debe declararse `missing`.
 5. **Dependencia del RNG:** en discretas, la elección de \(V_i\) determina el residuo final.  Para reproducibilidad se debe permitir fijar semilla global y/o suministrar un vector de uniformes por el usuario; sin embargo, las comparaciones entre Stata y R deben basarse en los límites de la CDF y no en el residuo aleatorizado【filecite†L15-L17】.
 
@@ -64,7 +64,7 @@ Cuando los parámetros se estiman, los residuos cuantílicos ya no son exactamen
 
 #### Offset y exposición
 
-Los modelos de tasas (p. ej. Poisson con exposición) incorporan un **offset** \(o_i = \log(E_i)\) aditivo en la predicción.  El algoritmo debe añadir \(o_i\) a la parte lineal antes de aplicar el enlace inverso.  En Stata la variable `offset()` se incorpora en el comando `glm`/`poisson`; al calcular los RQR debe recuperarse este término para reproducir el valor ajustado y la CDF correctos.
+Los modelos de tasas (p. ej. Poisson con exposición) incorporan un **offset** \(o_i = \log(E_i)\) aditivo en la predicción. En Stata la regla operativa es usar la predicción final del comando (`predict, mu` o `predict, n`) como fuente primaria. Reconstruir manualmente \(x_i\beta + o_i\) queda reservado como fallback auditado y requiere tests que demuestren que no se duplica offset/exposure.
 
 #### Valores ausentes y submuestras (`if`/`in`)
 
@@ -72,7 +72,7 @@ El pseudocódigo general trata valores ausentes propagando `missing`.  En un con
 
 #### Pesos
 
-En familias como la beta-regresión, la definición de residuos cuantílicos incluye el multiplicador \(\sqrt{w_i}\).  El algoritmo general permite pesos multiplicando el residuo normalizado; para otras familias los pesos afectan la estimación de parámetros pero no la transformación PIT.
+Los pesos requieren semántica por familia. En `statmod`, por ejemplo, binomial trata `prior.weights` como número de ensayos y Gamma incorpora el peso en la CDF vía la parametrización; Poisson no multiplica el residuo final por \(\sqrt{w_i}\). Por tanto, el algoritmo general no aplica `sqrt(w_i)` global y debe consultar `03_REPO_REVIEW/WEIGHTS_RQR_EVIDENCE_REVIEW.md` antes de activar pesos.
 
 #### RNG y comparabilidad R–Stata
 
@@ -91,7 +91,7 @@ La implementación debe despachar diferentes cálculos de CDF en función de la 
 - **CDF:** \(F_i(y) = \Phi\left((y - \hat\mu_i)/\hat\sigma\right)\).
 - **End points:** \(F(y_i^-)=F(y_i)\) dado que la CDF es continua.
 - **Salida:** \(r_i = \Phi^{-1}(F_i(y_i))\).
-- **Validación:** comprobar \(\hat\sigma > 0\); si la familia se estimó con pesos, multiplicar el residuo por \(\sqrt{w_i}\).
+- **Validación:** comprobar \(\hat\sigma > 0\); si la familia se estimó con pesos, no aplicar multiplicador global y exigir regla validada por familia.
 - **Comparación con R:** los valores son deterministas y deben coincidir con `statmod::qresiduals()` dentro de tolerancia numérica.
 
 #### 2.1.2 Gamma
@@ -221,9 +221,10 @@ program qresid, eclass
         }
         * 4. Transformación normal
         gen double `generate' = invnormal(`U')
-        * 5. Aplicar pesos
+        * 5. Pesos: no aplicar transformacion global
         if "`weight'" != "" {
-            replace `generate' = sqrt(`weight') * `generate'
+            display as err "weights require family-specific validation"
+            exit 198
         }
     }
     exit 0

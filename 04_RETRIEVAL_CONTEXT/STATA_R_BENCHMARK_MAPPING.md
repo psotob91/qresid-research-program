@@ -80,7 +80,7 @@ Regla central: validar primero capas deterministas —coeficientes, `xb`, `mu`, 
 - `alpha` o `theta` en NB.
 - Número de ensayos `m` en binomial agrupada.
 - Offset/exposure usado por observación.
-- Pesos `e(wexp)` y transformación `sqrt(w_i)` si se aplica.
+- Pesos `e(wexp)` y regla por familia si se aplica; no comparar contra transformacion global `sqrt(w_i)`.
 - Log-likelihood si el método de estimación es comparable.
 
 ### 3.3 No comparar exactamente
