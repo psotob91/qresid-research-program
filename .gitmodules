@@ -1,0 +1,4 @@
+[submodule "qresid"]
+	path = qresid
+	url = https://github.com/psotob91/qresid.git
+	ignore = untracked

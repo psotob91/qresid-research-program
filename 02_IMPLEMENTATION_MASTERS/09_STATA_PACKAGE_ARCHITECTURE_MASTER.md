@@ -1,0 +1,368 @@
+# 09_STATA_PACKAGE_ARCHITECTURE_MASTER.md
+
+## 1. Propósito del documento
+
+`ESTÁNDAR OFICIAL`: este documento define la arquitectura operativa del paquete Stata/Mata `qresid` antes de implementar código.
+
+`qresid` debe ser un comando de postestimación para residuos cuantílicos y residuos cuantílicos aleatorizados, con extracción reproducible desde modelos Stata, cálculo CDF/PIT auditable, benchmarks R-Stata por capas y preparación eventual para SSC/Stata Journal.
+
+`RECOMENDACIÓN OPERATIVA`: tratar este archivo como especificación interna de diseño. No copiarlo al paquete final SSC.
+
+---
+
+## 2. Alcance Fase 1 vs Fase 2/3
+
+### Fase 1
+
+`ESTÁNDAR OFICIAL`: Fase 1 cubre modelos no correlacionados con CDF evaluable, extracción postestimación documentada y benchmark R reproducible.
+
+Familias objetivo:
+
+- Gaussian normal.
+- Bernoulli/binomial.
+- Poisson.
+- Negative binomial con validación explícita de parametrización.
+- Gamma como Fase 1b o Fase 1 con gate de validación.
+
+### Fase 2
+
+`RECOMENDACIÓN OPERATIVA`: Fase 2 cubre extensiones discretas compuestas o modelos donde la CDF requiere estructura adicional.
+
+Familias/modelos:
+
+- ZIP/ZINB.
+- Hurdle.
+- Truncados.
+- PIT o diagnósticos simulados.
+- Modelos `me*` simples solo si se define CDF condicional, marginal o simulada.
+
+### Fase 2/3
+
+`EVIDENCIA PENDIENTE`: GLMM, GSEM, FMM, `xt*`, modelos bayesianos y correlacionados requieren revisión humana antes de cualquier soporte activo.
+
+---
+
+## 3. Estructura final esperada del paquete
+
+| Ruta | Responsabilidad | Regla |
+|---|---|---|
+| `qresid.ado` | Comando público de postestimación | `ESTÁNDAR OFICIAL`: `version`, `program qresid, rclass`, `syntax`, dispatcher y returned results. |
+| `qresid.sthlp` | Ayuda oficial | `ESTÁNDAR OFICIAL`: sintaxis, opciones, ejemplos, stored results, métodos breves, limitaciones. |
+| `qresid.pkg` | Instalación SSC | `ESTÁNDAR OFICIAL`: listar solo archivos públicos necesarios. |
+| `stata.toc` | Índice Stata | `ESTÁNDAR OFICIAL`: descripción breve, sin texto interno. |
+| `README.md` | Entrada pública GitHub | `RECOMENDACIÓN OPERATIVA`: estado de soporte, instalación y ejemplos mínimos. |
+| `examples/` | Ejemplos ejecutables | `ESTÁNDAR OFICIAL`: `version`, datos pequeños o oficiales, `set seed` si aplica. |
+| `tests/` | Unit, integration y R benchmarks | `ESTÁNDAR OFICIAL`: separar familias, capas y outputs. |
+| `certification/` | Evidencia release/SJ | `ESTÁNDAR OFICIAL`: `master.do`, `master_R.R`, logs, outputs, reports. |
+
+`ESTÁNDAR OFICIAL`: el paquete final no debe contener prompts, notas de agentes, scratch, logs gigantes ni claims sin test.
+
+---
+
+## 4. Arquitectura de comando
+
+Flujo interno esperado:
+
+1. Comando público: recibir `newvarname`, `if/in` y opciones.
+2. Parser: validar sintaxis pública con `syntax`.
+3. Validación de entorno: verificar `e(cmd)` y modelo soportado.
+4. Muestra: combinar `marksample` con `e(sample)`.
+5. Dispatcher: mapear comando/familia a extractor y CDF.
+6. Extracción postestimación: obtener `y`, `mu/pr/n/xb`, parámetros accesorios, pesos y offset si aplica.
+7. Cálculo CDF: crear `F_low` y `F_high` como `double`.
+8. Uniformización: construir `U` determinístico o aleatorizado.
+9. Transformación normal: aplicar clipping documentado y `invnormal(U)`.
+10. Outputs: generar residuo principal y variables auditables solicitadas.
+11. Returned results: devolver conteos, flags y metadatos en `r()`.
+
+`RECOMENDACIÓN OPERATIVA`: mantener `qresid.ado` delgado. Mover cálculo repetido o vectorizable a subrutinas o Mata solo cuando los tests estén estables.
+
+---
+
+## 5. API pública propuesta
+
+Sintaxis recomendada:
+
+```stata
+qresid newvarname [if] [in] [, seed(integer) uvar(varname numeric) ///
+    savev(name) saveflo(name) savefhi(name) saveu(name) family(string) ]
+```
+
+Opciones:
+
+| Opción | Estado | Regla |
+|---|---|---|
+| `seed(integer)` | Fase 1 | `ESTÁNDAR OFICIAL`: reproducibilidad interna en Stata; no implica igualdad con R. |
+| `uvar(varname numeric)` | Fase 1 | `ESTÁNDAR OFICIAL`: uniformes externos para benchmarks exactos R-Stata. |
+| `savev(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar uniforme base `V` usado en discretas. |
+| `saveflo(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar `F_low`. |
+| `savefhi(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar `F_high`. |
+| `saveu(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar `U` final antes de `invnormal()`. |
+| `family(string)` | Condicional | `RECOMENDACIÓN OPERATIVA`: permitir solo si el comando activo no permite inferencia segura; no contradecir `e(family)`. |
+
+`ESTÁNDAR OFICIAL`: no cambiar la API pública sin actualizar `.sthlp`, examples, tests y changelog.
+
+---
+
+## 6. Familias soportadas por fase
+
+| Familia | Comandos | Fase | Estado |
+|---|---|---:|---|
+| Gaussian | `regress`, `glm` | 1 | `ESTÁNDAR OFICIAL` |
+| Bernoulli/binomial | `logit`, `logistic`, `binreg`, `glm` | 1 | `ESTÁNDAR OFICIAL` |
+| Poisson | `poisson`, `glm` | 1 | `ESTÁNDAR OFICIAL` |
+| Negative binomial | `nbreg`, `glm` si aplica | 1 | `RECOMENDACIÓN OPERATIVA`: requiere validar NB1/NB2, `alpha/theta/k`. |
+| Gamma | `glm` | 1b | `RECOMENDACIÓN OPERATIVA`: aceptar tras validar `phi`, forma/escala y CDF. |
+| Inverse Gaussian | `glm` | futura | `EVIDENCIA PENDIENTE`: CDF Stata nativa no validada. |
+| Tweedie | `glm`/externos | futura | `EVIDENCIA PENDIENTE`: CDF aproximada/no cerrada. |
+| ZIP/ZINB | `zip`, `zinb` | 2 | `RECOMENDACIÓN OPERATIVA`: no Fase 1. |
+| Hurdle/truncados | `churdle`, `tpoisson`, `tnbreg` | 2 | `EVIDENCIA PENDIENTE`: extracción y CDF truncada pendientes. |
+| GLMM/GSEM | `me*`, `xt*`, `gsem`, `fmm` | 2/3 | `EVIDENCIA PENDIENTE`: preferir diseño simulado. |
+
+---
+
+## 7. Dispatcher de modelos Stata
+
+| `e(cmd)` / comando | Extractor principal | Familia inferida | Acción |
+|---|---|---|---|
+| `regress` | `predict double ..., xb` | Gaussian | Soportar Fase 1. |
+| `glm` | `predict double ..., mu` | `e(family)` | Soportar solo familias Fase 1/1b validadas. |
+| `poisson` | `predict double ..., n` | Poisson | Soportar Fase 1. |
+| `nbreg` | `predict double ..., n` | Negative binomial | Soportar con gate de parametrización. |
+| `logit` | `predict double ..., pr` | Bernoulli | Soportar Fase 1. |
+| `logistic` | `predict double ..., pr` | Bernoulli | Soportar Fase 1. |
+| `binreg` | `predict double ..., mu` | Binomial/Bernoulli | Soportar tras validar `e(m)`. |
+| `zip`, `zinb` | Pendiente | Inflados | `EVIDENCIA PENDIENTE`: error controlado Fase 2. |
+| `meglm`, `mepoisson`, `menbreg`, `melogit` | Pendiente | Mixtos | `EVIDENCIA PENDIENTE`: error controlado Fase 2. |
+| `gsem`, `fmm`, `xt*` | Pendiente | Latentes/panel | `EVIDENCIA PENDIENTE`: error controlado Fase 2/3. |
+
+`ESTÁNDAR OFICIAL`: comandos postergados deben fallar con mensaje claro, no calcular residuos parciales.
+
+---
+
+## 8. Manejo postestimación y datos
+
+### `e(cmd)`
+
+`ESTÁNDAR OFICIAL`: abortar si no hay resultados de estimación activos o si el comando no está en el dispatcher.
+
+### `e(sample)` e `if/in`
+
+`ESTÁNDAR OFICIAL`: calcular solo donde `marksample` y `e(sample)` son verdaderos. Fuera de muestra, dejar missing.
+
+### Missing values
+
+`ESTÁNDAR OFICIAL`: no imputar. Si `y`, `mu`, `pr`, `n` o un parámetro requerido es missing en muestra, abortar o dejar missing con regla documentada.
+
+### Offset/exposure
+
+`ESTÁNDAR OFICIAL`: preferir predicciones finales vía `predict`. No recalcular `xb + offset` salvo necesidad documentada. No duplicar offset/exposure.
+
+### Weights
+
+`RECOMENDACIÓN OPERATIVA`: detectar `e(wtype)` y `e(wexp)`. La regla de transformación del residuo ponderado debe documentarse y testearse antes de activarse.
+
+### Factor variables
+
+`ESTÁNDAR OFICIAL`: no reconstruir manualmente la matriz de diseño para Fase 1. Usar `predict` para preservar factor variables, interacciones y transformaciones del modelo.
+
+---
+
+## 9. Reglas numéricas
+
+- `ESTÁNDAR OFICIAL`: todas las variables internas de CDF, PIT, uniformes, predicciones y residuos deben ser `double`.
+- `ESTÁNDAR OFICIAL`: validar `0 <= F_low <= F_high <= 1`.
+- `ESTÁNDAR OFICIAL`: inversión severa `F_high + tol < F_low` debe abortar.
+- `RECOMENDACIÓN OPERATIVA`: saturar errores leves de CDF a `[0,1]` solo dentro de tolerancia documentada.
+- `RECOMENDACIÓN OPERATIVA`: aplicar clipping antes de `invnormal()` con epsilon documentado.
+- `ESTÁNDAR OFICIAL`: validar soporte de `y`: enteros no negativos para conteos, `0..m` para binomial, `y > 0` para Gamma.
+- `ESTÁNDAR OFICIAL`: validar parámetros: `mu > 0`, `0 <= p <= 1`, `sigma > 0`, `phi > 0`, `alpha/theta/k > 0`.
+
+Tolerancias iniciales:
+
+| Objeto | Tolerancia |
+|---|---:|
+| `mu`, `pr`, `n`, `xb` | `1e-8` |
+| CDF continua | `1e-12` |
+| CDF discreta | `1e-8` a `1e-12` |
+| `U` con `uvar()` | `1e-12` |
+| Residuo final con `uvar()` | `1e-8` |
+
+---
+
+## 10. Estrategia Mata
+
+`ESTÁNDAR OFICIAL`: la primera implementación puede residir en ado si las CDF nativas de Stata bastan y los tests son legibles.
+
+Qué va en ado:
+
+- parsing;
+- validación de entorno;
+- `marksample` y `e(sample)`;
+- llamadas a `predict`;
+- creación de variables de salida;
+- returned results y mensajes de error.
+
+Qué podría ir en Mata:
+
+- rutinas vectorizadas de endpoints CDF;
+- validación masiva de rangos;
+- uniformización;
+- clipping y conteo de flags;
+- CDF no nativas solo tras evidencia.
+
+Cuándo usar `.mlib`:
+
+- `RECOMENDACIÓN OPERATIVA`: compilar `.mlib` solo después de estabilizar API, tests unitarios, integración y benchmarks.
+
+Qué no implementar aún:
+
+- CDF inverse Gaussian, Tweedie, COM-Poisson o generalized Poisson sin evidencia.
+- Integración marginal GLMM/GSEM.
+- Simulación DHARMa-like antes de cerrar Fase 1 analítica.
+
+---
+
+## 11. Estrategia RNG
+
+- `ESTÁNDAR OFICIAL`: `seed()` fija reproducibilidad interna de Stata.
+- `ESTÁNDAR OFICIAL`: `uvar()` es obligatorio para comparar residuos aleatorizados discretos R-Stata punto a punto.
+- `RECOMENDACIÓN OPERATIVA`: permitir guardar uniforme base `V`, `F_low`, `F_high` y `U` para auditoría.
+- `ESTÁNDAR OFICIAL`: no afirmar igualdad exacta entre RNG nativo de R y RNG nativo de Stata.
+- `ESTÁNDAR OFICIAL`: si se usan uniformes externos, validar tipo numérico, no missing en muestra, longitud/muestra compatible y rango.
+- `RECOMENDACIÓN OPERATIVA`: preferir uniformes en `(0,1)` para benchmarks exactos; documentar manejo de `0` y `1`.
+
+---
+
+## 12. Testing y certificación
+
+### Unit tests
+
+`ESTÁNDAR OFICIAL`: cada familia soportada debe tener tests de:
+
+- CDF `F(y)`;
+- endpoint izquierdo `F(y-)`;
+- soporte de `y`;
+- parámetros extremos;
+- `U` dentro de intervalo;
+- `invnormal(U)` sin missing inesperado.
+
+### Integration tests
+
+`ESTÁNDAR OFICIAL`: probar después de comandos Stata reales:
+
+- `regress`;
+- `glm`;
+- `poisson`;
+- `nbreg`;
+- `logit`/`logistic`;
+- `binreg`;
+- `if/in`;
+- `e(sample)`;
+- offset/exposure;
+- pesos cuando estén activados.
+
+### R benchmarks
+
+`ESTÁNDAR OFICIAL`: validar por capas:
+
+1. datos, fórmula, muestra, pesos, offset;
+2. coeficientes;
+3. `xb`, `mu`, `pr`, `n`;
+4. parámetros accesorios;
+5. `F_low`, `F_high`;
+6. uniformes externos;
+7. residuo final con `uvar()`.
+
+### Certification scripts
+
+`ESTÁNDAR OFICIAL`: `certification/master.do` y `certification/master_R.R` deben correr desde cero, abrir logs, fallar con `assert` y producir evidencia reproducible.
+
+---
+
+## 13. Help, examples y documentación
+
+`qresid.sthlp` debe incluir:
+
+1. Title.
+2. Syntax.
+3. Description breve.
+4. Options.
+5. Remarks mínimos.
+6. Examples ejecutables.
+7. Stored results.
+8. Methods and formulas breve.
+9. Limitations.
+10. References.
+11. Author/contact.
+
+`ESTÁNDAR OFICIAL`: no incluir teoría extensa, prompts, lenguaje de agentes ni soporte no certificado.
+
+`RECOMENDACIÓN OPERATIVA`: los ejemplos básicos deben usar datos simulados pequeños, `version`, `set seed` y no depender de paquetes externos.
+
+---
+
+## 14. Versionado y release
+
+- `ESTÁNDAR OFICIAL`: toda versión pública debe tener changelog y sintaxis estable.
+- `ESTÁNDAR OFICIAL`: no publicar familia sin help, ejemplo, unit test, integration test y benchmark.
+- `ESTÁNDAR OFICIAL`: `qresid.pkg` y `stata.toc` deben listar solo archivos de distribución.
+- `RECOMENDACIÓN OPERATIVA`: mantener aliases de opciones durante al menos una versión menor si se cambia la API.
+- `ESTÁNDAR OFICIAL`: antes de SSC/Stata Journal, correr certificación completa y revisar ausencia de archivos temporales.
+
+---
+
+## 15. Criterios de aceptación antes de implementar Fase 1
+
+No iniciar implementación Fase 1 hasta que:
+
+- `ESTÁNDAR OFICIAL`: el dispatcher Fase 1 esté definido.
+- `ESTÁNDAR OFICIAL`: cada comando tenga extractor `predict` documentado.
+- `ESTÁNDAR OFICIAL`: cada familia tenga fórmula de CDF y endpoints.
+- `ESTÁNDAR OFICIAL`: existan tests unitarios planificados por familia.
+- `ESTÁNDAR OFICIAL`: exista estrategia `uvar()` para discretas.
+- `ESTÁNDAR OFICIAL`: tolerancias estén fijadas.
+- `RECOMENDACIÓN OPERATIVA`: Gamma se marque Fase 1b si forma/escala o CDF no están cerradas en pruebas.
+- `EVIDENCIA PENDIENTE`: NB no se declara estable hasta alinear `alpha/theta/k` con R.
+
+---
+
+## 16. Tabla maestra de componentes
+
+| Componente | Responsabilidad | Archivo fuente esperado | Tests requeridos | Riesgo |
+|---|---|---|---|---|
+| Parser público | Leer `newvarname`, `if/in`, opciones | `qresid.ado` | Integration interfaz | API inconsistente. |
+| Validador de modelo | Verificar `e(cmd)` y soporte | `qresid.ado` | Error tests | Soportar modelo no auditado. |
+| Muestra | Combinar `marksample` y `e(sample)` | `qresid.ado` | Integration `if/in`, missing | Calcular fuera de muestra. |
+| Extractor Gaussian | `regress`/`glm`, `mu`, `sigma` | `qresid.ado` o helper | Unit CDF, integration, R benchmark | `sigma` incorrecto. |
+| Extractor binomial | `pr/mu`, trials `m` | `qresid.ado` o helper | Unit endpoints, integration, R benchmark | `m` mal extraído. |
+| Extractor Poisson | `predict, n` | `qresid.ado` o helper | Unit endpoints, offset benchmark | Offset duplicado. |
+| Extractor NB | `predict, n`, `alpha/theta/k` | helper dedicado | Unit CDF, R benchmark | NB1/NB2 mal alineado. |
+| Extractor Gamma | `predict, mu`, `phi` | helper dedicado | Unit CDF, R benchmark | Forma/escala mal parametrizada. |
+| CDF endpoints | Generar `F_low`, `F_high` | ado primero; Mata futuro | Unit CDF extremos | Inversión o CDF fuera de rango. |
+| Uniformización | Crear `V` y `U` | ado primero; Mata futuro | RNG, `uvar()` | No reproducibilidad. |
+| Transformación normal | Clipping e `invnormal()` | ado/Mata | PIT endpoint tests | Missing o infinitos. |
+| Outputs auditables | Residuo, `V`, `F_low`, `F_high`, `U` | `qresid.ado` | Integration outputs | Sobrescritura o tipos no `double`. |
+| Returned results | Conteos, flags, familia, comando | `qresid.ado` | Stored result tests | Evidencia insuficiente. |
+| Help/examples | Documentación pública | `qresid.sthlp`, `examples/` | Smoke tests | Claims sin soporte. |
+| Certification | Evidencia reproducible | `certification/` | `master.do`, `master_R.R` | Resultados no auditables. |
+
+---
+
+## 17. Gaps y decisiones con aprobación humana
+
+`EVIDENCIA PENDIENTE`:
+
+- Confirmar extracción estable de `alpha/theta/k` para `nbreg` y equivalencia con R.
+- Confirmar si Gamma entra Fase 1 o Fase 1b tras pruebas de forma/escala.
+- Confirmar uso y transformación final de pesos por familia.
+- Confirmar sintaxis exacta de `family()` o decidir no exponerla en Fase 1.
+- Confirmar política de `replace` para sobrescribir variables existentes.
+- Confirmar si `savev()` se mantiene separado de `saveu()` en la API pública.
+- Confirmar CDF inverse Gaussian antes de cualquier soporte.
+- Confirmar estrategia para Tweedie, COM-Poisson y generalized Poisson.
+- Confirmar diseño Fase 2 para ZIP/ZINB/hurdle/truncados.
+- Confirmar si GLMM/GSEM se abordarán solo por simulación.
+- Confirmar licencia y datasets antes de incluir casebank o datos externos.
+
+`ESTÁNDAR OFICIAL`: cualquier gap anterior bloquea claims públicos y soporte activo hasta revisión humana.
