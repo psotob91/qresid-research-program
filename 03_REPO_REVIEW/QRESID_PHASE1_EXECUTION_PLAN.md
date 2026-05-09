@@ -22,7 +22,7 @@ Este plan presupone que Phase 0 ya dejo una suite minima ejecutable. No iniciar 
 | `PHASE1_TESTS` | unit, integration, benchmark y certificacion | obligatorio |
 | `PHASE1_DOCS` | help, README, examples, changelog | solo despues de tests verdes |
 | `DEFER_PHASE2` | ZIP/ZINB, hurdle, truncados, mixed/GLMM/GSEM | no implementar |
-| `DO_NOT_DO` | NB estable y pesos globales | no activar sin investigacion |
+| `RESEARCH_GATE_REQUIRED` | NB estable y pesos | investigar manuales/ado/R, cerrar teoria y pasar benchmarks antes de activar |
 
 ## 3. Orden Exacto De Ejecucion
 
@@ -59,9 +59,9 @@ Este plan presupone que Phase 0 ya dejo una suite minima ejecutable. No iniciar 
    - Poisson: `poisson`, `glm, family(poisson)`;
    - Bernoulli/binomial: `logit`, `logistic`, `binreg`, `glm, family(binomial)`;
    - Gamma: `glm, family(gamma)` con gate tecnico.
-8. Mantener fuera de soporte estable:
-   - NB: error controlado o ruta bloqueada hasta parametrizacion;
-   - pesos: detectar si aplica, pero no transformar residuo final ni prometer soporte;
+8. Mantener fuera de soporte estable hasta completar research gates:
+   - NB: investigar `alpha/theta/k`, NB1/NB2, CDF y 3 benchmarks antes de activar;
+   - pesos: investigar matriz familia x tipo de peso; no usar `sqrt(w_i)` global;
    - ZIP/ZINB/hurdle/truncados/mixed: error controlado.
 9. Implementar returned results:
    - comando/familia;
@@ -102,8 +102,8 @@ Este plan presupone que Phase 0 ya dejo una suite minima ejecutable. No iniciar 
 
 | topic | class | regla |
 |---|---|---|
-| NB estable | `DO_NOT_DO` | no activar hasta cerrar `alpha/theta/k`, NB1/NB2 y CDF exacta |
-| weights | `DO_NOT_DO` | no aplicar `sqrt(w_i)` global ni prometer soporte ponderado |
+| NB estable | `RESEARCH_GATE_REQUIRED` | no activar hasta cerrar `alpha/theta/k`, NB1/NB2, CDF exacta y 3 benchmarks |
+| weights | `RESEARCH_GATE_REQUIRED` | no aplicar `sqrt(w_i)` global; activar solo combinaciones familia x tipo de peso con teoria y benchmark |
 | ZIP/ZINB | `DEFER_PHASE2` | error controlado, no calculo parcial |
 | hurdle/truncados | `DEFER_PHASE2` | error controlado, no calculo parcial |
 | mixed/GLMM/GSEM | `DEFER_PHASE2` | error controlado, no calculo parcial |
@@ -117,7 +117,7 @@ Phase 1 termina cuando:
 - tests de API, muestra, RNG y endpoints pasan;
 - Gaussian, Poisson, Bernoulli/binomial y Gamma tienen tests verdes;
 - docs publicos no prometen soporte fuera de tests;
-- NB, pesos y Phase 2 quedan bloqueados de forma explicita;
+- NB y pesos quedan implementados solo si pasan research gates, o bloqueados de forma explicita;
 - post-change sync queda ejecutado.
 
 ## 8. Primer Prompt De Implementacion
