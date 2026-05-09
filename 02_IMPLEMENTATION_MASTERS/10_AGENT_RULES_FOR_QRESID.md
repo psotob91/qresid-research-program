@@ -217,7 +217,7 @@ Detenerse y no modificar código si:
 - `EVIDENCIA PENDIENTE`: no se puede extraer un parámetro esencial con `predict` o `e()`.
 - `EVIDENCIA PENDIENTE`: parametrización R-Stata no está alineada.
 - `EVIDENCIA PENDIENTE`: fuente documental clave está pendiente o restringida.
-- `ESTÁNDAR OFICIAL`: Gamma es Fase 1, pero no puede publicarse sin tests CDF y benchmark R.
+- `ESTÁNDAR OFICIAL`: Gamma es Fase 1 para modelos no ponderados `glm, family(gamma)` si pasan tests CDF y benchmark R; pesos en Gamma siguen bloqueados por la regla general de pesos.
 - `HUMAN_DECISION_REQUIRED`: NB requiere decisión `alpha/theta/k` o NB1/NB2.
 - `HUMAN_DECISION_REQUIRED`: pesos requieren regla final por familia.
 - `ESTÁNDAR OFICIAL`: API pública Fase 1 está cerrada; cambios futuros requieren aprobación humana y actualización de help/examples/tests/changelog.
@@ -268,7 +268,7 @@ Crear issue o nota de revisión cuando el bloqueo sea reproducible, tenga archiv
 
 ## 18. Gaps y contradicciones registradas
 
-- `ESTÁNDAR OFICIAL`: Gamma queda resuelto como Fase 1; falta validación técnica de `phi`, forma/escala, CDF y benchmark antes de soporte estable.
+- `ESTÁNDAR OFICIAL`: Gamma queda resuelto como Fase 1 para modelos no ponderados con validación técnica de `phi`, forma/escala, CDF y benchmark; pesos en Gamma siguen pendientes.
 - `HUMAN_DECISION_REQUIRED`: NB requiere decisión estable sobre `alpha/theta/k`, NB1/NB2 y CDF exacta.
 - `HUMAN_DECISION_REQUIRED`: pesos requieren regla final por familia antes de activar transformación del residuo; no usar `sqrt(w_i)` global.
 - `ESTÁNDAR OFICIAL`: API pública Fase 1 resuelta: `newvarname`, `family()` condicional, sin `replace`, sin `generate()` y `savev()` separado de `saveu()`.

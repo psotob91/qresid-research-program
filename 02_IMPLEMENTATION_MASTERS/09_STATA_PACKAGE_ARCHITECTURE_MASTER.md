@@ -328,7 +328,7 @@ No iniciar implementación Fase 1 hasta que:
 - `ESTÁNDAR OFICIAL`: existan tests unitarios planificados por familia.
 - `ESTÁNDAR OFICIAL`: exista estrategia `uvar()` para discretas.
 - `ESTÁNDAR OFICIAL`: tolerancias estén fijadas.
-- `ESTÁNDAR OFICIAL`: Gamma Fase 1 tenga cerrados soporte, `phi`, forma/escala, CDF y benchmark R antes de claim público.
+- `ESTÁNDAR OFICIAL`: Gamma Fase 1 queda cerrada para modelos no ponderados `glm, family(gamma)` con soporte, `phi`, forma/escala, CDF y benchmark R; pesos en Gamma siguen pendientes.
 - `EVIDENCIA PENDIENTE`: NB no se declara estable hasta alinear `alpha/theta/k` con R.
 
 ---
@@ -360,7 +360,7 @@ No iniciar implementación Fase 1 hasta que:
 `EVIDENCIA PENDIENTE`:
 
 - Confirmar extracción estable de `alpha/theta/k` para `nbreg` y equivalencia con R.
-- Gamma queda decidido como Fase 1; queda pendiente cerrar evidencia técnica de forma/escala, CDF y benchmark antes de publicarlo como soporte estable.
+- Gamma queda decidido como Fase 1 y cerrado para modelos no ponderados con evidencia técnica de forma/escala, CDF y benchmark R; pesos en Gamma siguen pendientes.
 - Confirmar uso y transformación final de pesos por familia; no activar `sqrt(w_i)` global.
 - API pública Fase 1 queda cerrada: `qresid newvarname [if] [in], ...`; `family()` es condicional, `replace` no se expone, y `savev()` queda separado de `saveu()`.
 - Confirmar CDF inverse Gaussian antes de cualquier soporte.

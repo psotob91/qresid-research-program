@@ -23,6 +23,7 @@ Este plan presupone que Phase 0 ya dejo una suite minima ejecutable. No iniciar 
 | `PHASE1_DOCS` | help, README, examples, changelog | solo despues de tests verdes |
 | `DEFER_PHASE2` | ZIP/ZINB, hurdle, truncados, mixed/GLMM/GSEM | no implementar |
 | `RESEARCH_GATE_REQUIRED` | NB estable y pesos | investigar manuales/ado/R, cerrar teoria y pasar benchmarks antes de activar |
+| `COMPLETED_LOCAL_PHASE1C` | Gamma unweighted | `glm, family(gamma)` implementado con benchmark Stata/R de 3 datasets |
 
 ## 3. Orden Exacto De Ejecucion
 
@@ -58,7 +59,7 @@ Este plan presupone que Phase 0 ya dejo una suite minima ejecutable. No iniciar 
    - Gaussian: `regress`, `glm, family(gaussian)`;
    - Poisson: `poisson`, `glm, family(poisson)`;
    - Bernoulli/binomial: `logit`, `logistic`, `binreg`, `glm, family(binomial)`;
-   - Gamma: `glm, family(gamma)` con gate tecnico.
+   - Gamma: `glm, family(gamma)` con gate tecnico; completado para modelos no ponderados.
 8. Mantener fuera de soporte estable hasta completar research gates:
    - NB: investigar `alpha/theta/k`, NB1/NB2, CDF y 3 benchmarks antes de activar;
    - pesos: investigar matriz familia x tipo de peso; no usar `sqrt(w_i)` global;
@@ -83,7 +84,7 @@ Este plan presupone que Phase 0 ya dejo una suite minima ejecutable. No iniciar 
 | Gaussian | `regress`, `glm gaussian` | `predict` y parametros de escala | continua, sin aleatorizacion | unit + integration |
 | Poisson | `poisson`, `glm poisson` | `predict, n` o `predict, mu` | discreta con endpoints | unit + integration + R benchmark con `uvar()` |
 | Bernoulli/binomial | `logit`, `logistic`, `binreg`, `glm binomial` | `predict, pr` o `predict, mu`, trials validos | discreta con endpoints | unit + integration + R benchmark con `uvar()` |
-| Gamma | `glm gamma` | `predict, mu`, dispersion | continua con `shape = 1/phi`, `scale = mu*phi` | unit + integration + R benchmark |
+| Gamma | `glm gamma` | `predict, mu`, dispersion | continua con `shape = 1/phi`, `scale = mu*phi` | completed locally with unit + integration + 3-dataset R benchmark |
 
 ## 5. Tests De Aceptacion
 

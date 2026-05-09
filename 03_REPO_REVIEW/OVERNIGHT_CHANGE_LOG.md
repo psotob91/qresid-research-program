@@ -12,35 +12,43 @@ Fecha: 2026-05-10
 
 | file | change_type | classification |
 |---|---|---|
-| `qresid/tests/README.md` | completed placeholder | `PHASE0_STRUCTURE` |
-| `qresid/tests/run_all_tests.do` | created test runner | `PHASE1_TESTS` |
-| `qresid/certification/README.md` | completed placeholder | `PHASE0_STRUCTURE` |
-| `qresid/certification/certify_phase1.do` | created certification scaffold | `PHASE0_STRUCTURE` |
-| `qresid/examples/README.md` | completed placeholder | `PHASE0_STRUCTURE` |
-| `qresid/changelog/CHANGELOG.md` | created changelog placeholder | `PHASE0_STRUCTURE` |
-| `qresid/tests/logs/*` | generated Stata logs | `PHASE1_TESTS` |
-| `qresid/certification/logs/*` | generated Stata logs | `PHASE0_STRUCTURE` |
+| `qresid/qresid.ado` | refactor API/core and family dispatcher | `PHASE1_IMPLEMENTATION` |
+| `qresid/qresid.sthlp` | replace stale public help | `PHASE1_DOCS` |
+| `qresid/README.md` | update tested support and syntax | `PHASE1_DOCS` |
+| `qresid/qresid.pkg` | update package metadata | `PHASE1_DOCS` |
+| `qresid/stata.toc` | update package table of contents metadata | `PHASE1_DOCS` |
+| `qresid/tests/run_all_tests.do` | expand API/core/family tests | `PHASE1_TESTS` |
+| `qresid/tests/benchmark_gamma_stata.do` | add Gamma Stata benchmark producer | `PHASE1_TESTS` |
+| `qresid/tests/benchmark_gamma_r.R` | add Gamma R benchmark checker | `PHASE1_TESTS` |
+| `qresid/certification/certify_phase1.do` | update development gate status | `PHASE0_STRUCTURE` |
+| `qresid/changelog/CHANGELOG.md` | record Phase 1B/1C work | `PHASE1_DOCS` |
 
-## 2. Cambios No Aplicados
+## 2. Cambios De Implementacion
+
+- Implemented official API options:
+  `seed()`, `uvar()`, `savev()`, `saveflo()`, `savefhi()`, `saveu()`,
+  `family()`.
+- Added `program qresid, rclass`.
+- Added `marksample, novarlist` and `e(sample)` filtering.
+- Added controlled error gate for weighted estimation.
+- Added controlled error gate for NB and grouped binomial.
+- Added PIT endpoint validation and clipping before `invnormal()`.
+- Added Gaussian, Poisson, Bernoulli and Gamma unweighted paths.
+
+## 3. Cambios No Aplicados
 
 | area | reason |
 |---|---|
-| `qresid.ado` | Phase 1B stopped before implementation |
-| API base | prompt partial conflicts with official API in `09` |
-| CDF/PIT/RNG implementation | Phase 1B not started |
-| Gamma | deferred from overnight run |
-| NB | `DO_NOT_DO` until parametrization research |
-| weights | `DO_NOT_DO` until evidence matrix |
-| ZIP/ZINB/hurdle/truncados/mixed | `DEFER_PHASE2` |
+| NB stable support | parametrization/CDF/R benchmark gate still open |
+| weights | family x weight-type semantics gate still open |
+| grouped binomial | trials semantics gate still open |
+| ZIP/ZINB/hurdle/truncados/mixed | deferred Phase 2+ |
 
-## 3. Git Notes
+## 4. Git Notes
 
-`qresid.ado` remains unmodified.
+Recommended checkpoint names:
 
-The previous untracked empty files were integrated as scaffolds:
-
-- `qresid/tests/run_all_tests.do`
-- `qresid/certification/certify_phase1.do`
-- `qresid/changelog/CHANGELOG.md`
+- `checkpoint-phase1c-core-gamma` for `qresid/`.
+- root checkpoint with updated gitlink and reports.
 
 Post-change documentation sync: `POST_CHANGE_SYNC_DONE`
