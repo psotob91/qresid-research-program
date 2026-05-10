@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>qresid Hurdle Stata Ado Pinning Audit</title>
+<style>body{font-family:Segoe UI,Arial,sans-serif;margin:24px;line-height:1.45}table{border-collapse:collapse;width:100%;font-size:13px}td,th{border:1px solid #ddd;padding:8px;vertical-align:top}th{background:#f3f5f7}.badge{padding:3px 8px;border-radius:999px;font-weight:600}.green{background:#daf5df;color:#135c20}.purple{background:#eadcff;color:#563391}.gray{background:#eceff1;color:#455a64}input{padding:8px;width:340px;max-width:100%;margin:8px 0 16px}</style></head>
+<body><h1>qresid Hurdle Stata Ado Pinning Audit</h1>
+<p><strong>Date:</strong> 2026-05-10. <span class="badge green">PINNING PASS</span> <span class="badge purple">IMPLEMENTATION PENDING</span></p>
+<input id="search" placeholder="Search file, hash, route...">
+<table id="t"><thead><tr><th>file</th><th>route</th><th>source</th><th>SHA256</th><th>decision</th></tr></thead><tbody>
+<tr><td>hplogit.ado</td><td>Poisson-logit hurdle</td><td>SSC/RePEc S456405, GPL v3</td><td>7E136E22EA34181E3513955E4498FAEC106C3FED838002851FF955D01EDF65C5</td><td>candidate accepted for benchmark gate</td></tr>
+<tr><td>jhpoi_logit_ll.ado</td><td>Poisson-logit likelihood</td><td>SSC/RePEc</td><td>7EE7D60B4A481839EB06237250DC9C7244E1C3547BAA087805C89F54EF9DC4AC</td><td>pinned</td></tr>
+<tr><td>hnblogit.ado</td><td>NB-logit hurdle</td><td>SSC/RePEc S456401, GPL v3</td><td>F1E9187AFFBBE44116183836119B680314CE08B36CA24FBA78063BA69E53BC39</td><td>candidate accepted for benchmark gate</td></tr>
+<tr><td>jhnb_logit_ll.ado</td><td>NB-logit likelihood</td><td>SSC/RePEc</td><td>408D7CAC7CA9B484F6671A92FE90C6486EEE246FB64C2F99CF134E4D2289F6BA</td><td>pinned</td></tr>
+</tbody></table>
+<p>Support is not claimed in qresid yet. This audit only closes source pinning for external estimator candidates.</p>
+<script>const q=document.getElementById('search');q.addEventListener('input',()=>{const s=q.value.toLowerCase();document.querySelectorAll('#t tbody tr').forEach(r=>r.style.display=r.textContent.toLowerCase().includes(s)?'':'none')});</script>
+</body></html>
+

@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>qresid Hurdle Count Extraction Audit</title>
+<style>body{font-family:Segoe UI,Arial,sans-serif;margin:24px;line-height:1.45}table{border-collapse:collapse;width:100%;font-size:13px}td,th{border:1px solid #ddd;padding:8px;vertical-align:top}th{background:#f3f5f7}.badge{padding:3px 8px;border-radius:999px;font-weight:600}.green{background:#daf5df;color:#135c20}.blue{background:#dcecff;color:#164f8b}.purple{background:#eadcff;color:#563391}input{padding:8px;width:340px;max-width:100%;margin:8px 0 16px}</style></head>
+<body><h1>qresid Hurdle Count Postestimation Extraction Audit</h1>
+<p><strong>Date:</strong> 2026-05-10. <span class="badge green">EXTRACTION PASS</span> <span class="badge blue">R_CDF_REPLAY PASS</span> <span class="badge purple">QRESID IMPLEMENTATION PENDING</span></p>
+<input id="search" placeholder="Search route, layer, status...">
+<table id="t"><thead><tr><th>route</th><th>e(cmd)</th><th>parameters</th><th>R benchmark</th><th>decision</th></tr></thead><tbody>
+<tr><td>hplogit</td><td>ml</td><td>xb logit, xb poisson, pi0=invlogit(xb_logit), mu=exp(xb_poisson)</td><td>pscl::hurdle Poisson, zero equation sign-adjusted; manual CDF replay</td><td>benchmark gate passed; implementation pending</td></tr>
+<tr><td>hnblogit</td><td>ml</td><td>xb logit, xb negbinomial, alpha=exp(/lnalpha), theta=1/alpha</td><td>pscl::hurdle NB, zero equation sign-adjusted; manual CDF replay</td><td>benchmark gate passed; implementation pending</td></tr>
+</tbody></table>
+<p>Future qresid dispatch cannot rely only on e(cmd), because both external commands leave e(cmd) as ml.</p>
+<script>const q=document.getElementById('search');q.addEventListener('input',()=>{const s=q.value.toLowerCase();document.querySelectorAll('#t tbody tr').forEach(r=>r.style.display=r.textContent.toLowerCase().includes(s)?'':'none')});</script>
+</body></html>
+

@@ -8,23 +8,23 @@ Retrieval policy: load before hurdle count implementation or benchmark work
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: hurdle RQR theory gate opened as a benchmark-first research gate and reconciled with estimator-equivalence audit.
-SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix, math/software evidence matrix and registry reviewed; no support claim added.
+POST_CHANGE_SYNC_DONE: hurdle RQR theory gate opened and updated after Hilbe-Hardin Stata ado pinning/extraction benchmark.
+SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix, math/software evidence matrix and registry reviewed; qresid support remains implementation-pending.
 
 ## Decision
 
-`HURDLE_COUNT_IMPLEMENTATION_ALLOWED: no`
+`HURDLE_COUNT_IMPLEMENTATION_ALLOWED: no_not_in_this_cycle`
 
-`HURDLE_COUNT_BENCHMARK_ALLOWED: yes_after_stata_route_closes`
+`HURDLE_COUNT_BENCHMARK_ALLOWED: yes_hplogit_hnblogit_gate_passed`
 
 `CHURDLE_IS_COUNT_HURDLE: no`
 
 The probability-integral-transform and Dunn-Smyth randomized quantile residual
 theory is suitable for hurdle count distributions once the fitted CDF is
-closed. The current blocker is not the residual theory. The blocker is the
-estimator route for Stata postestimation: no official Stata count-hurdle
-Poisson/NB estimator is accepted for `qresid`, and no external Stata ado has
-yet been source/version/license pinned.
+closed. The previous blocker was the Stata estimator route. That route is now
+closed for pinned external `hplogit` and `hnblogit` logit-hurdle commands, but
+`qresid.ado` implementation remains a separate cycle because both commands
+leave `e(cmd)="ml"` and require route-specific dispatch.
 
 Estimator-level benchmarks must be attempted before residual benchmarks. If
 the R and Stata estimators are not equivalent, the route may only use
@@ -65,12 +65,13 @@ approximate, as in other fitted-model quantile residuals.
 
 ## Required Stata Closure
 
-Before implementation, one of these must close:
+Before implementation, these route-specific items must close:
 
-- an official Stata count-hurdle Poisson/NB estimator is identified with
-  robust `predict`/`e()` extraction for zero and positive components; or
-- an external Stata hurdle-count ado is source/version/license pinned and
-  extraction is audited.
+- external Stata hurdle-count ado is source/version/license pinned and
+  extraction is audited. This is now complete for `hplogit` and `hnblogit`;
+- future `qresid` dispatcher policy must handle `e(cmd)="ml"` safely;
+- public help/examples/certification must be added in a separate
+  implementation cycle.
 
 `churdle` is not that route. It is official Stata Cragg hurdle regression for
 bounded/continuous outcomes and receives a separate gate.
@@ -105,13 +106,16 @@ Move to `READY_FOR_EXTENSION_PRERELEASE` only after a Stata estimator route is
 accepted, three datasets pass, the CDF endpoints are reproducible, and public
 docs/examples/certification/matrices are synchronized.
 
-Until then, hurdle count remains `GATED_MODEL_FAMILY` and
-`MISSING_NOT_BLOCKING`.
+Until implementation, hurdle count remains `MISSING_NOT_BLOCKING` for current
+package validity and `BENCHMARK_GATE_PASSED_IMPLEMENTATION_PENDING` for the
+pinned Hilbe-Hardin logit routes.
 
 ## Sources
 
 - Dunn, P. K., and G. K. Smyth. 1996. Randomized quantile residuals.
 - `pscl::hurdle`: https://search.r-project.org/CRAN/refmans/pscl/html/hurdle.html
+- `hplogit`: https://econpapers.repec.org/RePEc%3Aboc%3Abocode%3As456405
+- `hnblogit`: https://ideas.repec.org/c/boc/bocode/s456401.html
 - `glmmTMB`: https://glmmtmb.github.io/glmmTMB/reference/glmmTMB.html
 - `VGAM` zero-altered families: https://www.rdocumentation.org/packages/VGAM/versions/1.1-14/topics/zanegbinomial
 - `topmodels::qresiduals`: https://rdrr.io/rforge/topmodels/man/qresiduals.html
