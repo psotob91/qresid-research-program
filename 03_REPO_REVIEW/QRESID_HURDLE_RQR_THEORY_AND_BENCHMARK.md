@@ -8,7 +8,7 @@ Retrieval policy: load before hurdle count implementation or benchmark work
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: hurdle RQR theory gate opened as a benchmark-first research gate.
+POST_CHANGE_SYNC_DONE: hurdle RQR theory gate opened as a benchmark-first research gate and reconciled with estimator-equivalence audit.
 SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix, math/software evidence matrix and registry reviewed; no support claim added.
 
 ## Decision
@@ -25,6 +25,12 @@ closed. The current blocker is not the residual theory. The blocker is the
 estimator route for Stata postestimation: no official Stata count-hurdle
 Poisson/NB estimator is accepted for `qresid`, and no external Stata ado has
 yet been source/version/license pinned.
+
+Estimator-level benchmarks must be attempted before residual benchmarks. If
+the R and Stata estimators are not equivalent, the route may only use
+`R_CDF_REPLAY` after a Stata estimator exports all fitted CDF parameters
+robustly. Until that happens, hurdle remains gated even though its PIT/RQR
+formula is closed.
 
 ## Count Hurdle RQR Target
 

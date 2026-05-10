@@ -8,8 +8,8 @@ Retrieval policy: load before generalized Poisson or hurdle count work
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: hurdle RQR theory gate created; generalized Poisson remains closed for pinned `st0279` route and hurdle research gate remains open.
-SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix and math/software evidence matrix reviewed after hurdle gate formalization.
+POST_CHANGE_SYNC_DONE: hurdle RQR theory gate created; estimator-equivalence audit added; generalized Poisson remains closed for pinned `st0279` route and hurdle research gate remains open.
+SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix, GLM/link report and math/software evidence matrix reviewed after estimator-equivalence formalization.
 
 ## Decision
 
@@ -23,6 +23,10 @@ This audit originally opened a separate benchmark-first cycle. It now records
 that the pinned Stata Journal `st0279` / `gpoisson` unweighted route passed
 source, PMF/CDF, Stata and R CDF-replay gates. Hurdle count has a documented
 PIT/RQR target but remains research only until a Stata estimator route closes.
+The stricter estimator-equivalence audit is recorded in
+`QRESID_ESTIMATOR_EQUIVALENCE_AUDIT.md`: estimator-level equality is required
+when claimed; otherwise the route must be explicitly labeled as CDF replay,
+approximate benchmark, Stata external validation, or gated.
 
 ## Generalized Poisson Gate
 

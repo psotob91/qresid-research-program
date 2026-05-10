@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>qresid Generalized Poisson / Hurdle Release Decision</title>
+<style>
+body{font-family:Segoe UI,Arial,sans-serif;margin:24px;line-height:1.45;color:#222}
+.badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:600}
+.green{background:#daf5df;color:#135c20}.purple{background:#eadcff;color:#563391}.gray{background:#eceff1;color:#455a64}.blue{background:#dcecff;color:#164f8b}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid #ddd;padding:8px;vertical-align:top}th{background:#f3f5f7;text-align:left}
+input{padding:8px;width:360px;max-width:100%;margin:8px 0 16px;border:1px solid #aaa;border-radius:4px}
+</style>
+</head>
+<body>
+<h1>qresid Generalized Poisson / Hurdle Release Decision</h1>
+<p><strong>Date:</strong> 2026-05-10. <strong>Sync:</strong> POST_CHANGE_SYNC_DONE; SUPPORT_MATRIX_SYNC_DONE.</p>
+<input id="search" placeholder="Search generalized Poisson, hurdle, package...">
+<table id="decision">
+<thead><tr><th>area</th><th>decision</th><th>usable now?</th><th>evidence</th><th>what remains gated</th></tr></thead>
+<tbody>
+<tr><td>Generalized Poisson</td><td><span class="badge green">READY_FOR_EXTENSION_PRERELEASE</span></td><td>Yes, pinned unweighted st0279/gpoisson route only.</td><td>Stata Journal source pinning, analytic PMF/CDF, VGAM positive-delta check, manual R CDF replay, three datasets.</td><td>weights, gp2, other GP ado routes, hurdle GP, correlated routes.</td></tr>
+<tr><td>Hurdle count Poisson/NB</td><td><span class="badge purple">GATED_MODEL_FAMILY</span></td><td>No.</td><td>Theory and R references are documented, but no accepted Stata count-hurdle estimator/extractor is closed.</td><td>All count-hurdle implementation until Stata route/source closes.</td></tr>
+<tr><td>Stata churdle</td><td><span class="badge gray">SEPARATE_GATE</span></td><td>No count-hurdle support.</td><td>Official Stata command exists, but it is Cragg bounded/continuous hurdle, not count Poisson/NB hurdle.</td><td>Separate continuous/bounded PIT/CDF gate.</td></tr>
+</tbody>
+</table>
+<h2>Next Gate For Hurdle</h2>
+<p>Accept or pin a Stata count-hurdle estimator, audit extraction of pi/mu/theta, run three datasets, replay endpoints in R, and then sync matrices before any qresid.ado change.</p>
+<script>
+const q=document.getElementById('search');q.addEventListener('input',()=>{const s=q.value.toLowerCase();document.querySelectorAll('#decision tbody tr').forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(s)?'':'none'})});
+</script>
+</body>
+</html>
+

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>qresid Estimator Equivalence Audit</title>
+<style>
+body{font-family:Segoe UI,Arial,sans-serif;margin:24px;line-height:1.45;color:#222}
+input{padding:8px;width:360px;max-width:100%;margin:8px 0 16px;border:1px solid #aaa;border-radius:4px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid #ddd;padding:8px;vertical-align:top}
+th{background:#f3f5f7;text-align:left}
+.badge{display:inline-block;padding:2px 7px;border-radius:999px;font-size:12px;font-weight:600}
+.green{background:#daf5df;color:#135c20}.blue{background:#dcecff;color:#164f8b}.purple{background:#eadcff;color:#563391}.gray{background:#eceff1;color:#455a64}.amber{background:#fff1cc;color:#7a4d00}
+</style>
+</head>
+<body>
+<h1>qresid Estimator Equivalence Audit</h1>
+<p><strong>Date:</strong> 2026-05-10. <strong>Sync:</strong> POST_CHANGE_SYNC_DONE; SUPPORT_MATRIX_SYNC_DONE; SUPPORT_EVIDENCE_INDEX_SYNC.</p>
+<input id="search" placeholder="Search route, package, status...">
+<h2>Decisions</h2>
+<table id="matrix">
+<thead><tr><th>route</th><th>Stata source</th><th>R estimator</th><th>R PIT/RQR</th><th>equivalence</th><th>CDF replay</th><th>decision</th><th>notes</th></tr></thead>
+<tbody>
+<tr><td>generalized Poisson GP-0</td><td>pinned Stata Journal st0279/gpoisson</td><td>VGAM::genpoisson0 / pgenpois0; glmmTMB::genpois approximate candidate</td><td>manual generalized-Poisson CDF replay</td><td><span class="badge blue">PARTIAL</span></td><td><span class="badge green">yes</span></td><td><span class="badge green">READY_FOR_EXTENSION_PRERELEASE</span></td><td>Unweighted pinned route only.</td></tr>
+<tr><td>generalized Poisson variants</td><td>weights, gp2, other ado routes</td><td>route-specific</td><td>none established</td><td><span class="badge purple">no</span></td><td><span class="badge purple">not closed</span></td><td><span class="badge purple">GATED_VARIANT</span></td><td>Needs separate pinning and CDF audit.</td></tr>
+<tr><td>hurdle count Poisson</td><td>no accepted Stata route</td><td>pscl::hurdle; glmmTMB truncated_poisson + zero component; VGAM candidates</td><td>topmodels::qresiduals candidate; manual CDF replay after Stata route closes</td><td><span class="badge gray">not testable</span></td><td><span class="badge blue">math yes</span></td><td><span class="badge purple">GATED_MODEL_FAMILY</span></td><td>Theory is sufficient; estimator/extractor is not closed.</td></tr>
+<tr><td>hurdle count negative binomial</td><td>no accepted Stata route</td><td>pscl::hurdle; glmmTMB truncated_nbinom2 + zero component; VGAM candidates</td><td>topmodels::qresiduals candidate; manual CDF replay after Stata route closes</td><td><span class="badge gray">not testable</span></td><td><span class="badge blue">math yes</span></td><td><span class="badge purple">GATED_MODEL_FAMILY</span></td><td>Needs pi, mu and theta/alpha extraction from a Stata route.</td></tr>
+<tr><td>Stata churdle Cragg</td><td>official Stata churdle</td><td>route-specific Cragg/two-part candidates needed</td><td>manual continuous/interval PIT after route closure</td><td><span class="badge gray">separate class</span></td><td><span class="badge amber">route-specific</span></td><td><span class="badge purple">GATED_MODEL_FAMILY</span></td><td>Not count-hurdle Poisson/NB support.</td></tr>
+</tbody>
+</table>
+<h2>Interpretation</h2>
+<p>Generalized Poisson is ready only for the pinned unweighted st0279/gpoisson route. Hurdle count has adequate PIT/RQR theory but remains gated because qresid needs a Stata postestimation route with robust parameter extraction.</p>
+<script>
+const q=document.getElementById('search');q.addEventListener('input',()=>{const s=q.value.toLowerCase();document.querySelectorAll('#matrix tbody tr').forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(s)?'':'none'})});
+</script>
+</body>
+</html>
+
