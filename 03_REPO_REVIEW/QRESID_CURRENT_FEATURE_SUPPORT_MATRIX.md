@@ -26,6 +26,12 @@ or experimental in `qresid` but its detailed evidence lives in another active
 benchmark report. `GATED_VARIANT` means a specific variant remains unclaimed; it
 does not cancel a validated base route.
 
+Cross-report rule: the support matrix is the quick answer to "what can I use?";
+the GLM/link report now exposes `evidence_scope` and `evidence_artifact` so a
+viewer can see whether evidence was generated in that report (`THIS_REPORT`) or
+validated in a separate benchmark (`SEPARATE_BENCHMARK`). The two reports are
+complementary, not competing authorities.
+
 ## Matrix
 
 | feature_group | stata_command | link_function | weights | offset_exposure | dispersion_parameters | implemented_in_qresid | stata_tests | r_equivalent | r_benchmark_status | public_claim_status | validity_for_current_package | plain_language_summary | next_action |

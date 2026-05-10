@@ -78,6 +78,15 @@ were evidenced in separate benchmark reports. The GLM/link inventory now uses
 `GATED_VARIANT` for the specific variants that remain unclaimed. This prevents
 the report from hiding support that is visible in the live support matrix.
 
+## Evidence-Scope Addendum
+
+The generated GLM/link report now includes `evidence_scope` and
+`evidence_artifact` columns. Rows executed directly by the GLM/link report use
+`THIS_REPORT`; rows validated elsewhere use `SEPARATE_BENCHMARK` with the
+benchmark artifact name. The new `qresid/tests/check_support_report_consistency.R`
+script verifies the GLM/link report, support matrix, glossary and registry stay
+aligned.
+
 ## Post-Change Sync
 
 POST_CHANGE_SYNC_DONE

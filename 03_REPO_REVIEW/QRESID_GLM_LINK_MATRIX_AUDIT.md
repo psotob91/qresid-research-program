@@ -78,6 +78,10 @@ Families and commands covered:
   summarized in the live support matrix.
 - The HTML report is repository/certification evidence, not `qresid.pkg`
   install payload.
+- The generated inventory separates `status` from `evidence_scope` and
+  `evidence_artifact`, so `EXPERIMENTAL_VALIDATED_LOCAL` means evidence is in
+  this report, while `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK` points to a
+  named separate benchmark.
 
 ## Report Scope Harmonization
 
@@ -86,6 +90,11 @@ family-by-link evidence report. Routes validated in other active benchmarks are
 shown as `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK`, while specific unclaimed
 variants are shown as `GATED_VARIANT`. The live support matrix remains the quick
 answer for "what can I use?".
+
+The automatic consistency check `qresid/tests/check_support_report_consistency.R`
+must pass whenever support matrix, GLM/link report, glossary or registry status
+changes. It fails if grouped binomial, NB or `fweight` separate-benchmark routes
+regress to an absolute `GATED_FUTURE` status.
 
 ## Remaining Gaps
 

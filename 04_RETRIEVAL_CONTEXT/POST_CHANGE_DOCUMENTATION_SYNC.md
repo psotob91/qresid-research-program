@@ -62,6 +62,7 @@ If uncertain, add a short `sync_notes` entry in the registry rather than rewriti
 | cambio en familia/link GLM | GLM/link benchmark scripts, `qresid_glm_link_matrix.html`, support matrix, registry | GLM/link producer/checker, HTML report, support matrix | si |
 | cambio en soporte/status/claims | support glossary, feature matrix, terminology, registry, help/README/changelog | `QRESID_SUPPORT_STATUS_GLOSSARY.md`, `QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md`, HTML derivados | si |
 | cambio en evidencia separada de benchmark | support matrix, GLM/link report if adjacent, registry, glossary | scoped report notes and granular statuses | si |
+| cambio en matriz de soporte, GLM/link report o estado de evidencia | support matrix, GLM/link report, glossary, registry, `qresid/tests/check_support_report_consistency.R` | HTML regenerado y/o chequeo de consistencia | si |
 | cambio en retrieval | `AGENTS`, retrieval map, lifecycle rules, registry | retrieval map, registry | si |
 | cambio en MCP | execution protocols, readiness checklist, resolution log | readiness checklist, setup log | si |
 | cambio menor editorial | registry/lifecycle only if status changes | normalmente ninguno | no |
@@ -105,6 +106,7 @@ When a snapshot finding is resolved:
 - [ ] Hay coherencia cruzada entre matriz de soporte, GLM/link report, benchmarks separados y registry?
 - [ ] Alguna ruta validada en benchmark separado esta marcada como `GATED_FUTURE` absoluto en otro reporte?
 - [ ] Debe usarse `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK`, `GATED_VARIANT` o `REPORT_SCOPE_ONLY` para evitar ambiguedad?
+- [ ] SUPPORT_REPORT_CONSISTENCY_CHECK: se ejecuto `Rscript qresid/tests/check_support_report_consistency.R` o se justifico por que no aplica?
 - [ ] Cambio testing?
 - [ ] Cambio retrieval?
 - [ ] Cambio lifecycle status?
