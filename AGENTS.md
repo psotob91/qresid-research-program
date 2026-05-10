@@ -159,10 +159,11 @@ Despues de cualquier cambio que afecte soporte implementado, benchmarks, status 
 
 - actualizar `04_RETRIEVAL_CONTEXT/QRESID_SUPPORT_STATUS_GLOSSARY.md` y `04_RETRIEVAL_CONTEXT/qresid_support_status_glossary.html` si cambio la semantica de algun termino;
 - actualizar `03_REPO_REVIEW/QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md` y `03_REPO_REVIEW/qresid_current_feature_support_matrix.html` si cambio una funcionalidad, benchmark, status, semaforo de validez o claim;
+- actualizar o revisar `03_REPO_REVIEW/QRESID_HILBE_COUNT_MODEL_COVERAGE_PLAN.md` y `03_REPO_REVIEW/qresid_unified_extension_matrix.html` si cambio el alcance de modelos count, Hilbe-style, comandos oficiales Stata, rutas externas, tipos de validacion o decision de si un faltante bloquea la validez actual;
 - revisar `qresid/certification/reports/qresid_glm_link_matrix.html` y sus generadores si cambio soporte de familia, comando GLM, funcion de enlace, offset/exposure o evidencia familia x link, aunque el prompt no lo mencione explicitamente;
 - verificar coherencia cruzada entre la matriz de soporte viva, el reporte GLM/link, el registry y benchmarks separados; si una ruta esta validada fuera del reporte visible, usar un estado granular como `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK` o `GATED_VARIANT`, no un `GATED_FUTURE` absoluto que oculte soporte existente;
 - ejecutar o justificar el chequeo `qresid/tests/check_support_report_consistency.R` despues de cualquier cambio de soporte, benchmark, familia/link GLM, pesos o claim publico;
 - si no aplica, registrar explicitamente `SUPPORT_MATRIX_SYNC_NOT_REQUIRED` en el resumen de cierre;
 - no reescribir snapshots historicos para sincronizar esta matriz; el registry y los reportes vivos mandan.
 
-Toda respuesta final sobre soporte, release, prerelease, validez del paquete o funcionalidades disponibles debe incluir enlaces al glosario HTML, a la matriz HTML y, si la respuesta trata familias GLM o links, al reporte GLM/link para consulta rapida.
+Toda respuesta final sobre soporte, release, prerelease, validez del paquete o funcionalidades disponibles debe incluir enlaces al glosario HTML, a la matriz HTML y, si la respuesta trata familias GLM, links, count models o Hilbe-style extensions, al reporte GLM/link y/o a la matriz unificada de extensiones para consulta rapida.

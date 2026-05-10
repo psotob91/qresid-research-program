@@ -61,6 +61,7 @@ If uncertain, add a short `sync_notes` entry in the registry rather than rewriti
 | cambio en familia soportada | `09`, benchmark, testing, retrieval, extraction rules | `09`, tests, benchmark map, help | si |
 | cambio en familia/link GLM | GLM/link benchmark scripts, `qresid_glm_link_matrix.html`, support matrix, registry | GLM/link producer/checker, HTML report, support matrix | si |
 | cambio en soporte/status/claims | support glossary, feature matrix, terminology, registry, help/README/changelog | `QRESID_SUPPORT_STATUS_GLOSSARY.md`, `QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md`, HTML derivados | si |
+| cambio en cobertura count/Hilbe/external ado | support matrix, unified extension matrix, source rules, registry, glossary | `QRESID_HILBE_COUNT_MODEL_COVERAGE_PLAN.md`, `qresid_unified_extension_matrix.html`, glossary validation terms | si |
 | cambio en evidencia separada de benchmark | support matrix, GLM/link report if adjacent, registry, glossary | scoped report notes and granular statuses | si |
 | cambio en matriz de soporte, GLM/link report o estado de evidencia | support matrix, GLM/link report, glossary, registry, `qresid/tests/check_support_report_consistency.R` | HTML regenerado y/o chequeo de consistencia | si |
 | cambio en retrieval | `AGENTS`, retrieval map, lifecycle rules, registry | retrieval map, registry | si |
@@ -102,6 +103,9 @@ When a snapshot finding is resolved:
 - [ ] Cambio semaforo de validez o release?
 - [ ] Cambio benchmark?
 - [ ] Cambio equivalente R o benchmark R-Stata?
+- [ ] Cambio cobertura count/Hilbe, comando oficial Stata, ruta externa o tipo de validacion (`R_EXACT_BENCHMARK`, `STATA_INTERNAL_VALIDATION`, etc.)?
+- [ ] Debe actualizarse `QRESID_HILBE_COUNT_MODEL_COVERAGE_PLAN.md`?
+- [ ] Debe actualizarse `qresid_unified_extension_matrix.html`?
 - [ ] Debe actualizarse `qresid/certification/reports/qresid_glm_link_matrix.html` porque cambio familia/link GLM?
 - [ ] Hay coherencia cruzada entre matriz de soporte, GLM/link report, benchmarks separados y registry?
 - [ ] Alguna ruta validada en benchmark separado esta marcada como `GATED_FUTURE` absoluto en otro reporte?

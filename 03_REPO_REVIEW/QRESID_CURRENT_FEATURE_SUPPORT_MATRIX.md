@@ -8,7 +8,7 @@ Retrieval policy: load for support, release and feature-status questions
 
 Date: 2026-05-10
 
-Status source: inverse Gaussian and expanded fweight validation cycle, 2026-05-10. See `QRESID_IGAUSSIAN_FWEIGHT_EXTENSION_AUDIT.md` for logs and freeze evidence.
+Status source: inverse Gaussian and expanded fweight validation cycle plus Hilbe/count model coverage reconciliation, 2026-05-10. See `QRESID_IGAUSSIAN_FWEIGHT_EXTENSION_AUDIT.md` for logs/freeze evidence and `QRESID_HILBE_COUNT_MODEL_COVERAGE_PLAN.md` for count-model roadmap scope.
 
 POST_CHANGE_SYNC_DONE: feature support matrix created and registered as a live status reference.
 SUPPORT_MATRIX_SYNC_DONE: matrix and searchable HTML are synchronized with the support glossary.
@@ -32,6 +32,13 @@ viewer can see whether evidence was generated in that report (`THIS_REPORT`) or
 validated in a separate benchmark (`SEPARATE_BENCHMARK`). The two reports are
 complementary, not competing authorities.
 
+Count-model roadmap rule: the unified extension matrix
+`qresid_unified_extension_matrix.html` is the quick answer to "what exists in
+Stata/R or Hilbe-style count workflows, and what validation would be required
+next?" It does not expand support claims by itself. Missing official or
+external count-model routes remain `MISSING_NOT_BLOCKING` or
+`GATED_MODEL_FAMILY` unless a support row below says otherwise.
+
 ## Matrix
 
 | feature_group | stata_command | link_function | weights | offset_exposure | dispersion_parameters | implemented_in_qresid | stata_tests | r_equivalent | r_benchmark_status | public_claim_status | validity_for_current_package | plain_language_summary | next_action |
@@ -46,8 +53,11 @@ complementary, not competing authorities.
 | fweight expanded families | `regress`; `poisson`; Bernoulli; grouped binomial; `nbreg`; Gamma; inverse Gaussian | tested links by family | `fweight` | Poisson log-link as tested | family-specific fitted distribution | yes | PASS | expansion/R CDF checks for tested routes | PASS | claimed experimental | EXPERIMENTAL_VALIDATED_LOCAL | Direct fweight now works for tested listed routes; no final weight multiplier is applied. | Do not generalize to aweight/iweight/pweight or unsupported weighted routes. |
 | pweight direct Gaussian/Poisson/Bernoulli | direct `[pweight=]` fits, no `svy:` | model links above | `pweight` | not central | model-based fitted distribution | partial | PASS | no exact R base equivalent | STATA_ONLY_DIAGNOSTIC | claimed experimental diagnostic | DIAGNOSTIC_ONLY | Useful as Stata model-based diagnostic; not survey-exact support. | Human policy decision before public RC. |
 | Tweedie | not implemented | future GLM links | none | not claimed | power/dispersion and CDF approximation pending | no | N/A | `statmod`, `tweedie` | NOT_RUN | not_claimed | MISSING_NOT_BLOCKING | R has routes, but qresid does not claim Tweedie yet; package validity is not affected. | Open Tweedie CDF benchmark gate. |
-| ZIP/ZINB | not implemented | future count models | none | not claimed | zero-inflation + count CDF pending | no | N/A | `pscl`, `VGAM`, `glmmTMB`, `topmodels` | NOT_RUN | not_claimed | MISSING_NOT_BLOCKING | Missing by design; this is Phase 2 and does not invalidate current support. | Future Phase 2 research. |
-| Hurdle/truncated counts | not implemented | future count models | none | not claimed | truncated/hurdle CDF pending | no | N/A | `pscl`, `VGAM`, `topmodels` | NOT_RUN | not_claimed | MISSING_NOT_BLOCKING | Missing by design; not promised. | Future Phase 2 research. |
+| Official zero-inflated count | `zip`; `zinb` | count links by official estimator | none | not claimed | zero-inflation + count CDF pending | no | N/A | `pscl`, `VGAM`, `glmmTMB`, `topmodels` | NOT_RUN | not_claimed | MISSING_NOT_BLOCKING | Stata has official estimators, but qresid does not claim ZIP/ZINB yet. This absence does not invalidate the package. | Open zero-inflated CDF/extraction benchmark gate. |
+| Official truncated count | `tpoisson`; `tnbreg`; `ztp`; `ztnb` | count links by official estimator | none | not claimed | truncated support CDF pending | no | N/A | `VGAM`, `countreg`/custom CDF candidates | NOT_RUN | not_claimed | MISSING_NOT_BLOCKING | Official Stata routes exist; qresid has not validated truncated endpoints yet. | Design truncated-support datasets and CDF formulas. |
+| Official censored count | `cpoisson` | count route by official estimator | none | not claimed | censored interval CDF pending | no | N/A | no exact base R equivalent identified | NOT_RUN | not_claimed | MISSING_NOT_BLOCKING | Censored count support needs Stata-internal validation before any claim. | Define censored PIT interval semantics. |
+| Specialized official count | `popoisson`; `xpopoisson`; `dspoisson`; `expoisson`; `etpoisson`; `heckpoisson`; `ivpoisson`; `xtpoisson`; `xtnbreg`; `mepoisson`; `menbreg`; `fmm:` count routes | route-specific | none | not claimed | conditional/marginal/treatment/selection/mixture CDF unresolved | no | N/A | route-specific R candidates | NOT_RUN | not_claimed | MISSING_NOT_BLOCKING | These official Stata commands are not current qresid support. Their absence is not a validity problem. | Create separate residual-policy gates per estimator class. |
+| External Hilbe-style counts | generalized Poisson; NB-P; hurdle Poisson/NB; generalized Waring; Sichel/PIG; COM-Poisson; double Poisson; beta-binomial variants | route-specific | none | not claimed | external source, license, PMF/CDF and metadata pending | no | N/A | family-specific R packages where available | NOT_RUN | not_claimed | MISSING_NOT_BLOCKING | These are research candidates only; qresid should not copy or replace external estimators. | Pin source/version/license and open one research gate per family. |
 | Mixed/GLMM/GSEM | not implemented | future conditional/simulated residuals | none | not claimed | conditional or simulated PIT unresolved | no | N/A | `lme4`, `glmmTMB`, `DHARMa` | NOT_RUN | not_claimed | MISSING_NOT_BLOCKING | Complex dependent models are outside the current package claims. | Future simulation/conditional CDF design. |
 | aweight/iweight | tested as gated | not applicable | `aweight`, `iweight` | not claimed | semantics unresolved | no | gated | partial/no exact equivalent by route | NOT_RUN | gated | MISSING_NOT_BLOCKING | These weights are not supported; absence is not a validity problem. | Separate weights research if desired. |
 | svy | not implemented | survey framework | survey weights/design | not claimed | design-based diagnostics unresolved | no | N/A | R `survey` diagnostics possible | NOT_RUN | not_claimed | MISSING_NOT_BLOCKING | `svy:` is not supported and not promised. | Human design decision before any support. |
@@ -59,9 +69,10 @@ complementary, not competing authorities.
 - Current local extension prerelease validity: acceptable.
 - `BLOCKS_CURRENT_VALIDITY`: none.
 - `BLOCKS_PUBLIC_RC`: pweight public policy.
-- Missing Tweedie, ZIP/ZINB, hurdle, truncation, mixed models, `svy:`,
-  `aweight`, `iweight`, and unsupported weighted routes do not invalidate the
-  package because current public docs do not claim support for them.
+- Missing Tweedie, official zero-inflated/truncated/censored/specialized count
+  routes, external Hilbe-style count models, mixed models, `svy:`, `aweight`,
+  `iweight`, and unsupported weighted routes do not invalidate the package
+  because current public docs do not claim support for them.
 
 ## Footnote
 

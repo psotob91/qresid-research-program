@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qresid Unified Extension Matrix</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --ink: #202124;
+      --muted: #5f6368;
+      --line: #d7d7cf;
+      --head: #19324a;
+      --ready: #1f7a4d;
+      --exp: #8a5a00;
+      --gate: #8a1f2d;
+      --info: #255f85;
+      --card: #ffffff;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.45;
+    }
+    header {
+      background: var(--head);
+      color: white;
+      padding: 24px 28px;
+    }
+    main {
+      padding: 24px 28px 40px;
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+    h1, h2 {
+      margin: 0 0 12px;
+    }
+    h2 {
+      margin-top: 28px;
+      color: var(--head);
+    }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 16px;
+      margin: 18px 0;
+    }
+    .links a {
+      color: #0b5cab;
+      margin-right: 18px;
+    }
+    input[type="search"] {
+      width: min(760px, 100%);
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      font-size: 15px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      vertical-align: top;
+    }
+    th {
+      position: sticky;
+      top: 0;
+      background: #e9eef2;
+      text-align: left;
+      z-index: 1;
+    }
+    code {
+      background: #eef1f3;
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 2px 7px;
+      color: white;
+      font-weight: bold;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .ready { background: var(--ready); }
+    .exp { background: var(--exp); }
+    .gate { background: var(--gate); }
+    .info { background: var(--info); }
+    .muted { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>qresid Unified Extension Matrix</h1>
+    <div>Status source: Hilbe/count model coverage plan, support matrix, registry, 2026-05-10.</div>
+  </header>
+  <main>
+    <section class="panel">
+      <h2>How To Read This</h2>
+      <p>
+        This matrix is a roadmap, not a public support claim. It separates
+        official Stata commands, external/Hilbe-style models, current qresid
+        support, R benchmark feasibility, and whether missing support affects
+        the validity of the current package.
+      </p>
+      <p>
+        The support matrix remains the quick answer to "what can I use now".
+        This unified matrix answers "what exists, what is missing, and what
+        validation would be required next".
+      </p>
+      <div class="links">
+        <a href="qresid_current_feature_support_matrix.html">Support matrix</a>
+        <a href="../04_RETRIEVAL_CONTEXT/qresid_support_status_glossary.html">Glossary</a>
+        <a href="../qresid/certification/reports/qresid_glm_link_matrix.html">GLM/link report</a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <label for="filter"><strong>Search matrix</strong></label><br>
+      <input id="filter" type="search" placeholder="Search: zip, nbreg, generalized Poisson, R_EXACT_BENCHMARK, Hilbe, BLOCKS...">
+    </section>
+
+    <table id="matrix">
+      <thead>
+        <tr>
+          <th>model_family</th>
+          <th>stata_command</th>
+          <th>official_stata_command</th>
+          <th>external_source</th>
+          <th>qresid_support_status</th>
+          <th>r_benchmark_possible</th>
+          <th>validation_type</th>
+          <th>cdf_endpoint_status</th>
+          <th>implemented_in_qresid</th>
+          <th>blocks_current_validity</th>
+          <th>plain_language_summary</th>
+          <th>next_action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Poisson</td>
+          <td><code>poisson</code>; <code>glm, family(poisson)</code></td>
+          <td>yes</td>
+          <td>none</td>
+          <td><span class="badge ready">READY_FOR_EXTENSION_PRERELEASE</span></td>
+          <td>yes, exact</td>
+          <td>R_EXACT_BENCHMARK</td>
+          <td>closed</td>
+          <td>yes</td>
+          <td>no</td>
+          <td>Already usable in current prerelease scope.</td>
+          <td>Maintain regression tests and public docs.</td>
+        </tr>
+        <tr>
+          <td>Negative binomial NB2</td>
+          <td><code>nbreg, dispersion(mean)</code></td>
+          <td>yes</td>
+          <td>none</td>
+          <td><span class="badge exp">EXPERIMENTAL_VALIDATED_LOCAL</span></td>
+          <td>yes, exact for tested route</td>
+          <td>R_EXACT_BENCHMARK</td>
+          <td>closed for tested route</td>
+          <td>yes</td>
+          <td>no</td>
+          <td>NB mean-dispersion route works locally; other NB options remain gated.</td>
+          <td>Complete offset/exposure and NB variant gates before stable claim.</td>
+        </tr>
+        <tr>
+          <td>Negative binomial variants</td>
+          <td><code>nbreg, dispersion(constant)</code>; <code>gnbreg</code>; <code>glm, family(nbinomial #|ml)</code></td>
+          <td>yes</td>
+          <td>none</td>
+          <td><span class="badge gate">GATED_VARIANT</span></td>
+          <td>partial or route-specific</td>
+          <td>STATA_INTERNAL_VALIDATION; R_EXACT_BENCHMARK where fixed theta maps cleanly</td>
+          <td>pending</td>
+          <td>no</td>
+          <td>no</td>
+          <td>These are official Stata routes but not yet claimed by qresid.</td>
+          <td>Investigate alpha/theta/k, observation-specific alpha and CDF layers.</td>
+        </tr>
+        <tr>
+          <td>Grouped binomial</td>
+          <td><code>glm, family(binomial trials)</code></td>
+          <td>yes</td>
+          <td>none</td>
+          <td><span class="badge exp">EXPERIMENTAL_VALIDATED_LOCAL</span></td>
+          <td>yes, exact</td>
+          <td>R_EXACT_BENCHMARK</td>
+          <td>closed for tested links</td>
+          <td>yes</td>
+          <td>no</td>
+          <td>Grouped binomial GLM works locally; aliases and weights remain separate.</td>
+          <td>Finish <code>binreg</code> aliases and weighted grouped-binomial gate separately.</td>
+        </tr>
+        <tr>
+          <td>Zero-inflated count</td>
+          <td><code>zip</code>; <code>zinb</code></td>
+          <td>yes</td>
+          <td>none</td>
+          <td><span class="badge info">MISSING_NOT_BLOCKING</span></td>
+          <td>yes/approx depending on package and parametrization</td>
+          <td>R_EXACT_BENCHMARK or R_APPROX_BENCHMARK</td>
+          <td>pending mixture CDF</td>
+          <td>no</td>
+          <td>no</td>
+          <td>Stata has official estimators; qresid does not claim support yet.</td>
+          <td>Open zero-inflated CDF/extraction benchmark gate.</td>
+        </tr>
+        <tr>
+          <td>Truncated count</td>
+          <td><code>tpoisson</code>; <code>tnbreg</code>; <code>ztp</code>; <code>ztnb</code></td>
+          <td>yes</td>
+          <td>none</td>
+          <td><span class="badge info">MISSING_NOT_BLOCKING</span></td>
+          <td>route-specific</td>
+          <td>R_EXACT_BENCHMARK or STATA_INTERNAL_VALIDATION</td>
+          <td>pending truncated support CDF</td>
+          <td>no</td>
+          <td>no</td>
+          <td>Official Stata support exists, but qresid has not validated endpoints.</td>
+          <td>Design truncated-support datasets and CDF endpoint formulas.</td>
+        </tr>
+        <tr>
+          <td>Censored count</td>
+          <td><code>cpoisson</code></td>
+          <td>yes</td>
+          <td>none</td>
+          <td><span class="badge info">MISSING_NOT_BLOCKING</span></td>
+          <td>not exact in base R</td>
+          <td>STATA_INTERNAL_VALIDATION</td>
+          <td>pending censored interval CDF</td>
+          <td>no</td>
+          <td>no</td>
+          <td>Needs Stata-only validation unless an exact R route is identified.</td>
+          <td>Define censored PIT interval and endpoint audit.</td>
+        </tr>
+        <tr>
+          <td>Specialized official count</td>
+          <td><code>popoisson</code>; <code>xpopoisson</code>; <code>dspoisson</code>; <code>expoisson</code>; <code>etpoisson</code>; <code>heckpoisson</code>; <code>ivpoisson</code></td>
+          <td>yes</td>
+          <td>none</td>
+          <td><span class="badge info">FUTURE_PHASE</span></td>
+          <td>route-specific</td>
+          <td>STATA_INTERNAL_VALIDATION</td>
+          <td>pending</td>
+          <td>no</td>
+          <td>no</td>
+          <td>These involve population, treatment, selection or endogenous structures.</td>
+          <td>Create one extraction/CDF design per estimator class.</td>
+        </tr>
+        <tr>
+          <td>Panel, multilevel and finite mixture count</td>
+          <td><code>xtpoisson</code>; <code>xtnbreg</code>; <code>mepoisson</code>; <code>menbreg</code>; <code>fmm: poisson</code>; <code>fmm: nbreg</code>; <code>fmm: tpoisson</code></td>
+          <td>yes</td>
+          <td>none</td>
+          <td><span class="badge info">FUTURE_PHASE</span></td>
+          <td>route-specific</td>
+          <td>STATA_INTERNAL_VALIDATION</td>
+          <td>conditional/marginal CDF unresolved</td>
+          <td>no</td>
+          <td>no</td>
+          <td>Not a current validity issue; needs a residual-policy decision.</td>
+          <td>Decide conditional vs marginal residual target before code.</td>
+        </tr>
+        <tr>
+          <td>Generalized Poisson</td>
+          <td><code>gnpoisson</code> candidate, not official</td>
+          <td>no</td>
+          <td>SSC/Stata Journal source must be pinned; do not confuse with local <code>gtools/gpoisson.ado</code></td>
+          <td><span class="badge gate">GATED_MODEL_FAMILY</span></td>
+          <td>possible with VGAM after parameter mapping</td>
+          <td>STATA_EXTERNAL_ADO_VALIDATION; possible R_EXACT_BENCHMARK</td>
+          <td>pending PMF/CDF</td>
+          <td>no</td>
+          <td>no</td>
+          <td>Research candidate only; not part of current support.</td>
+          <td>Pin source/version/license and map PMF/CDF before implementation.</td>
+        </tr>
+        <tr>
+          <td>Other Hilbe-style external counts</td>
+          <td>Hurdle Poisson/NB; generalized Waring; Sichel/PIG; COM-Poisson; double Poisson; beta-binomial/count-binomial variants</td>
+          <td>no official Stata route confirmed</td>
+          <td>external research required</td>
+          <td><span class="badge gate">GATED_MODEL_FAMILY</span></td>
+          <td>package-specific</td>
+          <td>NO_OFFICIAL_STATA_COMMAND; STATA_EXTERNAL_ADO_VALIDATION if source pinned</td>
+          <td>pending</td>
+          <td>no</td>
+          <td>no</td>
+          <td>These do not invalidate qresid because they are not claimed.</td>
+          <td>Create one research gate per family before touching <code>qresid.ado</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <section class="panel">
+      <h2>Validity Summary</h2>
+      <p>
+        No missing Hilbe/count model listed here is a
+        <code>BLOCKS_CURRENT_VALIDITY</code> item. A route becomes blocking only
+        if public docs claim support or a critical benchmark for a claimed
+        route fails. Public RC must still review policy-sensitive experimental
+        routes such as direct <code>[pweight=]</code>.
+      </p>
+    </section>
+  </main>
+  <script>
+    const filter = document.getElementById('filter');
+    const rows = Array.from(document.querySelectorAll('#matrix tbody tr'));
+    filter.addEventListener('input', () => {
+      const q = filter.value.toLowerCase();
+      rows.forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
