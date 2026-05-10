@@ -199,6 +199,12 @@ Detener la tarea si:
   `04_RETRIEVAL_CONTEXT/STATA_HELP_STYLE_MASTER.md`; si se usa MarkDoc,
   GitHub tooling o Quarto, revisar
   `04_RETRIEVAL_CONTEXT/QRESID_DOCUMENTATION_TOOLING_MASTER.md`.
+- Antes de cualquier release publico o envio SSC, separar explicitamente:
+  repositorio GitHub completo (`README`, docs, tests, examples, benchmarks,
+  `qresid.pkg`, `stata.toc`) versus payload SSC minimo derivado
+  automaticamente con `qresid/scripts/build_ssc_submission.ps1`.
+  No armar el ZIP SSC a mano ni mezclar docs internas, logs, benchmarks o
+  fuentes externas en el adjunto SSC.
 
 ## 13. Matriz viva de soporte y glosario
 

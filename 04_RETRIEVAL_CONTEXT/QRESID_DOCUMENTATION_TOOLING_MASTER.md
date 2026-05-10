@@ -29,6 +29,14 @@ This master defines how external documentation tools can support `qresid` withou
 - If MarkDoc or GitHub commands are installed locally, record version/source in `SOURCE_ACCESS_LOG.md`.
 - Do not use third-party tooling to broaden support claims or bypass benchmark gates.
 - `ggeffects` may guide site structure, but qresid pages must use qresid data, qresid output, and qresid support labels.
+- Haghish's `github` command is supported as a user installation pathway for
+  the GitHub repository, not as a runtime dependency of `qresid`.
+- Keep GitHub install metadata (`qresid.pkg`, `stata.toc`) in the repository.
+  Do not include those files in the SSC email attachment unless SSC explicitly
+  requests them.
+- Build SSC submission artifacts only through
+  `qresid/scripts/build_ssc_submission.ps1`, which derives the minimal SSC
+  payload from the complete repository.
 
 ## Quarto Website Policy
 

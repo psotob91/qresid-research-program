@@ -181,6 +181,17 @@ Checklist mínimo:
 - [ ] `qresid.sthlp` abre sin errores.
 - [ ] `qresid.pkg` lista solo archivos necesarios.
 - [ ] `stata.toc` actualizado.
+- [ ] El repositorio GitHub conserva README, docs, examples, tests,
+      benchmarks, `qresid.pkg`, `stata.toc`, changelog y evidencia pública
+      limpia para instalación/documentación.
+- [ ] El envío SSC se deriva automáticamente desde el repositorio completo con
+      `qresid/scripts/build_ssc_submission.ps1`; no se arma a mano.
+- [ ] El ZIP SSC contiene solo `qresid.ado`, `qresid.sthlp`,
+      `qresid_ssc_cover_note.txt` y, si existe y se aprueba, un ejemplo corto
+      sin dependencias externas.
+- [ ] README, docs Markdown, tests, certification, benchmarks, assets,
+      logs, research audits, `qresid.pkg` y `stata.toc` no entran en el ZIP SSC
+      salvo solicitud explícita de SSC/RePEc.
 
 ### Help style source
 
@@ -237,4 +248,7 @@ Checklist adicional:
 - [ ] `.sthlp` coincide con la sintaxis real.
 - [ ] README no contradice `.sthlp`.
 - [ ] `qresid.pkg` instala exactamente lo necesario.
+- [ ] `qresid/scripts/build_ssc_submission.ps1` generó y validó el staging SSC.
+- [ ] `qresid/release/SSC_SUBMISSION_MANIFEST.md` coincide con el artefacto
+      generado y con la política GitHub/SSC vigente.
 - [ ] `certification/master.do` corre desde cero.

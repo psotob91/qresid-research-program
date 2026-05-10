@@ -80,6 +80,24 @@ Rutas experimentales locales actualmente permitidas por evidencia:
 
 `ESTÁNDAR OFICIAL`: el paquete final no debe contener prompts, notas de agentes, scratch, logs gigantes ni claims sin test.
 
+### 3.1 Separación GitHub/SSC
+
+`ESTÁNDAR OFICIAL`: el repositorio GitHub es la distribución pública completa:
+README, manual Markdown, changelog, examples, tests, benchmarks,
+certification, `qresid.pkg`, `stata.toc` y evidencia de validación pueden vivir
+allí si están limpios y sincronizados.
+
+`ESTÁNDAR OFICIAL`: el envío SSC/RePEc es un subconjunto mínimo derivado
+automáticamente desde el repositorio completo. Debe construirse con
+`qresid/scripts/build_ssc_submission.ps1`; no se arma a mano.
+
+`ESTÁNDAR OFICIAL`: el staging SSC final solo puede contener `qresid.ado`,
+`qresid.sthlp`, `qresid_ssc_cover_note.txt` y, si existe y está aprobado, un
+ejemplo público corto sin dependencias externas. README, docs, tests,
+certification, benchmarks, imágenes, logs, audits, fuentes externas,
+`qresid.pkg` y `stata.toc` quedan fuera del ZIP SSC salvo solicitud explícita
+de SSC/RePEc.
+
 ---
 
 ## 4. Arquitectura de comando

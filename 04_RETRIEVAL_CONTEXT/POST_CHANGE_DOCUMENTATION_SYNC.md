@@ -63,6 +63,7 @@ If uncertain, add a short `sync_notes` entry in the registry rather than rewriti
 | cambio en soporte/status/claims | canonical support rows, support glossary, feature matrix, terminology, registry, help/README/changelog | `QRESID_SUPPORT_REPORT_CANONICAL_ROWS.md`, `QRESID_SUPPORT_STATUS_GLOSSARY.md`, `QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md`, HTML derivados | si |
 | cambio o propuesta de residuo ajustado/studentizado/standardized adicional | standardized residual gate, API architecture, help, tests, benchmark rules, R package source audit | `QRESID_STANDARDIZED_QUANTILE_RESIDUALS_GATE.md`, `09`, `10`, help/changelog only after gate | si |
 | cambio en `.sthlp`, MarkDoc, GitHub tooling o Quarto docs | `QRESID_STHLP_FORMAT_MASTER.md`, `QRESID_STHLP_CONTENT_MASTER.md`, help style master, documentation tooling master, package style rules, registry | `QRESID_STHLP_FORMAT_MASTER.md`, `QRESID_STHLP_CONTENT_MASTER.md`, `STATA_HELP_STYLE_MASTER.md`, `QRESID_DOCUMENTATION_TOOLING_MASTER.md`, website blueprint/regenerable map | si |
+| cambio en packaging/release GitHub/SSC | package style rules, `09`, documentation tooling master, registry, README/help/changelog si hay enlaces publicos | SSC manifest, release builder, package style rules, `09`, post-change sync notes | si |
 | cambio en cobertura count/Hilbe/external ado | canonical support rows, support matrix, unified extension matrix, source rules, registry, glossary | `QRESID_SUPPORT_REPORT_CANONICAL_ROWS.md`, `QRESID_HILBE_COUNT_MODEL_COVERAGE_PLAN.md`, `qresid_unified_extension_matrix.html`, glossary validation terms | si |
 | cambio en evidencia separada de benchmark | support matrix, GLM/link report if adjacent, registry, glossary | scoped report notes and granular statuses | si |
 | cambio en matriz de soporte, GLM/link report o estado de evidencia | canonical support rows, support matrix, unified matrix, GLM/link report, glossary, registry, `qresid/tests/check_support_report_consistency.R` | HTML regenerado y/o chequeo de consistencia | si |
@@ -109,6 +110,7 @@ When a snapshot finding is resolved:
 - [ ] Cambio residuo ajustado/studentizado/standardized adicional o su gate?
 - [ ] Cambio help estilo Stata, MarkDoc/GitHub tooling o Quarto website?
 - [ ] Si cambio `qresid.sthlp`, se cargaron y obedecieron `QRESID_STHLP_FORMAT_MASTER.md` y `QRESID_STHLP_CONTENT_MASTER.md` como autoridad superior, dejando `STATA_HELP_STYLE_MASTER.md` como apoyo subordinado?
+- [ ] GITHUB_RELEASE_AND_SSC_PAYLOAD_SYNC: si cambio release, packaging, help links o instalacion GitHub/SSC, se actualizo el manifiesto SSC, el builder automatico, las reglas normativas y se verifico que el ZIP SSC no incluya README/docs/tests/logs/assets/audits/pkg/toc?
 - [ ] Cambio cobertura count/Hilbe, comando oficial Stata, ruta externa o tipo de validacion (`R_EXACT_BENCHMARK`, `STATA_INTERNAL_VALIDATION`, etc.)?
 - [ ] Debe actualizarse `QRESID_HILBE_COUNT_MODEL_COVERAGE_PLAN.md`?
 - [ ] CANONICAL_SUPPORT_ROW_SYNC: si se agrego/dividio una familia, comando, gate, peso o ruta RQR/PIT, se actualizo `QRESID_SUPPORT_REPORT_CANONICAL_ROWS.md` antes de regenerar las vistas?
