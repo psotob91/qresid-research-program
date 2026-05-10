@@ -16,7 +16,7 @@ POST_CHANGE_SYNC_DONE: extension hardening reports, public help/examples and reg
 
 Readiness decision: `PROMOTE_TO_EXTENSION_PRERELEASE_READY`.
 
-The integrated extension branch now satisfies the local extension prerelease gate. The previous prerelease blocker was closed by adding executable help and repo examples for the experimental direct `fweight` and `[pweight=]` routes, expanding the help methods section with PIT/Dunn-Smyth formulas and references, and re-running the local Stata/R validation suite.
+The integrated extension branch satisfies the local extension prerelease gate. The latest count-extension pass additionally promotes NB2 `nbreg, dispersion(mean)` with no-offset, `offset()`, and `exposure()`, plus grouped-binomial `binreg, n()` aliases `or`, `rr`, and `rd`, to local extension prerelease readiness.
 
 This remains an extension prerelease, not a public RC. Direct `[pweight=]` remains model-based diagnostic support and not `svy:` support. Public RC still requires a human release-policy decision for pweight claims.
 
@@ -47,6 +47,7 @@ Claims aligned with evidence:
 - Direct `[pweight=]` is explicitly experimental, not `svy:`, and remains `STATA_ONLY_DIAGNOSTIC`.
 - `qresid.pkg` remains minimal: `qresid.ado` and `qresid.sthlp` only.
 - `qresid.sthlp` now includes PIT, CDF endpoint, Dunn-Smyth RQR formulas, and references.
+- NB2 offset/exposure and grouped-binomial/binreg support statuses are synchronized across the support matrix, GLM/link report, unified extension matrix, and registry.
 
 No public-package traces found:
 

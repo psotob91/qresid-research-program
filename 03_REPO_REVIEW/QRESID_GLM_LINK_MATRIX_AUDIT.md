@@ -45,8 +45,8 @@ Families and commands covered:
 | Bernoulli individual | `logit`, `logistic`, `glm binomial` logit/probit/cloglog/log/identity, `binreg` logit/log/identity | `SUPPORTED_TESTED` |
 | Gamma | `glm gamma` log/identity/inverse | `SUPPORTED_TESTED` |
 | inverse Gaussian | `glm igaussian` `power -2`/log/identity/`power -1` | `EXPERIMENTAL_VALIDATED_LOCAL` |
-| grouped binomial | validated in grouped-binomial benchmarks, not executed in this family-by-link matrix | `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK`; `GATED_VARIANT` for `binreg` grouped aliases and grouped-binomial weights |
-| NB | validated in NB benchmarks for `nbreg, dispersion(mean)`, not executed in this family-by-link matrix | `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK`; `GATED_VARIANT` for NB variants, offset/exposure, weights, `gnbreg`, and stable `glm nbinomial` |
+| grouped binomial | validated in grouped-binomial benchmarks, not executed in this family-by-link matrix | `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK`; `READY_FOR_EXTENSION_PRERELEASE` in the support matrix for `glm, family(binomial trials)` and `binreg, n()` aliases `or`/`rr`/`rd`; `binreg hr` is `STATA_INTERNAL_VALIDATION`; grouped-binomial untested weights remain `GATED_VARIANT` |
+| NB | validated in NB benchmarks for `nbreg, dispersion(mean)`, not executed in this family-by-link matrix | `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK`; `READY_FOR_EXTENSION_PRERELEASE` in the support matrix for NB2 with tested `offset()`/`exposure()`; `dispersion(constant)`, `gnbreg`, `glm nbinomial`, and untested variants remain `GATED_VARIANT` |
 | weights | separate benchmark evidence | `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK` for tested direct `fweight`; `GATED_VARIANT` for unclaimed weight types/routes |
 | quasi, ZIP/ZINB, hurdle, truncados, mixed/GLMM/GSEM | inventoried only | `DEFERRED_PHASE2` or `EVIDENCIA_PENDIENTE` |
 
@@ -63,6 +63,8 @@ Families and commands covered:
 | separate grouped-binomial R check | `qresid/tests/logs/10_May_2026_160036_grouped_binomial_benchmark_r.log`: `QRESID_GROUPED_BINOMIAL_R_STATUS PASS` |
 | separate NB R check | `qresid/tests/logs/10_May_2026_160037_nb_benchmark_r.log`: `QRESID_NB_R_STATUS PASS` |
 | separate fweight extended R check | `qresid/tests/logs/10_May_2026_160039_fweight_extended_benchmark_r.log`: `QRESID_FWEIGHT_EXTENDED_BENCHMARK_R_STATUS PASS` |
+| latest grouped-binomial expansion check | `qresid/tests/logs/10_May_2026_173033_grouped_binomial_benchmark_stata.log` and matching R checker: `PASS` for GLM and `binreg, n()` aliases |
+| latest NB offset/exposure check | `qresid/tests/logs/10_May_2026_173033_nb_benchmark_stata.log` and matching R checker: `PASS` for no offset, `offset()`, and `exposure()` |
 
 ## Scope Guardrails
 

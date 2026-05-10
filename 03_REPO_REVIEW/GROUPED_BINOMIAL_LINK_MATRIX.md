@@ -14,11 +14,11 @@ POST_CHANGE_SYNC_DONE: grouped binomial link matrix registered in `04_RETRIEVAL_
 
 ## Decision Summary
 
-`GROUPED_BINOMIAL_IMPLEMENTATION_ALLOWED: no`
+`GROUPED_BINOMIAL_IMPLEMENTATION_ALLOWED: yes`, limited to tested GLM links and `binreg, n()` aliases.
 
 `GROUPED_BINOMIAL_BENCHMARK_ALLOWED: yes`
 
-The benchmark candidate is `glm, family(binomial trials)` with exact binomial CDF endpoints. `binreg` can be evaluated as an alias after the `glm` benchmark layers pass.
+The benchmark candidate `glm, family(binomial trials)` passed with exact binomial CDF endpoints. `binreg` aliases `or`, `rr`, and `rd` also passed as aliases after the GLM layers. `binreg hr` has Stata-internal validation only.
 
 ## Link Matrix
 
@@ -33,10 +33,10 @@ The benchmark candidate is `glm, family(binomial trials)` with exact binomial CD
 | `glm` | `glm y x, family(binomial nvar) link(logc)` | log-complement | custom R link required | `e(m)=nvar` | `NEEDS_RESEARCH` | yes, after custom-link decision |
 | `glm` | `glm y x, family(binomial nvar) link(loglog)` | loglog | custom or non-base R equivalent required | `e(m)=nvar` | `NEEDS_RESEARCH` | yes, after equivalence decision |
 | `glm` | `glm y x, family(binomial nvar) link(power #)` | power | custom R link required | `e(m)=nvar` | `NEEDS_RESEARCH` | yes, after equivalence decision |
-| `binreg` | `binreg y x, n(nvar) or` | logit | same as R binomial logit | `e(m)=nvar` | `BENCHMARK_CANDIDATE` | yes, after `glm` logit layers pass |
-| `binreg` | `binreg y x, n(nvar) rr` | log | same as R binomial log | `e(m)=nvar` | `BENCHMARK_CANDIDATE` | yes, after `glm` log layers pass |
-| `binreg` | `binreg y x, n(nvar) rd` | identity | same as R binomial identity | `e(m)=nvar` | `BENCHMARK_CANDIDATE` | yes, after `glm` identity layers pass |
-| `binreg` | `binreg y x, n(nvar) hr` | log-complement | custom R link required | `e(m)=nvar` | `NEEDS_RESEARCH` | yes, but not initial extension |
+| `binreg` | `binreg y x, n(nvar) or` | logit | same as R binomial logit | `e(m)=nvar` | `TESTED_READY` | yes |
+| `binreg` | `binreg y x, n(nvar) rr` | log | same as R binomial log | `e(m)=nvar` | `TESTED_READY` | yes |
+| `binreg` | `binreg y x, n(nvar) rd` | identity | same as R binomial identity | `e(m)=nvar` | `TESTED_READY` | yes |
+| `binreg` | `binreg y x, n(nvar) hr` | log-complement | custom R link required | `e(m)=nvar` | `STATA_INTERNAL_VALIDATION` | yes, but not an R-exact support claim |
 
 ## Dataset Matrix
 
@@ -83,8 +83,8 @@ If the two R encodings disagree beyond tolerance, the combination becomes `NEEDS
 
 Before `qresid.ado` changes:
 
-- `GROUPED_BINOMIAL_IMPLEMENTATION_ALLOWED` must be changed by a later report from `no` to `yes`;
+- `GROUPED_BINOMIAL_IMPLEMENTATION_ALLOWED` is `yes` only for tested GLM and `binreg` alias routes;
 - all five base candidate links must be benchmarked or explicitly narrowed;
 - the implementation must define how `p_i` is extracted from Stata predictions;
-- `binreg` must remain an alias/dispatcher candidate, not an independent formula path;
-- `binreg hr`, custom links, weights, and offset-like variants must stay outside the initial implementation.
+- `binreg` remains an alias/dispatcher path, not an independent formula path;
+- `binreg hr` remains Stata-internal, while custom links, weights, and offset-like variants stay outside the initial implementation.

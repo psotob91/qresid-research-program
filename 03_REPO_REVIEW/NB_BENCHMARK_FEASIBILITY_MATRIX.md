@@ -18,19 +18,19 @@ POST_CHANGE_SYNC_DONE: registered in `DOCUMENT_STATUS_REGISTRY.md`.
 
 | item | result |
 |---|---|
-| `NB_IMPLEMENTATION_ALLOWED` | `no` |
+| `NB_IMPLEMENTATION_ALLOWED` | `yes`, for tested `nbreg, dispersion(mean)` routes only |
 | `NB_BENCHMARK_ALLOWED` | `yes` |
 | first candidate | `nbreg, dispersion(mean)` unweighted log-link |
 | first R reference | `MASS::glm.nb()` plus explicit `pnbinom(size = theta, mu = mu)` endpoints |
-| qresid code changes allowed now | `no` |
+| qresid code changes allowed now | `yes`, only inside tested `nbreg, dispersion(mean)` scope |
 
 ## 2. Combination Matrix
 
 | Stata estimator | dispersion/link | offset/exposure | weights | R equivalent | parameter extraction | CDF source | status | notes |
 |---|---|---|---|---|---|---|---|---|
 | `nbreg` | `dispersion(mean)`, default log mean | no | none | `MASS::glm.nb(..., link=log)` candidate | `e(alpha)`, `/lnalpha`, `theta=1/e(alpha)` | R `pnbinom(size=theta, mu=mu)` | `TESTABLE_NOW` | First benchmark route; no implementation until three datasets pass. |
-| `nbreg` | `dispersion(mean)`, default log mean | offset | none | `MASS::glm.nb(... + offset(offset))` candidate | `e(alpha)`, `predict, n`, `predict, xb` | R `pnbinom(size=theta, mu=mu)` | `NEEDS_RESEARCH` | Must verify Stata `predict, n` and R `mu` include offset identically. |
-| `nbreg` | `dispersion(mean)`, default log mean | exposure | none | R `offset(log(exposure))` candidate | `e(alpha)`, `predict, n`, exposure handling | R `pnbinom(size=theta, mu=mu)` | `NEEDS_RESEARCH` | Requires strict exposure > 0 validation and equivalence logs. |
+| `nbreg` | `dispersion(mean)`, default log mean | offset | none | `MASS::glm.nb(... + offset(offset))` candidate | `e(alpha)`, `predict, n`, `predict, xb` | R `pnbinom(size=theta, mu=mu)` | `TESTED_READY` | Stata `predict, n` and R `mu` include offset identically in current benchmark. |
+| `nbreg` | `dispersion(mean)`, default log mean | exposure | none | R `offset(log(exposure))` candidate | `e(alpha)`, `predict, n`, exposure handling | R `pnbinom(size=theta, mu=mu)` | `TESTED_READY` | Exposure > 0 validation and equivalence logs passed in current benchmark. |
 | `nbreg` | `dispersion(mean)` | any | fweight | possible expanded-data check | `e(wtype)`, `e(wexp)`, `e(alpha)` | unresolved | `NEEDS_RESEARCH` | Do not benchmark residuals until weight semantics are closed. |
 | `nbreg` | `dispersion(mean)` | any | aweight/iweight/pweight | no general equivalent established | `e(wtype)`, `e(wexp)`, `e(alpha)` | unresolved | `NO_R_EQUIVALENT` | Treat as blocked unless a family-specific interpretation is approved. |
 | `nbreg` | `dispersion(constant)` | no | none | not established | `e(delta)`, `/lndelta` | unresolved | `NEEDS_RESEARCH` | Stata variance/dispersion form is not the same as NB2 mapping. |
@@ -92,4 +92,4 @@ Implementation may be proposed only after:
 
 Until then:
 
-`NB_IMPLEMENTATION_ALLOWED: no`
+`NB_IMPLEMENTATION_ALLOWED: yes`, limited to tested `nbreg, dispersion(mean)` routes; all other NB variants remain gated.

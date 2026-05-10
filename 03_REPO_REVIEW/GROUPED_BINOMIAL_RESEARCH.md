@@ -18,19 +18,20 @@ POST_CHANGE_SYNC_DONE: grouped binomial research reports registered in `04_RETRI
 
 `GROUPED_BINOMIAL_BENCHMARK_ALLOWED: yes`
 
-Grouped binomial support is now allowed for the narrow integrated experimental scope after Stata/R benchmark evidence passed for `glm, family(binomial trials)` across three datasets and five links.
+Grouped binomial support is now allowed for the narrow integrated experimental scope after Stata/R benchmark evidence passed for `glm, family(binomial trials)` across three datasets and five links, and for `binreg, n()` aliases `or`, `rr`, and `rd`.
 
 Allowed implementation scope:
 
 - `glm, family(binomial trials)` / `glm, family(binomial #)`;
 - links `logit`, `probit`, `cloglog`, `log`, `identity`;
+- `binreg, n(trials)` aliases `or`, `rr`, and `rd`;
+- `binreg, n(trials) hr` as Stata-internal endpoint/PIT validation only;
 - unweighted grouped binomial only.
 
 Still blocked:
 
-- `binreg` aliases until a separate alias benchmark confirms identical layers;
 - grouped binomial with weights;
-- `binreg hr` / log-complement links.
+- `binreg hr` as an R-exact benchmark claim.
 
 ## Current Package Gate
 
@@ -126,14 +127,14 @@ Before any implementation:
 
 ## Implementation Boundary
 
-Allowed for benchmark only:
+Ready for local extension prerelease:
 
 - `glm, family(binomial nvar/#)` with links `logit`, `probit`, `cloglog`, `log`, `identity`;
 - `binreg or`, `binreg rr`, `binreg rd` after confirming they match the corresponding `glm` layers.
 
 Blocked until separate research:
 
-- `binreg hr`;
+- `binreg hr` as an R-exact benchmark claim;
 - grouped binomial with Stata weights;
 - grouped binomial with offset/exposure-like adjustments;
 - R-only links such as `cauchit`;
@@ -163,4 +164,4 @@ Grouped binomial is not cleared by model convergence alone. Benchmarks must comp
 
 ## Recommendation
 
-Proceed to benchmark design for `glm, family(binomial nvar/#)` first. Treat `binreg` as a dispatcher/alias candidate only after the `glm` layers pass. Keep implementation blocked until the benchmark matrix is green.
+Proceed next only with grouped-binomial weights or other unclaimed variants. The base `glm, family(binomial nvar/#)` route and `binreg or`/`rr`/`rd` aliases are ready for local extension prerelease; `binreg hr` remains Stata-internal.

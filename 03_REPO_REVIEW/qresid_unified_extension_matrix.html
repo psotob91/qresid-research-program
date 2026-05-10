@@ -166,14 +166,14 @@
           <td><code>nbreg, dispersion(mean)</code></td>
           <td>yes</td>
           <td>none</td>
-          <td><span class="badge exp">EXPERIMENTAL_VALIDATED_LOCAL</span></td>
+          <td><span class="badge ready">READY_FOR_EXTENSION_PRERELEASE</span></td>
           <td>yes, exact for tested route</td>
           <td>R_EXACT_BENCHMARK</td>
           <td>closed for tested route</td>
           <td>yes</td>
           <td>no</td>
-          <td>NB mean-dispersion route works locally; other NB options remain gated.</td>
-          <td>Complete offset/exposure and NB variant gates before stable claim.</td>
+          <td>NB mean-dispersion route works locally, including tested offset() and exposure(); other NB options remain gated.</td>
+          <td>Keep dispersion(constant), gnbreg, glm nbinomial, and other NB variants behind separate gates.</td>
         </tr>
         <tr>
           <td>Negative binomial variants</td>
@@ -191,17 +191,17 @@
         </tr>
         <tr>
           <td>Grouped binomial</td>
-          <td><code>glm, family(binomial trials)</code></td>
+          <td><code>glm, family(binomial trials)</code>; <code>binreg, n(trials)</code> aliases <code>or</code>/<code>rr</code>/<code>rd</code>; <code>binreg hr</code> Stata-internal</td>
           <td>yes</td>
           <td>none</td>
-          <td><span class="badge exp">EXPERIMENTAL_VALIDATED_LOCAL</span></td>
+          <td><span class="badge ready">READY_FOR_EXTENSION_PRERELEASE</span></td>
           <td>yes, exact</td>
           <td>R_EXACT_BENCHMARK</td>
           <td>closed for tested links</td>
           <td>yes</td>
           <td>no</td>
-          <td>Grouped binomial GLM works locally; aliases and weights remain separate.</td>
-          <td>Finish <code>binreg</code> aliases and weighted grouped-binomial gate separately.</td>
+          <td>Grouped binomial GLM and main binreg aliases work locally; hr has Stata-internal validation; weights remain separate.</td>
+          <td>Keep weighted grouped-binomial gate separate; do not generalize to untested weighted variants.</td>
         </tr>
         <tr>
           <td>Zero-inflated count</td>

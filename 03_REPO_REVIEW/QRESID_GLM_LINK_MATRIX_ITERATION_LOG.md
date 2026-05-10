@@ -87,6 +87,23 @@ benchmark artifact name. The new `qresid/tests/check_support_report_consistency.
 script verifies the GLM/link report, support matrix, glossary and registry stay
 aligned.
 
+## Count-Extension Addendum
+
+NB2 and grouped-binomial routes were expanded after the status harmonization
+cycle:
+
+- `nbreg, dispersion(mean)` now has separate no-offset, `offset()`, and
+  `exposure()` benchmark datasets. The R checker confirms CDF endpoints, PIT
+  `U`, and final qres match `pnbinom(size=theta, mu=mu)` from Stata fitted
+  means.
+- `binreg, n()` grouped-binomial aliases `or`, `rr`, and `rd` are benchmarked
+  against equivalent R grouped-binomial links. `binreg, n() hr` is retained as
+  `STATA_INTERNAL_VALIDATION` because no exact standard base-R link is claimed.
+- The live support matrix promotes those base routes to
+  `READY_FOR_EXTENSION_PRERELEASE`; the GLM/link report still marks them as
+  `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK` because their evidence lives in
+  dedicated NB and grouped-binomial benchmark scripts.
+
 ## Post-Change Sync
 
 POST_CHANGE_SYNC_DONE

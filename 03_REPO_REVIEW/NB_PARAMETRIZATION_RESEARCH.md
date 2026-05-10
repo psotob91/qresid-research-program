@@ -28,12 +28,13 @@ The allowed benchmark candidate is:
 nbreg y x..., dispersion(mean)
 ```
 
-with default log-link mean model and no weights.
+with default log-link mean model; the no-weight route now includes tested no-offset, `offset()`, and `exposure()` cases. Direct `fweight` is validated in the separate fweight benchmark, not in this NB parametrization gate.
 
 Allowed implementation scope:
 
 - `nbreg y x..., dispersion(mean)`;
-- unweighted;
+- unweighted plus tested direct `fweight` in separate weight benchmark;
+- no-offset, `offset()`, and `exposure()` cases;
 - default log-link mean model;
 - CDF endpoints using `theta = 1/e(alpha)` and `p = theta/(theta+mu)`.
 
@@ -41,8 +42,7 @@ Still blocked:
 
 - `dispersion(constant)`;
 - `gnbreg`;
-- NB weights;
-- NB offset/exposure until a dedicated benchmark closes;
+- NB weights beyond the tested direct `fweight` route;
 - non-log links;
 - `glm, family(nbinomial ml)` as a stable implementation route.
 
@@ -163,8 +163,8 @@ Decision:
 |---|---|---|
 | `nbreg, dispersion(constant)` | blocked | R equivalent and CDF parameterization are not closed. |
 | `gnbreg, lnalpha(varlist)` | blocked | Observation-varying alpha requires separate CDF endpoint rules and R benchmark strategy. |
-| NB weights | blocked | Weight semantics are not closed by family x weight type. |
-| NB with offset/exposure | blocked for implementation | Supported by Stata, but requires dedicated benchmark because `predict, n` includes exposure/offset and R must match exactly. |
+| NB weights beyond tested direct `fweight` | blocked | Weight semantics are not closed by family x weight type. |
+| NB with offset/exposure | allowed for `nbreg, dispersion(mean)` | Dedicated benchmark confirms `predict, n` includes exposure/offset and R endpoints match from the fitted mean. |
 | NB non-log links | blocked | Stata/R link equivalence and convergence design not yet benchmarked. |
 | `glm, family(nbinomial ml)` stable route | blocked | Estimated NB parameter extraction is not robustly available as scalar/matrix output. |
 
@@ -195,8 +195,8 @@ All comparisons must include tolerances and log files.
 
 ## 10. Recommendation
 
-Keep NB blocked for implementation now.
+Keep NB variants beyond `nbreg, dispersion(mean)` blocked for implementation now.
 
-Proceed next with a benchmark-only task for `nbreg, dispersion(mean)` unweighted log-link, using explicit R `pnbinom(size = 1 / alpha, mu = mu)` endpoints and `MASS::glm.nb()` as a reference estimator.
+Base `nbreg, dispersion(mean)` has passed the benchmark cycle for no-offset, `offset()`, and `exposure()` cases, using explicit R `pnbinom(size = 1 / alpha, mu = mu)` endpoints and `MASS::glm.nb()` as a reference estimator.
 
-If all three datasets pass the layered benchmark, create a separate implementation plan for NB2 unweighted default `nbreg` only.
+Next NB work should target only separately gated variants such as `dispersion(constant)`, `gnbreg`, or `glm nbinomial`.
