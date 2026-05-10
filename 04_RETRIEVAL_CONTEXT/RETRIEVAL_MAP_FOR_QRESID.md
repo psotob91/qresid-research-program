@@ -33,6 +33,8 @@ Regla central: leer el mínimo contexto suficiente, priorizar documentos Markdow
 | `STATA_NUMERICAL_STABILITY_RULES.md` | Reglas de estabilidad numérica, clipping, validación PIT/CDF, tolerancias y control RNG | Leer antes de modificar CDF, PIT, uniformización o transformaciones normales |
 | `SOURCE_ACCESS_LOG.md` | Registro de fuentes disponibles, pendientes, restringidas o superseded usadas por retrieval y benchmarking | Leer antes de afirmar soporte documental o agregar nuevas referencias |
 | `STATA_PACKAGE_STYLE_RULES.md` | Reglas editoriales, estructura SSC/Stata Journal, packaging y limpieza pública del repositorio | Leer antes de editar `.ado`, `.sthlp`, examples, certification o releases |
+| `STATA_HELP_STYLE_MASTER.md` | Auditoría local de estilo SMCL basada en `predict`, `regress` y `glm` | Leer antes de reestructurar `qresid.sthlp` o crear nueva ayuda Stata pública |
+| `QRESID_DOCUMENTATION_TOOLING_MASTER.md` | Reglas de uso para MarkDoc, GitHub Stata tooling y Quarto como herramientas documentales externas | Leer antes de usar herramientas Haghish, generar web Quarto o añadir documentación no-SSC |
 | `CANONICAL_TERMINOLOGY_FOR_QRESID.md` | Glosario operativo y terminos canonicos para fases, soporte, benchmark, RQR/PIT, extraction y MCP | Leer ante ambiguedad semantica o preparacion MCP |
 | `QRESID_SUPPORT_STATUS_GLOSSARY.md` | Glosario vivo de estados de soporte, experimental, diagnostico, validez y release | Leer para preguntas sobre soporte, release, prerelease, matriz de funcionalidades o claims publicos |
 | `03_REPO_REVIEW/QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md` | Matriz viva de funcionalidades: implementado, benchmark R, experimental, diagnostico, faltante y bloqueante | Leer para responder que tiene `qresid`, que falta y que invalida o no el paquete |
@@ -260,5 +262,6 @@ Detener implementación y abrir issue/stub cuando ocurra cualquiera de estos cas
 | Explorar pesos/RQR | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `03_REPO_REVIEW/WEIGHTS_RQR_EVIDENCE_REVIEW.md`, `STATA_MODEL_EXTRACTION_RULES.md`, `STATA_R_BENCHMARK_MAPPING.md`, `STATA_NUMERICAL_STABILITY_RULES.md` |
 | Tests unitarios o integración | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `STATA_TESTING_CERTIFICATION_RULES.md`, `08_TESTING_QC_BENCHMARK_MASTER.md`, archivo específico de familia, `STATA_NUMERICAL_STABILITY_RULES.md` |
 | Benchmark R–Stata | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `STATA_R_BENCHMARK_MAPPING.md`, `08_TESTING_QC_BENCHMARK_MASTER.md`, `STATA_MODEL_EXTRACTION_RULES.md`, archivo específico de familia |
-| Documentación pública, examples o release | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`, `STATA_PACKAGE_STYLE_RULES.md`, `PROJECT_BRIEF_QRESID.md` |
+| Documentación pública, examples o release | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`, `STATA_PACKAGE_STYLE_RULES.md`, `STATA_HELP_STYLE_MASTER.md`, `PROJECT_BRIEF_QRESID.md` |
+| Web Quarto, MarkDoc, GitHub Stata tooling | `AGENTS.md`, `QRESID_DOCUMENTATION_TOOLING_MASTER.md`, `SOURCE_ACCESS_LOG.md`, `DOCUMENT_STATUS_REGISTRY.md` |
 | Verificar trazabilidad documental | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `SOURCE_ACCESS_LOG.md`, `PROJECT_BRIEF_QRESID.md` |

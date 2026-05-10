@@ -1,0 +1,32 @@
+---
+title: "qresid"
+subtitle: "Quantile residual diagnostics for Stata models"
+---
+
+`qresid` turns fitted model probabilities into a common diagnostic scale. The core idea is simple: evaluate the fitted CDF at each observation, randomize inside CDF jumps for discrete outcomes, and transform the result to the standard normal scale.
+
+```stata
+sysuse auto, clear
+regress price mpg
+qresid rq
+qnorm rq
+```
+
+The same visual language then works across Gaussian, binomial, count, positive continuous, zero-inflated, truncated, censored, generalized Poisson, and pinned hurdle routes that have passed the local extension prerelease gates.
+
+::: {.callout-note}
+This site is a teaching prototype. The package help, support matrix, and benchmark reports remain the support authorities.
+:::
+
+## Quick interpretation
+
+- A good QQ-normal plot should roughly follow the reference line.
+- Systematic curvature suggests distributional mismatch, missing nonlinear terms, or an incorrect link.
+- Residuals versus fitted values help spot mean-variance and tail problems.
+- Residuals versus a covariate help spot omitted structure.
+
+## Reference links
+
+- [Support matrix](file:///C:/qresid-research-program/03_REPO_REVIEW/qresid_current_feature_support_matrix.html)
+- [Glossary](file:///C:/qresid-research-program/04_RETRIEVAL_CONTEXT/qresid_support_status_glossary.html)
+- [GLM/link evidence](file:///C:/qresid-research-program/qresid/certification/reports/qresid_glm_link_matrix.html)

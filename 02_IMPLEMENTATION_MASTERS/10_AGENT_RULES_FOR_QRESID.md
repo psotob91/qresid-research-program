@@ -49,6 +49,10 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 - `ESTÁNDAR OFICIAL`: todo cambio que use `predict`, `e()`, offset, exposure, pesos o muestra requiere leer `STATA_MODEL_EXTRACTION_RULES.md`.
 - `RECOMENDACIÓN OPERATIVA`: implementar primero el error controlado para rutas fuera de fase.
 - `HUMAN_DECISION_REQUIRED`: si el cambio exige elegir entre API alternativas no cerradas, detenerse.
+- `ESTÁNDAR OFICIAL`: no agregar variantes ajustadas, studentizadas,
+  leverage-adjusted, scaled o "standardized" adicionales de residuos
+  cuantílicos sin cerrar el gate matematico y de reverse engineering en
+  `03_REPO_REVIEW/QRESID_STANDARDIZED_QUANTILE_RESIDUALS_GATE.md`.
 
 ---
 
@@ -72,6 +76,10 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 - `ESTÁNDAR OFICIAL`: ejemplos deben ser ejecutables, con `version`, sin rutas absolutas, y con `set seed` si hay aleatorización.
 - `RECOMENDACIÓN OPERATIVA`: documentar `uvar()` como ruta de reproducibilidad R-Stata, no como opción avanzada opcional.
 - `ESTÁNDAR OFICIAL`: documentación pública no debe contener prompts, trazas, notas internas ni lenguaje de trabajo asistido.
+- `ESTÁNDAR OFICIAL`: para reescrituras sustanciales de `.sthlp`, leer
+  `04_RETRIEVAL_CONTEXT/STATA_HELP_STYLE_MASTER.md`; para MarkDoc/GitHub
+  tooling o Quarto, leer
+  `04_RETRIEVAL_CONTEXT/QRESID_DOCUMENTATION_TOOLING_MASTER.md`.
 
 ---
 

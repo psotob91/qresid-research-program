@@ -1,0 +1,14 @@
+---
+title: "Applied case studies"
+---
+
+The real-data casebank should favor datasets with clear licenses and health or biomedical interpretation.
+
+| case | source | teaching use |
+|---|---|---|
+| `NMES1988` | `AER` | medical visits; Poisson vs NB vs zero-inflated/hurdle-style count models |
+| `esoph` | R `datasets` | grouped binomial cancer case-control strata |
+| `Contraception` | `mlmRev` | future bridge to correlated binary models; use marginal models only in current examples |
+| `bioChemists` | `pscl` | publication count example with overdispersion/zero patterns |
+
+Each case should show one intentionally imperfect model and one improved model, then compare QQ-normal and residual-versus-fitted patterns.

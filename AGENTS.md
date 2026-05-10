@@ -143,6 +143,9 @@ Usar error controlado o stub si una ruta fuera de fase aparece en codigo.
 - No incluir prompts, conversaciones, notas de IA, rastros de agente ni reasoning traces en el paquete final.
 - No copiar codigo externo dentro de `qresid`.
 - No asumir licencias de repos externos.
+- No implementar opciones adicionales de residuos ajustados, studentizados,
+  leverage-adjusted, scaled o "standardized" sin cerrar primero
+  `03_REPO_REVIEW/QRESID_STANDARDIZED_QUANTILE_RESIDUALS_GATE.md`.
 - No declarar soporte sin implementacion, help, ejemplo y test.
 - No implementar CDF sin evidencia matematica y benchmark reproducible.
 - No modificar `qresid/` sin tests correspondientes.
@@ -174,6 +177,10 @@ Detener la tarea si:
 - Modelos fuera de fase fallan con mensaje claro.
 - No hay prompts ni rastros de agente en archivos publicos.
 - Help, examples y claims coinciden con tests existentes.
+- Si se toca documentacion publica, revisar
+  `04_RETRIEVAL_CONTEXT/STATA_HELP_STYLE_MASTER.md`; si se usa MarkDoc,
+  GitHub tooling o Quarto, revisar
+  `04_RETRIEVAL_CONTEXT/QRESID_DOCUMENTATION_TOOLING_MASTER.md`.
 
 ## 13. Matriz viva de soporte y glosario
 

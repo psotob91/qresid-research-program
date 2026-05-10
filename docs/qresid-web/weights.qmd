@@ -1,0 +1,15 @@
+---
+title: "Weights and diagnostic status"
+---
+
+`qresid` does not apply a universal final multiplier such as `sqrt(w_i)`. A weight changes the fitted model and therefore the fitted CDF. Each supported weighted route has its own validation evidence.
+
+```stata
+sysuse auto, clear
+generate int fw = 1 + mod(_n, 3)
+regress price mpg [fweight=fw]
+qresid rq_fw
+qnorm rq_fw
+```
+
+Direct `[pweight=]` support is diagnostic and model-based. It is not `svy:` support and should not be described as exact survey-design residual inference.

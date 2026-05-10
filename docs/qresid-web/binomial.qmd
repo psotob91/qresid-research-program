@@ -1,0 +1,19 @@
+---
+title: "Bernoulli and grouped binomial"
+---
+
+Bernoulli and grouped binomial outcomes are discrete, so exact R/Stata comparisons require shared uniforms through `uvar()` in benchmarks.
+
+```stata
+clear
+set obs 80
+set seed 20260510
+generate double x = (_n - 40) / 20
+generate double p = invlogit(-.2 + .8*x)
+generate byte y = runiform() < p
+logit y x
+qresid rq_logit, seed(101) family(bernoulli)
+qnorm rq_logit
+```
+
+For grouped binomial, always explain the trials denominator and distinguish it from generic weights.

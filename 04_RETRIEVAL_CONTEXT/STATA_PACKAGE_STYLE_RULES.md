@@ -181,6 +181,11 @@ Checklist mínimo:
 - [ ] `qresid.sthlp` abre sin errores.
 - [ ] `qresid.pkg` lista solo archivos necesarios.
 - [ ] `stata.toc` actualizado.
+
+### Help style source
+
+- `ESTÁNDAR OFICIAL`: antes de reestructurar `qresid.sthlp`, cargar `STATA_HELP_STYLE_MASTER.md` y seguir sus patrones SMCL tomados de `predict`, `regress` y `glm`.
+- `ESTÁNDAR OFICIAL`: la teoría extensa, reverse engineering de paquetes R, diseño de web Quarto y herramientas MarkDoc/GitHub deben vivir en documentos maestros o web externa, no sobrecargar el help instalado.
 - [ ] README breve y consistente.
 - [ ] Licencia definida.
 - [ ] Ejemplos básicos corren sin rutas absolutas.

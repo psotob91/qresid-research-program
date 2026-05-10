@@ -131,6 +131,14 @@ Opciones:
 
 `ESTÁNDAR OFICIAL`: no cambiar la API pública sin actualizar `.sthlp`, examples, tests y changelog.
 
+`ESTÁNDAR OFICIAL`: el residuo producido por la API actual ya esta en escala
+normal estandar porque aplica `invnormal(U)` al PIT. No agregar una opcion
+publica llamada simplemente `standardized` para este comportamiento existente.
+Opciones futuras de residuos ajustados, studentizados o leverage-adjusted
+requieren cerrar primero `QRESID_STANDARDIZED_QUANTILE_RESIDUALS_GATE.md`,
+incluyendo revision de formulas, paquetes R/codigo fuente y benchmarks por
+ruta.
+
 ---
 
 ## 6. Familias soportadas por fase

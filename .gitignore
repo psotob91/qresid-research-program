@@ -15,6 +15,8 @@ mermaid-diagram.png
 *~
 .cache/
 __pycache__/
+docs/qresid-web/_site/
+docs/qresid-web/.quarto/
 05_MCP_STATA_EXECUTION/logs/
 05_MCP_STATA_EXECUTION/STATA_EXECUTION_LOGS/
 05_MCP_STATA_EXECUTION/R_EXECUTION_LOGS/

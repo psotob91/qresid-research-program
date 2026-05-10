@@ -1,0 +1,25 @@
+---
+title: "Continuous uncorrelated models"
+---
+
+Use this page for Gaussian, Gamma, and inverse Gaussian examples. The teaching pattern is:
+
+1. Fit the model.
+2. Generate quantile residuals.
+3. Draw `qnorm`.
+4. Check residuals against fitted values and important covariates.
+
+```stata
+clear
+set obs 120
+set seed 20260510
+generate double x = rnormal()
+generate double y = exp(1 + .3*x + rnormal()/4)
+glm y x, family(gamma) link(log)
+qresid rq_gamma, family(gamma)
+qnorm rq_gamma
+predict double mu_gamma, mu
+scatter rq_gamma mu_gamma, yline(0)
+```
+
+Gamma and inverse Gaussian examples should emphasize positive support. Gaussian examples should explain why the quantile residual coincides with a normal CDF residual under the fitted normal model, not with every regression residual diagnostic.

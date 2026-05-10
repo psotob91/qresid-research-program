@@ -1,0 +1,29 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "qresid"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: continuous.qmd
+        text: Continuous
+      - href: counts.qmd
+        text: Counts
+      - href: binomial.qmd
+        text: Binomial
+      - href: weights.qmd
+        text: Weights
+      - href: cases.qmd
+        text: Case studies
+      - href: future.qmd
+        text: Future
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    code-copy: true

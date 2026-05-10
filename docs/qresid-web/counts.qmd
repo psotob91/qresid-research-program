@@ -1,0 +1,21 @@
+---
+title: "Count models"
+---
+
+Count outcomes are where quantile residuals become especially helpful: ordinary residuals often show bands because the response is discrete. `qresid` uses Dunn-Smyth randomization inside the CDF jump.
+
+```stata
+clear
+set obs 150
+set seed 20260510
+generate double x = rnormal()
+generate double mu = exp(.2 + .5*x)
+generate int y = rpoisson(mu)
+poisson y x
+qresid rq_pois, seed(101)
+qnorm rq_pois
+predict double n_pois, n
+scatter rq_pois n_pois, yline(0)
+```
+
+For teaching, compare Poisson, negative binomial, zero-inflated, truncated, censored, generalized Poisson, and hurdle routes on the same synthetic or applied dataset when the support matrix marks them ready.

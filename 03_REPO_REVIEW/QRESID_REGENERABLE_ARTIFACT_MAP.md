@@ -36,6 +36,7 @@ SUPPORT_MATRIX_SYNC_NOT_REQUIRED: this map does not change support claims; it ma
 | `03_REPO_REVIEW/qresid_genpoisson_hurdle_release_decision.html` | `REGENERATOR_GAP` | current tracked canonical view, consistency checked | preserve; do not delete in clean run |
 | `03_REPO_REVIEW/qresid_hurdle_count_postestimation_extraction_audit.html` | `REGENERATOR_GAP` | current tracked canonical view, consistency checked | preserve; do not delete in clean run |
 | `03_REPO_REVIEW/qresid_hurdle_stata_ado_pinning_audit.html` | `REGENERATOR_GAP` | current tracked canonical view, consistency checked | preserve; do not delete in clean run |
+| `docs/qresid-web/_site/` | `IGNORED_REGENERABLE` | `quarto render docs/qresid-web` | may delete/regenerate; source `.qmd` files are tracked |
 
 ## Ignored Regenerables To Archive
 
@@ -73,4 +74,3 @@ The archive directory is ignored by git and is not package payload.
 | Root ignored logs are visually noisy | `LOW_HYGIENE` | archive and delete in clean regeneration |
 | Several tracked HTML views lack a centralized generator | `SHOULD_FIX_BEFORE_PUBLIC_RC` | build a future root report generator; do not block clean test |
 | External retrieval clones are large and ignored | `EXPECTED` | preserve; source manifests and pinning audits govern use |
-

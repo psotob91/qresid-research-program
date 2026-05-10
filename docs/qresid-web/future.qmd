@@ -1,0 +1,12 @@
+---
+title: "Future and gated models"
+---
+
+Some model classes are deliberately outside the current prerelease support surface.
+
+- Tweedie needs a dedicated CDF and benchmark gate.
+- COM-Poisson, Sichel/PIG, Waring, double Poisson, and beta-binomial variants need source, CDF, and R mapping gates.
+- Correlated, panel, multilevel, GSEM, and finite-mixture models need a separate residual-policy decision.
+- DHARMa-style simulation can be used for sanity checks but does not replace analytic CDF endpoint validation.
+
+Missing future models do not invalidate `qresid` when the package does not claim them as supported.
