@@ -91,7 +91,8 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 - `ESTÁNDAR OFICIAL`: la API pública Fase 1 es `qresid newvarname [if] [in], options`; no aceptar `generate()` ni interfaz híbrida.
 - `ESTÁNDAR OFICIAL`: `replace` no forma parte de Fase 1; si la variable de salida ya existe, fallar con error claro.
 - `ESTÁNDAR OFICIAL`: `family()` es opción condicional; no debe contradecir `e(family)`.
-- `ESTÁNDAR OFICIAL`: `type(quantile)` es el default; `type(studentized)` queda limitado a rutas unweighted `regress` y GLM testeadas; `type(adjusted)` queda limitado a GLM Gamma/inverse Gaussian unweighted con formula Scudilio-Pereira y benchmark/replay cerrado.
+- `ESTÁNDAR OFICIAL`: `type(quantile)` es el default; `type(adjusted)` es el nombre canonico para la correccion validada `qres/sqrt(1-h)`; `type(studentized)` se conserva como alias exacto en las mismas rutas validadas.
+- `ESTÁNDAR OFICIAL`: `dispersion(#)` solo esta validado para `glm` Gamma e inverse Gaussian; debe ser positivo y no refitea el modelo.
 - `ESTÁNDAR OFICIAL`: usar `marksample` y cruzar con `e(sample)`.
 - `ESTÁNDAR OFICIAL`: usar `tempvar`, `tempname` y `tempfile` para objetos internos.
 - `ESTÁNDAR OFICIAL`: crear `mu`, `xb`, `pr`, `n`, `F_low`, `F_high`, `V`, `U` y residuos como `double`.

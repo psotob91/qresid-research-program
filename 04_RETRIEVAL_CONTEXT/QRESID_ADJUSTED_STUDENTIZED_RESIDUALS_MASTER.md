@@ -16,8 +16,7 @@ SUPPORT_MATRIX_SYNC_DONE: support evidence must be updated when any row below ch
 | route | formula | source | R function / replay | prior.weights role | qresid decision |
 |---|---|---|---|---|---|
 | `type(quantile)` | `r_i = Phi^{-1}(U_i)` | Dunn and Smyth 1996; `statmod::qresiduals` | `statmod::qresiduals`; manual CDF replay with `uvar()` | affects fitted model/CDF where estimator uses weights | `ALREADY_IMPLEMENTED` |
-| `type(studentized)` for unweighted `regress`/tested `glm` families | `r_i^s = r_i / sqrt(1 - h_ii)` | `glmtoolbox::residuals2(..., standardized=TRUE)`; Pierce and Schafer leverage standardization | exact `glmtoolbox` for Gaussian; R CDF replay for discrete/Gamma/IG using exported `U` and `hatvalues(glm)` | weighted route remains gated because `h`, CDF dispersion and trial/frequency meaning must be separated | `READY_FOR_EXTENSION_PRERELEASE` for unweighted `regress`, `glm gaussian`, `glm poisson`, individual `glm binomial`, `glm gamma`, `glm igaussian` |
-| `type(adjusted)` for unweighted `glm gamma` and `glm igaussian` | `r_i^{*qu} = r_i^{qu} / sqrt(1 - h_ii)` | Scudilio and Pereira 2020, equations in Section 2.3; arXiv 1710.11172 source | R CDF replay using Stata-exported `U` and R `hatvalues(glm)` | weighted route remains gated | `READY_FOR_EXTENSION_PRERELEASE` only for unweighted Gamma and inverse Gaussian GLM |
+| `type(adjusted)` canonical, with `type(studentized)` retained as exact alias where validated | `r_i^* = r_i / sqrt(1 - h_ii)` | `glmtoolbox::residuals2(..., standardized=TRUE)`; Scudilio and Pereira 2020 for Gamma/IG; Pierce and Schafer leverage standardization | exact `glmtoolbox` for Gaussian; R CDF replay for discrete/Gamma/IG using exported `U` and `hatvalues(glm)` | weighted route remains gated because `h`, CDF dispersion and trial/frequency meaning must be separated | `READY_FOR_EXTENSION_PRERELEASE` for unweighted `regress`, `glm gaussian`, `glm poisson`, individual `glm binomial`, `glm gamma`, `glm igaussian`; Gamma/IG additionally support Scudilio-Pereira naming |
 | `type(adjusted)` for Gaussian, Poisson, binomial, NB, ZIP/ZINB, truncated, censored, generalized Poisson, hurdle | no accepted route-specific adjusted formula in current evidence | not covered by Scudilio-Pereira implementation gate; `topmodels` and DHARMa do not supply analytic leverage adjustment | none accepted | not applicable | `GATED_RESEARCH` |
 | `topmodels::proresiduals` | PIT/quantile residual from predictive distribution | topmodels 0.3-0 source | `proresiduals(type="pit"|"quantile")` | distribution-object dependent | `REFERENCE_ONLY`, not studentized/adjusted evidence |
 | `DHARMa::simulateResiduals` / `createDHARMa` | simulated scaled residuals on uniform scale | DHARMa 0.4.7 source | simulation sanity check | simulation-model dependent | `SIMULATION_SANITY_CHECK_ONLY` |
@@ -41,12 +40,25 @@ Relevant extracted facts:
 - The paper uses the term adjusted to avoid conflict with other standardized quantile residual terminology.
 - Scenarios include Gamma with log/inverse links and inverse Gaussian with log/canonical-style inverse-square link.
 
+## Dispersion Override Finding
+
+For Gamma and inverse Gaussian GLM, `statmod::qresiduals()` accepts a
+`dispersion` argument. If omitted, `statmod` estimates dispersion from the R
+GLM object; if supplied, it uses the fixed value in the fitted CDF. `qresid` is
+a Stata postestimation command, so its default remains Stata's stored
+postestimation dispersion. The validated `dispersion(#)` option is an explicit
+CDF replay override for Gamma and inverse Gaussian only: it does not refit the
+model, and it affects both `type(quantile)` and the adjusted/studentized alias
+because the leverage adjustment starts from the base quantile residual.
+
 ## Implementation Guardrails
 
 - Do not enable `type(studentized)` for weighted GLM, grouped binomial, NB, zero-inflated, truncated, censored, generalized Poisson or hurdle without a dedicated gate.
 - Do not use `topmodels` or DHARMa to justify leverage-adjusted residuals.
 - For discrete GLM, exact R comparison must use exported `U` or deterministic `uvar()`; native RNGs must not be compared across R and Stata.
 - For Gamma and inverse Gaussian, if `glmtoolbox` CDF differs from qresid/statmod/Stata dispersion conventions, use R CDF replay from exported `U` and document the scope.
+- Do not add manual dispersion overrides outside Gamma and inverse Gaussian
+  without a dedicated distribution-specific gate.
 
 ## References
 

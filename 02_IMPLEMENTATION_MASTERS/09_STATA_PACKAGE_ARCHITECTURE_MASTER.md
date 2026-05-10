@@ -111,7 +111,7 @@ Sintaxis final:
 ```stata
 qresid newvarname [if] [in] [, seed(integer) uvar(varname numeric) ///
     savev(name) saveflo(name) savefhi(name) saveu(name) ///
-    type(string) family(string) ]
+    type(string) dispersion(real) family(string) ]
 ```
 
 Opciones:
@@ -124,7 +124,8 @@ Opciones:
 | `saveflo(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar `F_low`. |
 | `savefhi(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar `F_high`. |
 | `saveu(name)` | Fase 1 | `ESTÁNDAR OFICIAL`: guardar `U` final antes de `invnormal()`; no es alias de `savev()`. |
-| `type(string)` | Extension prerelease | `ESTÁNDAR OFICIAL`: `type(quantile)` es el default; `type(studentized)` solo para rutas unweighted `regress` y GLM testeadas; `type(adjusted)` solo para GLM Gamma/inverse Gaussian unweighted con formula Scudilio-Pereira. |
+| `type(string)` | Extension prerelease | `ESTÁNDAR OFICIAL`: `type(quantile)` es el default; `type(adjusted)` es el nombre canonico para la unica correccion validada `qres/sqrt(1-h)`; `type(studentized)` se conserva como alias exacto en las mismas rutas validadas. |
+| `dispersion(real)` | Extension prerelease | `ESTÁNDAR OFICIAL`: override positivo de dispersion solo para `glm` Gamma e inverse Gaussian; no refitea el modelo y solo cambia la CDF/PIT usada por `qresid`. |
 | `family(string)` | Fase 1 condicional | `ESTÁNDAR OFICIAL`: permitir solo si el comando activo no permite inferencia segura; nunca debe contradecir `e(family)`. |
 
 `ESTÁNDAR OFICIAL`: `replace` no forma parte de la API pública Fase 1. Si `newvarname` o una variable solicitada con `save*()` ya existe, el comando debe fallar con error claro.
@@ -136,14 +137,20 @@ Opciones:
 `ESTÁNDAR OFICIAL`: el residuo producido por `type(quantile)` ya esta en
 escala normal estandar porque aplica `invnormal(U)` al PIT. No agregar una
 opcion publica llamada simplemente `standardized` para este comportamiento
-existente. `type(studentized)` es una excepcion limitada: divide el residuo
-cuantilico por `sqrt(1-h)` solo despues de `regress` y GLM testeadas sin pesos,
-con `h` obtenido de `predict, hat` y benchmark contra `glmtoolbox` o R CDF
-replay. `type(adjusted)` usa la misma correccion Scudilio-Pereira solo para
-GLM Gamma/inverse Gaussian sin pesos. Opciones futuras de
-residuos ajustados o nuevas variantes studentizadas requieren cerrar primero
+existente. `type(adjusted)` es la categoria publica canonica para la correccion
+validada `qres/sqrt(1-h)` con `h` obtenido de `predict, hat`; `type(studentized)`
+se acepta como alias exacto por compatibilidad terminologica. Gamma e inverse
+Gaussian citan adicionalmente a Scudilio-Pereira para la misma formula.
+Opciones futuras de residuos ajustados o nuevas variantes studentizadas
+requieren cerrar primero
 `QRESID_STANDARDIZED_QUANTILE_RESIDUALS_GATE.md`, incluyendo revision de
 formulas, paquetes R/codigo fuente y benchmarks por ruta.
+
+`ESTÃNDAR OFICIAL`: `dispersion(#)` esta validado solo para Gamma e inverse
+Gaussian GLM. Por defecto `qresid` usa la dispersion postestimacion almacenada
+por Stata; con `dispersion(#)`, usa ese valor positivo fijo para reproducir la
+CDF/PIT y cualquier ajuste derivado. No agregar overrides de dispersion a otras
+familias sin gate y benchmark.
 
 ---
 

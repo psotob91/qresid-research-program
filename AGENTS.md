@@ -146,6 +146,11 @@ Usar error controlado o stub si una ruta fuera de fase aparece en codigo.
 - No implementar opciones adicionales de residuos ajustados, studentizados,
   leverage-adjusted, scaled o "standardized" sin cerrar primero
   `03_REPO_REVIEW/QRESID_STANDARDIZED_QUANTILE_RESIDUALS_GATE.md`.
+- Si adjusted, studentized y leverage-adjusted usan la misma formula, tratarlos
+  como una sola categoria conceptual y documentar los nombres alternativos como
+  sinonimos/fuentes, no como metodos distintos.
+- No implementar overrides manuales de dispersion fuera de Gamma e inverse
+  Gaussian sin un gate especifico y benchmark R/Stata.
 - No declarar soporte sin implementacion, help, ejemplo y test.
 - No implementar CDF sin evidencia matematica y benchmark reproducible.
 - No modificar `qresid/` sin tests correspondientes.
