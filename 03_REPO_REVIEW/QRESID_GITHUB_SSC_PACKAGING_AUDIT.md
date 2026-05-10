@@ -8,6 +8,9 @@ This audit records the packaging split added for the 1.0.0 public-preparation
 cycle. The GitHub repository remains the complete public project home; the SSC
 submission payload is generated as a minimal derived artifact.
 
+This audit was updated during the final README/help polish pass before pushing
+`dev-qresid-extension-integrated`.
+
 ## Changes Verified
 
 - `qresid.sthlp` now includes a compact SMCL section linking to:
@@ -23,6 +26,19 @@ submission payload is generated as a minimal derived artifact.
 - `qresid/.gitignore` ignores generated `release/ssc/` artifacts.
 - Normative release rules now require GitHub/SSC payload separation before
   public release or SSC email submission.
+- `README.md`, `qresid.sthlp`, and `docs/reference.md` now carry aligned
+  prose and explicit PIT/RQR formulas for zero-inflated, truncated, censored,
+  and hurdle count specifications.
+
+## Five-Pass Final Audit
+
+| pass | focus | result |
+|---|---|---|
+| 1 | README/help consistency and public prose | PASS: wording polished; no support claim expanded. |
+| 2 | SMCL/static help check | PASS: `which qresid`, `help qresid`, and repo smoke completed. |
+| 3 | public hygiene and package metadata | PASS: public text trace scan passed; `qresid.ado`, `qresid.pkg`, and `stata.toc` unchanged. |
+| 4 | clean SSC regeneration | PASS: ignored `release/ssc/` was deleted and rebuilt by script. |
+| 5 | final package/ZIP/GitHub readiness | PASS: SSC staging smoke passed; Haghish `github` command present; full branch install waits on default branch or release. |
 
 ## Generated SSC Artifact
 
@@ -56,10 +72,11 @@ No README, Markdown docs, tests, certification, benchmark files, assets, logs,
 - Haghish `github` command availability:
   `QRESID_GITHUB_COMMAND_STATUS PASS`.
 - Full GitHub installation from `psotob91/qresid`:
-  `GITHUB_INSTALL_TEST_PENDING_PUSH`, because the current local commit has not
-  been pushed.
+  `GITHUB_INSTALL_TEST_PENDING_DEFAULT_BRANCH_OR_RELEASE`, because Haghish
+  `github install psotob91/qresid` installs the default branch or a published
+  release, not this development branch directly.
 - SSC staging smoke from the generated folder:
-  `QRESID_SSC_STAGING_SMOKE PASS`.
+  `QRESID_SSC_FINAL_SMOKE PASS`.
   The smoke ran `which qresid`, `help qresid`, `sysuse auto`, `regress`,
   `qresid`, `summarize`, and `qnorm`.
 - Support report consistency:
