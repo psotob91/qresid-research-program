@@ -25,6 +25,9 @@ Status source: hardening iteration evidence after local tests, smoke checks, cer
 | dedicated `glm gaussian` test missing | IGNORE_FOR_NOW | no | no | no | resolved in hardening |
 | dedicated `glm poisson` test missing | IGNORE_FOR_NOW | no | no | no | resolved in hardening |
 | package payload decision for README/LICENSE/changelog | HIGH_PRIORITY | no | no | no | prerelease packaging |
+| GLM/link matrix absent | IGNORE_FOR_NOW | no | no | no | resolved for local prerelease |
+| individual `glm binomial`/`binreg` Bernoulli support absent | IGNORE_FOR_NOW | no | no | no | resolved for individual Bernoulli |
+| clean git status and prerelease tag `.2` | HIGH_PRIORITY | yes | no | no | prerelease freeze |
 | root changelog policy | NICE_TO_HAVE | no | no | yes | docs/release policy |
 | broader stress testing beyond local prerelease gate | NICE_TO_HAVE | no | no | yes | post-prerelease hardening |
 | formal MCP-mediated execution | IGNORE_FOR_NOW | no | no | yes | infrastructure |
@@ -38,9 +41,9 @@ Status source: hardening iteration evidence after local tests, smoke checks, cer
 
 ## Current Decision
 
-Decision: `ADVANCE_TO_NEXT_STAGE`
+Decision: `FREEZE_AND_PREPARE_RELEASE`
 
-The current hardening blockers are resolved for local prerelease readiness. The next stage should focus on prerelease payload and release-policy review, not on expanding model support.
+There are no model, benchmark, install, help, or certification blockers for local prerelease. The only active current-stage action is to freeze the completed GLM/link matrix round with commits and a new prerelease tag `.2`. Public RC remains a later human release-policy decision.
 
 ## Post-Change Sync
 

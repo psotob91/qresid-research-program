@@ -12,7 +12,7 @@ Status source: hardening iteration evidence after local tests, smoke checks, cer
 
 ## 1. Readiness
 
-Readiness: `PRERELEASE_READY_LOCAL`
+Readiness: `PRERELEASE_READY_LOCAL_WITH_GLM_LINK_MATRIX`
 
 The package has passed the local hardening gates required to advance from
 `hardening` to prerelease preparation. This is not a public release decision
@@ -28,6 +28,7 @@ and not a claim of support for gated families.
 | package metadata | `qresid/qresid.pkg`, `qresid/stata.toc` | local install smoke passed |
 | tests | `qresid/tests/` | runner, hardening smoke and benchmarks present |
 | certification | `qresid/certification/` | local pre-release Stata components passed |
+| GLM/link report | `qresid/certification/reports/qresid_glm_link_matrix.html` | generated HTML evidence report |
 | examples | `qresid/examples/` | executable examples present and smoke-tested |
 | logs | `tests/logs/`, `examples/logs/`, `certification/logs/` | local evidence, ignored by `.gitignore`, not package payload |
 
@@ -43,6 +44,7 @@ and not a claim of support for gated families.
 | RH-006 | resolved | help | `qresid.sthlp` had stale Phase 1B wording. | `RESOLVED` |
 | RH-007 | resolved | ado | Unsupported-command error had stale Phase 1B wording. | `RESOLVED` |
 | RH-008 | resolved | tests | Dedicated evidence was missing for `logistic`, `glm gaussian`, and `glm poisson`. | `RESOLVED` |
+| RH-011 | resolved | benchmarks | Phase 1 safe GLM link, `binreg`, and count offset/exposure matrix was missing. | `RESOLVED_LOCAL_PRERELEASE` |
 | RH-009 | moderate | certification | No public-release tag decision has been made. | `SHOULD_FIX_BEFORE_PUBLIC_RELEASE` |
 | RH-010 | minor | docs | No root `CHANGELOG.md`; current changelog is `changelog/CHANGELOG.md`. | `CAN_DEFER_OR_DECIDE_BEFORE_PUBLIC_RELEASE` |
 
@@ -52,9 +54,11 @@ and not a claim of support for gated families.
 |---|---|
 | main tests | `qresid/tests/logs/10_May_2026_114014_run_all_tests.log`: `QRESID_TEST_STATUS PASS` |
 | install/help/examples smoke | `qresid/tests/logs/10_May_2026_114036_hardening_smoke.log`: `QRESID_HARDENING_SMOKE_STATUS PASS` |
-| local pre-release Stata certification | `qresid/certification/logs/10_May_2026_114154_certify_phase1.log`: `PASS_PRERELEASE_LOCAL_STATA_COMPONENTS` |
-| Gamma R benchmark | `qresid/tests/logs/10_May_2026_114159_gamma_benchmark_r.log`: `QRESID_GAMMA_BENCHMARK_R_STATUS PASS` |
-| Gaussian/Poisson/Bernoulli R benchmark | `qresid/tests/logs/10_May_2026_114159_phase1_benchmark_r.log`: `QRESID_PHASE1_BENCHMARK_R_STATUS PASS` |
+| local pre-release Stata certification | `qresid/certification/logs/10_May_2026_122105_certify_phase1.log`: `PASS_PRERELEASE_LOCAL_STATA_COMPONENTS` |
+| Gamma R benchmark | `qresid/tests/logs/10_May_2026_122109_gamma_benchmark._r.log`: `QRESID_GAMMA_BENCHMARK_R_STATUS PASS` |
+| Gaussian/Poisson/Bernoulli R benchmark | `qresid/tests/logs/10_May_2026_122110_phase1_benchmark._r.log`: `QRESID_PHASE1_BENCHMARK_R_STATUS PASS` |
+| GLM/link matrix R benchmark | `qresid/tests/logs/10_May_2026_122110_glm_link_matrix_r.log`: `QRESID_GLM_LINK_MATRIX_R_STATUS PASS` |
+| GLM/link HTML report | `qresid/certification/reports/qresid_glm_link_matrix.html` |
 
 ## 5. Claims Audit
 
@@ -66,8 +70,8 @@ and not a claim of support for gated families.
 | ZIP/ZINB/hurdle/truncated/mixed support | not claimed; correctly gated |
 | Gaussian `regress` and GLM Gaussian path | claimed and locally tested |
 | Poisson `poisson` and GLM Poisson path | claimed and locally tested |
-| Bernoulli `logit`/`logistic` | claimed and locally tested |
-| Gamma `glm, family(gamma)` | claimed and benchmarked locally for unweighted models |
+| Bernoulli `logit`/`logistic`, individual `glm binomial`, individual `binreg` | claimed and locally tested |
+| Gamma `glm, family(gamma)` | claimed and benchmarked locally for unweighted models and estimable links |
 
 ## 6. Editorial Hygiene
 

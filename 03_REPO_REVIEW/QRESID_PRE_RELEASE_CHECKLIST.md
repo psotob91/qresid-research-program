@@ -24,15 +24,16 @@ Current transition: `NOT_READY` -> `PRERELEASE_READY_LOCAL`.
 | PRC-006 | `examples/` contains executable `.do` files | pass | pass |
 | PRC-007 | release/pre-release certification gate exists | pass | pass: `certify_phase1.do` local pre-release Stata components |
 | PRC-008 | certification label is not development-only | pass | pass: `PASS_PRERELEASE_LOCAL_STATA_COMPONENTS` |
-| PRC-009 | Gaussian benchmark recorded | pass | pass: `10_May_2026_114159_phase1_benchmark_r.log` |
-| PRC-010 | Poisson benchmark recorded | pass | pass: `10_May_2026_114159_phase1_benchmark_r.log` |
-| PRC-011 | Bernoulli benchmark recorded | pass | pass: `10_May_2026_114159_phase1_benchmark_r.log` |
-| PRC-012 | Gamma benchmark recorded | pass | pass: `10_May_2026_114159_gamma_benchmark_r.log` |
+| PRC-009 | Gaussian benchmark recorded | pass | pass: `10_May_2026_122110_phase1_benchmark._r.log` |
+| PRC-010 | Poisson benchmark recorded | pass | pass: `10_May_2026_122110_phase1_benchmark._r.log` |
+| PRC-011 | Bernoulli benchmark recorded | pass | pass: `10_May_2026_122110_phase1_benchmark._r.log` |
+| PRC-012 | Gamma benchmark recorded | pass | pass: `10_May_2026_122109_gamma_benchmark._r.log` |
 | PRC-013 | unsupported families fail with controlled errors | pass | pass for NB/weights/family contradiction gates in current tests |
 | PRC-014 | no prompts/internal traces in tracked package payload | pass | no issue found in public files touched |
 | PRC-015 | raw logs are not tracked package payload | pass | pass; logs ignored |
 | PRC-016 | README, `.sthlp`, `pkg`, `toc`, changelog synchronized | pass | pass for local prerelease scope |
 | PRC-017 | prerelease payload policy decided | pass | pass: `PRERELEASE_PAYLOAD_MINIMAL_SSC_STYLE` |
+| PRC-018 | GLM/link matrix for Phase 1 safe families | pass | pass: `10_May_2026_122110_glm_link_matrix_r.log` and `certification/reports/qresid_glm_link_matrix.html` |
 
 ## 2. Latest Commands Run
 
@@ -40,11 +41,13 @@ Current transition: `NOT_READY` -> `PRERELEASE_READY_LOCAL`.
 do "C:/qresid-research-program/qresid/tests/run_all_tests.do"
 do "C:/qresid-research-program/qresid/tests/hardening_smoke.do"
 do "C:/qresid-research-program/qresid/certification/certify_phase1.do"
+do "C:/qresid-research-program/qresid/tests/benchmark_glm_link_matrix_stata.do"
 ```
 
 ```powershell
-Rscript C:/qresid-research-program/qresid/tests/benchmark_gamma_r.R C:/qresid-research-program/qresid/tests/logs/10_May_2026_114159_gamma_benchmark.csv
-Rscript C:/qresid-research-program/qresid/tests/benchmark_phase1_r.R C:/qresid-research-program/qresid/tests/logs/10_May_2026_114159_phase1_benchmark.csv
+Rscript C:/qresid-research-program/qresid/tests/benchmark_gamma_r.R C:/qresid-research-program/qresid/tests/logs/10_May_2026_122109_gamma_benchmark.csv
+Rscript C:/qresid-research-program/qresid/tests/benchmark_phase1_r.R C:/qresid-research-program/qresid/tests/logs/10_May_2026_122110_phase1_benchmark.csv
+Rscript C:/qresid-research-program/qresid/tests/benchmark_glm_link_matrix_r.R C:/qresid-research-program/qresid/tests/logs/10_May_2026_122110_glm_link_matrix.csv
 ```
 
 ## 3. Public Package Hygiene Checklist
@@ -60,6 +63,7 @@ Rscript C:/qresid-research-program/qresid/tests/benchmark_phase1_r.R C:/qresid-r
 - [x] `examples/` is populated with executable `.do` examples.
 - [x] Logs under `tests/logs/`, `examples/logs/` and `certification/logs/` remain ignored.
 - [x] No prompts, agent notes, scratch text or internal plans appear in public package files touched.
+- [x] GLM/link HTML evidence exists outside `qresid.pkg` install payload.
 
 ## 4. Decision Rule
 

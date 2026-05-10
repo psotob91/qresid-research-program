@@ -8,13 +8,13 @@ Retrieval policy: load during iterative release-management decisions
 
 Date: 2026-05-10
 
-Status source: working tree after hardening iteration; base commits root `91af3a6` / qresid `fc0529f`.
+Status source: working tree after GLM/link matrix hardening iteration; local evidence from logs dated 2026-05-10.
 
 ## 1. Current Stage
 
-Current stage: `hardening`
+Current stage: `prerelease_freeze_pending`
 
-Hardening iteration 1 closed the active `MUST_FIX_BEFORE_RC` blockers identified in `QRESID_RELEASE_BLOCKERS.md`. The package is not a public release yet, but it now has enough local evidence to advance from `hardening` to the next prerelease-preparation stage.
+Hardening is closed for local prerelease purposes. The GLM/link matrix iteration also passed, so the rational next action is to freeze the current state with commits and a new prerelease tag. The package is not a public release yet.
 
 ## 2. State Summary
 
@@ -26,7 +26,9 @@ Hardening iteration 1 closed the active `MUST_FIX_BEFORE_RC` blockers identified
 | install/help smoke | local install, `which qresid`, and `help qresid` passed | blocker closed |
 | release certification | local pre-release Stata components passed | blocker closed for local prerelease |
 | R/Stata benchmarks | Gamma plus Gaussian/Poisson/Bernoulli checks passed | blocker closed |
+| GLM/link matrix | Phase 1 safe GLM links, `binreg` individual and count offset/exposure matrix passed | blocker closed |
 | public docs wording | stale Phase 1B wording removed from public help/error | blocker closed |
+| git freeze | changes are present but not yet committed | freeze before tagging |
 | NB/weights/Phase 2 | gated or deferred | does not block prerelease-local stage |
 
 ## 3. Evidence
@@ -35,9 +37,11 @@ Hardening iteration 1 closed the active `MUST_FIX_BEFORE_RC` blockers identified
 |---|---|
 | main tests | `qresid/tests/logs/10_May_2026_114014_run_all_tests.log`: 19 pass, 0 expected fail, 0 unexpected fail |
 | install/help/examples smoke | `qresid/tests/logs/10_May_2026_114036_hardening_smoke.log`: `QRESID_HARDENING_SMOKE_STATUS PASS` |
-| pre-release local Stata certification | `qresid/certification/logs/10_May_2026_114154_certify_phase1.log`: `PASS_PRERELEASE_LOCAL_STATA_COMPONENTS` |
-| Gamma R benchmark | `qresid/tests/logs/10_May_2026_114159_gamma_benchmark_r.log`: `QRESID_GAMMA_BENCHMARK_R_STATUS PASS` |
-| Gaussian/Poisson/Bernoulli R benchmark | `qresid/tests/logs/10_May_2026_114159_phase1_benchmark_r.log`: `QRESID_PHASE1_BENCHMARK_R_STATUS PASS` |
+| pre-release local Stata certification | `qresid/certification/logs/10_May_2026_122105_certify_phase1.log`: `PASS_PRERELEASE_LOCAL_STATA_COMPONENTS` |
+| Gamma R benchmark | `qresid/tests/logs/10_May_2026_122109_gamma_benchmark._r.log`: `QRESID_GAMMA_BENCHMARK_R_STATUS PASS` |
+| Gaussian/Poisson/Bernoulli R benchmark | `qresid/tests/logs/10_May_2026_122110_phase1_benchmark._r.log`: `QRESID_PHASE1_BENCHMARK_R_STATUS PASS` |
+| GLM/link matrix R benchmark | `qresid/tests/logs/10_May_2026_122110_glm_link_matrix_r.log`: `QRESID_GLM_LINK_MATRIX_R_STATUS PASS` |
+| GLM/link HTML report | `qresid/certification/reports/qresid_glm_link_matrix.html` |
 
 ## 4. Remaining Non-Blocking Items
 
@@ -59,16 +63,16 @@ Further iteration on hardening now has lower return unless it targets final rele
 
 ## 6. Recommendation
 
-Recommendation: `READY_TO_TAG_PRERELEASE_LOCAL`
+Recommendation: `FREEZE_AND_PREPARE_RELEASE`
 
-Recommended next stage: local prerelease tag
+Recommended next stage: local prerelease tag `v0.1.0-prerelease.2`
 
-Do not mark the package as public release-ready yet. The prerelease payload policy is minimal SSC-style ado/help install payload, with README/LICENSE/changelog/examples/tests/certification retained in the GitHub/repo payload.
+Do not iterate hardening again unless a new blocking failure appears. Do not mark the package as public release-ready yet. The prerelease payload policy is minimal SSC-style ado/help install payload, with README/LICENSE/changelog/examples/tests/certification retained in the GitHub/repo payload.
 
 ## 7. Next Prompt Recommended
 
 ```text
-Actua como release manager SSC/Stata Journal para qresid. Si git status esta limpio, crea tags locales anotados v0.1.0-prerelease.1 en qresid y qresid-v0.1.0-prerelease.1 en el repo raiz. No hagas push automatico y no implementes nuevas familias.
+Commit qresid/ with the GLM/link matrix round, then commit the root repo with the updated gitlink and active reports. Create annotated local tags v0.1.0-prerelease.2 in qresid/ and qresid-v0.1.0-prerelease.2 in the root repo. Do not push and do not implement new families.
 ```
 
 ## 8. Post-Change Sync
