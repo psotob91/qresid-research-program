@@ -59,6 +59,7 @@ If uncertain, add a short `sync_notes` entry in the registry rather than rewriti
 | cambio en `qresid.ado` | `09`, `10`, testing rules, help/changelog | tests, help, changelog | si |
 | cambio en API publica | `09`, `.sthlp`, README, tests, style rules | `09`, help, README, tests, changelog | si |
 | cambio en familia soportada | `09`, benchmark, testing, retrieval, extraction rules | `09`, tests, benchmark map, help | si |
+| cambio en familia/link GLM | GLM/link benchmark scripts, `qresid_glm_link_matrix.html`, support matrix, registry | GLM/link producer/checker, HTML report, support matrix | si |
 | cambio en soporte/status/claims | support glossary, feature matrix, terminology, registry, help/README/changelog | `QRESID_SUPPORT_STATUS_GLOSSARY.md`, `QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md`, HTML derivados | si |
 | cambio en retrieval | `AGENTS`, retrieval map, lifecycle rules, registry | retrieval map, registry | si |
 | cambio en MCP | execution protocols, readiness checklist, resolution log | readiness checklist, setup log | si |
@@ -99,6 +100,7 @@ When a snapshot finding is resolved:
 - [ ] Cambio semaforo de validez o release?
 - [ ] Cambio benchmark?
 - [ ] Cambio equivalente R o benchmark R-Stata?
+- [ ] Debe actualizarse `qresid/certification/reports/qresid_glm_link_matrix.html` porque cambio familia/link GLM?
 - [ ] Cambio testing?
 - [ ] Cambio retrieval?
 - [ ] Cambio lifecycle status?

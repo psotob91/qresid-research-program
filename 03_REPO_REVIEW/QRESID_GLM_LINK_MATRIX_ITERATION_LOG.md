@@ -27,7 +27,7 @@ Status source: local implementation, Stata logs and R benchmark logs.
 
 ## Iteration Outcome
 
-Final status: `PASS_GLM_LINK_MATRIX_LOCAL`
+Final status: `PASS_GLM_LINK_MATRIX_LOCAL_RECONCILED`
 
 Evidence:
 
@@ -35,6 +35,8 @@ Evidence:
 - `qresid/certification/logs/10_May_2026_122105_certify_phase1.log`: `PASS_PRERELEASE_LOCAL_STATA_COMPONENTS`.
 - `qresid/tests/logs/10_May_2026_122110_glm_link_matrix_stata.log`: `QRESID_GLM_LINK_MATRIX_STATA_STATUS PASS`.
 - `qresid/tests/logs/10_May_2026_122110_glm_link_matrix_r.log`: `QRESID_GLM_LINK_MATRIX_R_STATUS PASS`.
+- `qresid/tests/logs/10_May_2026_154140_glm_link_matrix_stata.log`: reconciled matrix with inverse Gaussian, `QRESID_GLM_LINK_MATRIX_STATA_STATUS PASS`.
+- `qresid/tests/logs/10_May_2026_154140_glm_link_matrix_r.log`: reconciled matrix with inverse Gaussian, `QRESID_GLM_LINK_MATRIX_R_STATUS PASS`.
 
 ## Findings Removed As False Blockers
 
@@ -50,10 +52,20 @@ Evidence:
 - `binreg hr` was not promoted because local probe did not converge on the
   default test fixture; it remains inventory-only unless a stable benchmark is
   added.
-- grouped binomial remains gated by trials extraction.
-- NB and weights remain research-gated.
+- weighted routes outside tested direct `fweight` and direct `pweight`
+  diagnostic remain gated.
 - Phase 2 models remain deferred.
+
+## Reconciliation Addendum
+
+After inverse Gaussian reached `EXPERIMENTAL_VALIDATED_LOCAL`, the generated
+GLM/link HTML report was stale because it still listed inverse Gaussian as
+`GATED_FUTURE`. The matrix producer and R checker now include inverse Gaussian
+`glm` links `power -2`, `log`, `identity`, and `power -1` across the same three
+dataset classes. The HTML report also notes that expanded direct `fweight`
+evidence is validated separately in `benchmark_fweight_extended_*`.
 
 ## Post-Change Sync
 
 POST_CHANGE_SYNC_DONE
+SUPPORT_MATRIX_SYNC_DONE

@@ -159,7 +159,8 @@ Despues de cualquier cambio que afecte soporte implementado, benchmarks, status 
 
 - actualizar `04_RETRIEVAL_CONTEXT/QRESID_SUPPORT_STATUS_GLOSSARY.md` y `04_RETRIEVAL_CONTEXT/qresid_support_status_glossary.html` si cambio la semantica de algun termino;
 - actualizar `03_REPO_REVIEW/QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md` y `03_REPO_REVIEW/qresid_current_feature_support_matrix.html` si cambio una funcionalidad, benchmark, status, semaforo de validez o claim;
+- revisar `qresid/certification/reports/qresid_glm_link_matrix.html` y sus generadores si cambio soporte de familia, comando GLM, funcion de enlace, offset/exposure o evidencia familia x link, aunque el prompt no lo mencione explicitamente;
 - si no aplica, registrar explicitamente `SUPPORT_MATRIX_SYNC_NOT_REQUIRED` en el resumen de cierre;
 - no reescribir snapshots historicos para sincronizar esta matriz; el registry y los reportes vivos mandan.
 
-Toda respuesta final sobre soporte, release, prerelease, validez del paquete o funcionalidades disponibles debe incluir enlaces al glosario HTML y a la matriz HTML para consulta rapida.
+Toda respuesta final sobre soporte, release, prerelease, validez del paquete o funcionalidades disponibles debe incluir enlaces al glosario HTML, a la matriz HTML y, si la respuesta trata familias GLM o links, al reporte GLM/link para consulta rapida.

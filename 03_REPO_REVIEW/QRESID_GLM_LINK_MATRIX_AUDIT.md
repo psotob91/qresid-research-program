@@ -8,26 +8,29 @@ Retrieval policy: load before GLM/link, benchmark, certification or release-scop
 
 Date: 2026-05-10
 
-Status source: local Stata/R execution after GLM/link matrix hardening.
+Status source: local Stata/R execution after GLM/link matrix reconciliation for inverse Gaussian support.
 
 ## Executive Summary
 
-Readiness impact: `PRERELEASE_READY_LOCAL_WITH_GLM_LINK_MATRIX`
+Readiness impact: `EXTENSION_PRERELEASE_LOCAL_WITH_RECONCILED_GLM_LINK_MATRIX`
 
-The previous Phase 1 benchmark coverage was not exhaustive across Stata
-estimation forms, GLM links, or offset/exposure count models. This audit adds a
-Phase 1 safe GLM/link matrix while keeping NB, weights, grouped binomial and
-Phase 2 families gated.
+The previous GLM/link evidence report became stale after inverse Gaussian moved
+from gated research to locally validated experimental support. This audit
+reconciles the family-by-link matrix by adding inverse Gaussian links to the
+executed Stata/R benchmark matrix while keeping expanded `fweight` evidence in
+its dedicated benchmark report.
 
-Implemented support expansion:
+Implemented/reconciled support:
 
 - individual Bernoulli after `glm, family(binomial)` where `e(m)==1`;
 - individual Bernoulli after `binreg` where `e(m)==1`;
+- inverse Gaussian after `glm, family(igaussian)` for `power -2`, `log`,
+  `identity`, and `power -1`;
 - no public API change.
 
 ## Matrix Executed
 
-The active matrix covers 75 Stata/R check groups, each on three datasets:
+The active matrix covers 87 Stata/R check groups, each on three datasets:
 
 - `synthetic`;
 - `real_like`;
@@ -41,10 +44,11 @@ Families and commands covered:
 | Poisson | `poisson`; `glm poisson` with log, identity, sqrt; log-link offset/exposure | `SUPPORTED_TESTED` |
 | Bernoulli individual | `logit`, `logistic`, `glm binomial` logit/probit/cloglog/log/identity, `binreg` logit/log/identity | `SUPPORTED_TESTED` |
 | Gamma | `glm gamma` log/identity/inverse | `SUPPORTED_TESTED` |
+| inverse Gaussian | `glm igaussian` `power -2`/log/identity/`power -1` | `EXPERIMENTAL_VALIDATED_LOCAL` |
 | grouped binomial | inventoried only | `GATED_FUTURE` |
 | NB | inventoried only | `GATED_FUTURE` |
-| weights | inventoried only | `GATED_FUTURE` |
-| inverse Gaussian, quasi, ZIP/ZINB, hurdle, truncados, mixed/GLMM/GSEM | inventoried only | `DEFERRED_PHASE2` or `EVIDENCIA_PENDIENTE` |
+| weights | separate benchmark evidence | `SEE_FWEIGHT_EXTENDED_BENCHMARK` |
+| quasi, ZIP/ZINB, hurdle, truncados, mixed/GLMM/GSEM | inventoried only | `DEFERRED_PHASE2` or `EVIDENCIA_PENDIENTE` |
 
 ## Evidence
 
@@ -53,8 +57,9 @@ Families and commands covered:
 | `qresid/tests/benchmark_glm_link_matrix_stata.do` | created; Stata producer passed |
 | `qresid/tests/benchmark_glm_link_matrix_r.R` | created; R checker passed |
 | `qresid/certification/reports/qresid_glm_link_matrix.html` | generated HTML evidence report |
-| latest Stata matrix log | `qresid/tests/logs/10_May_2026_122110_glm_link_matrix_stata.log`: `QRESID_GLM_LINK_MATRIX_STATA_STATUS PASS` |
-| latest R matrix log | `qresid/tests/logs/10_May_2026_122110_glm_link_matrix_r.log`: `QRESID_GLM_LINK_MATRIX_R_STATUS PASS` |
+| latest Stata matrix log | `qresid/tests/logs/10_May_2026_154140_glm_link_matrix_stata.log`: `QRESID_GLM_LINK_MATRIX_STATA_STATUS PASS` |
+| latest R matrix log | `qresid/tests/logs/10_May_2026_154140_glm_link_matrix_r.log`: `QRESID_GLM_LINK_MATRIX_R_STATUS PASS` |
+| latest matrix rows | 87 family/link/command/dataset/offset groups |
 
 ## Scope Guardrails
 
@@ -63,6 +68,11 @@ Families and commands covered:
 - Discrete residual comparisons use deterministic external uniforms.
 - Offset and exposure are tested for count log-link models and rely on final
   `predict` values to avoid double-counting.
+- Inverse Gaussian uses the same stable closed-form CDF already validated in
+  `benchmark_igaussian_*`.
+- Expanded direct `fweight` support is intentionally not folded into this
+  family-by-link matrix; it is validated by `benchmark_fweight_extended_*` and
+  summarized in the live support matrix.
 - The HTML report is repository/certification evidence, not `qresid.pkg`
   install payload.
 
@@ -70,9 +80,7 @@ Families and commands covered:
 
 | gap | status | action |
 |---|---|---|
-| grouped binomial trials | `GATED_FUTURE` | validate trials extraction and grouped CDF before support |
-| NB | `GATED_FUTURE` | resolve NB1/NB2 and `alpha/theta/k` mapping |
-| weights | `GATED_FUTURE` | resolve family x weight-type semantics |
+| weighted routes beyond tested direct `fweight` | `GATED_FUTURE` | keep in weights-specific benchmark/research reports |
 | R-side refitting equivalence by every link | `SHOULD_REVIEW_BEFORE_PUBLIC_RC` | current matrix validates qresid CDF/PIT/RQR from Stata fitted means; coefficient-level R refits can be added before public RC if desired |
 | broader stress testing | `CAN_DEFER` | post-prerelease hardening |
 
@@ -81,8 +89,10 @@ Families and commands covered:
 Decision: `ADVANCE_TO_NEXT_STAGE`
 
 The active Phase 1 safe matrix is sufficient for local prerelease readiness.
-Do not block on NB, weights, grouped binomial or Phase 2 families.
+The reconciled extension matrix is sufficient for local extension prerelease
+readiness. Do not block on unclaimed weighted routes or Phase 2 families.
 
 ## Post-Change Sync
 
 POST_CHANGE_SYNC_DONE
+SUPPORT_MATRIX_SYNC_DONE
