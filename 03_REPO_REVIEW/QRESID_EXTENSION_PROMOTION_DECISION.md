@@ -8,35 +8,34 @@ Retrieval policy: load before branch promotion or release policy decision
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: promotion decision registered after release audit.
+POST_CHANGE_SYNC_DONE: promotion decision updated after extension hardening and validation.
 
 ## Decision
 
-`PROMOTION_DECISION: ITERATE_EXTENSION_HARDENING`
+`PROMOTION_DECISION: PROMOTE_TO_EXTENSION_PRERELEASE_READY`
 
-The branch should stay frozen as an experimental checkpoint and should not yet be promoted to an extension prerelease tag.
+The branch may be tagged as a local extension prerelease checkpoint. It should not be promoted to public RC without a human release-policy decision on direct `[pweight=]` diagnostic support.
 
 ## Rationale
 
-All critical computation and benchmark gates passed, including install/help smoke, examples smoke, Stata certification, R checks for grouped binomial/NB/fweight, and pweight direct diagnostic. However, extension prerelease promotion requires public help examples for every claimed support path. The current `.sthlp` has grouped binomial and NB examples, but not examples for the newly claimed experimental `fweight` and direct `[pweight=]` routes.
+The prior blocker was resolved. Experimental direct `fweight` and `[pweight=]` routes now have executable help examples and repo examples. Help now includes a concise methods section explaining PIT, Dunn-Smyth randomized quantile residuals, CDF endpoints, `uvar()`, approximate normality with estimated parameters, and references.
 
-## Promotion Criteria For Next Iteration
+Validation passed after the hardening changes:
 
-Move to `PROMOTE_TO_EXTENSION_PRERELEASE_READY` only after:
-
-- `fweight` and direct `[pweight=]` have executable help examples or the public claims are narrowed.
-- examples smoke confirms those examples run.
-- `qresid.pkg` / `stata.toc` wording is reviewed for extension prerelease accuracy.
-- certification and R checks remain green.
+- install/help/examples smoke: `PASS`;
+- Stata certification: `PASS_EXPERIMENTAL_EXTENSION_LOCAL_STATA_COMPONENTS`;
+- Gamma, Phase 1, GLM/link, grouped binomial, NB and fweight R checks: `PASS`;
+- pweight direct R status: `STATA_ONLY_DIAGNOSTIC`.
 
 ## Current Release Boundary
 
-Allowed to keep as experimental:
+Allowed in local extension prerelease:
 
 - grouped binomial `glm`;
 - unweighted `nbreg, dispersion(mean)`;
 - `fweight` Gaussian/Poisson;
-- direct `[pweight=]` Gaussian/Poisson/Bernoulli as model-based diagnostic.
+- direct `[pweight=]` Gaussian/Poisson/Bernoulli as model-based diagnostic;
+- expanded help theory and references.
 
 Not allowed for public RC without human policy decision:
 
@@ -44,12 +43,11 @@ Not allowed for public RC without human policy decision:
 - `svy:`;
 - `aweight`, `iweight`;
 - NB weights or grouped-binomial weights;
-- Phase 2 families.
+- inverse Gaussian, Tweedie, ZIP/ZINB, hurdle, truncation, mixed/GLMM/GSEM.
 
 ## Next Prompt
 
 ```text
 PLEASE IMPLEMENT THIS PLAN:
-Run one extension hardening iteration: add executable help/examples for fweight Gaussian/Poisson and direct [pweight=] Gaussian/Poisson/Bernoulli, review qresid.pkg/stata.toc wording for extension prerelease, rerun install/help/examples smoke, certification and R checkers, then update QRESID_EXTENSION_RELEASE_AUDIT.md, QRESID_EXTENSION_RELEASE_BLOCKERS.md and QRESID_EXTENSION_PROMOTION_DECISION.md. Do not implement new families.
+Create local annotated tags for the extension prerelease: v0.1.0-extension-prerelease.1 in qresid/ and qresid-v0.1.0-extension-prerelease.1 in the root repo. Do not push. Then prepare a public-RC policy brief focused on direct [pweight=] diagnostic support.
 ```
-

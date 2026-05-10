@@ -8,37 +8,34 @@ Retrieval policy: load before extension prerelease or public RC decision
 
 Date: 2026-05-10
 
-Status source: root `edd1de5` / `qresid` `b686ad9`, branch `dev-qresid-extension-integrated`.
+Status source: root branch `dev-qresid-extension-integrated`; `qresid` commit `32641db`.
 
-POST_CHANGE_SYNC_DONE: active release-audit reports and registry updated.
+POST_CHANGE_SYNC_DONE: extension hardening reports, public help/examples and registry synchronized after validation.
 
 ## Executive Summary
 
-Readiness decision: `ITERATE_EXTENSION_HARDENING`.
+Readiness decision: `PROMOTE_TO_EXTENSION_PRERELEASE_READY`.
 
-The integrated extension branch is valid as an experimental checkpoint. Local Stata tests, install/help smoke, certification, R benchmark checks, and pweight diagnostic checks passed. It should not yet be promoted to extension prerelease because public help/README claims include experimental weight routes but `.sthlp` does not yet include executable examples for `fweight` and direct `[pweight=]`.
+The integrated extension branch now satisfies the local extension prerelease gate. The previous prerelease blocker was closed by adding executable help and repo examples for the experimental direct `fweight` and `[pweight=]` routes, expanding the help methods section with PIT/Dunn-Smyth formulas and references, and re-running the local Stata/R validation suite.
 
-This is not a blocker for the frozen experimental tag. It is a prerelease-promotion blocker under `STATA_PACKAGE_STYLE_RULES.md`, which requires every declared supported model/path to have executable examples and no claims beyond test evidence.
+This remains an extension prerelease, not a public RC. Direct `[pweight=]` remains model-based diagnostic support and not `svy:` support. Public RC still requires a human release-policy decision for pweight claims.
 
 ## Evidence Reviewed
 
 | evidence | status | latest artifact |
 |---|---|---|
-| git root clean | PASS | `dev-qresid-extension-integrated` |
-| git subrepo clean | PASS | `dev-qresid-extension-integrated` |
-| root tag | PASS | `qresid-extension-integrated-freeze.1` |
-| qresid tag | PASS | `v0.1.0-extension.1` |
-| install/help smoke | PASS | `qresid/tests/logs/10_May_2026_142416_hardening_smoke.log` |
-| examples smoke | PASS | `qresid/tests/logs/10_May_2026_142416_hardening_smoke.log` |
-| Stata test runner | PASS | `qresid/tests/logs/10_May_2026_142411_run_all_tests.log` |
-| Stata certification | PASS | `qresid/certification/logs/10_May_2026_142411_certify_phase1.log` |
-| Gamma R check | PASS | `qresid/tests/logs/10_May_2026_142416_gamma_benchmark_r_check.csv` |
-| Phase 1 R check | PASS | `qresid/tests/logs/10_May_2026_142416_phase1_benchmark_r_check.csv` |
-| GLM/link R check | PASS | `qresid/tests/logs/10_May_2026_142417_glm_link_matrix_r_check.csv` |
-| grouped binomial R check | PASS | `qresid/tests/logs/20260510_142437_grouped_binomial_benchmark_r.log` |
-| NB R check | PASS | `qresid/tests/logs/20260510_142438_nb_benchmark_r.log` |
-| fweight R check | PASS | `qresid/tests/logs/20260510_142438_fweight_benchmark_r.log` |
-| pweight diagnostic | PASS_DIAGNOSTIC | `qresid/tests/logs/20260510_142438_pweight_direct_benchmark_r.log` |
+| qresid commit | PASS | `32641db docs: harden extension prerelease help and examples` |
+| qresid ado unchanged | PASS | `git -C qresid diff -- qresid.ado` empty before commit |
+| install/help smoke | PASS | `qresid/tests/logs/10_May_2026_144247_hardening_smoke.log` |
+| examples smoke | PASS | `qresid/tests/logs/10_May_2026_144247_hardening_smoke.log` |
+| Stata certification | PASS | `qresid/certification/logs/10_May_2026_144312_certify_phase1.log` |
+| Gamma R check | PASS | `qresid/tests/logs/10_May_2026_144316_gamma_benchmark_r_check.csv` |
+| Phase 1 R check | PASS | `qresid/tests/logs/10_May_2026_144317_phase1_benchmark_r_check.csv` |
+| GLM/link R check | PASS | `qresid/tests/logs/10_May_2026_144317_glm_link_matrix_r_check.csv` |
+| grouped binomial R check | PASS | `qresid/tests/logs/20260510_144354_grouped_binomial_benchmark_r.log` |
+| NB R check | PASS | `qresid/tests/logs/20260510_144354_nb_benchmark_r.log` |
+| fweight R check | PASS | `qresid/tests/logs/20260510_144354_fweight_benchmark_r.log` |
+| pweight diagnostic | STATA_ONLY_DIAGNOSTIC | `qresid/tests/logs/20260510_144355_pweight_direct_benchmark_r.log` |
 
 ## Scope Audit
 
@@ -47,24 +44,19 @@ Claims aligned with evidence:
 - Grouped binomial is limited to unweighted `glm, family(binomial trials)` and tested links.
 - NB is limited to unweighted `nbreg, dispersion(mean)`.
 - `fweight` is limited to Gaussian/Poisson.
-- Direct `[pweight=]` is explicitly experimental, not `svy:`, and `STATA_ONLY_DIAGNOSTIC`.
+- Direct `[pweight=]` is explicitly experimental, not `svy:`, and remains `STATA_ONLY_DIAGNOSTIC`.
 - `qresid.pkg` remains minimal: `qresid.ado` and `qresid.sthlp` only.
-
-Promotion blockers:
-
-- `.sthlp` declares experimental `fweight` and direct `[pweight=]` support but lacks corresponding executable help examples.
-- `qresid.pkg` / `stata.toc` still say "tested Phase 1 families"; acceptable for experimental freeze, but should be reviewed before an extension prerelease label.
+- `qresid.sthlp` now includes PIT, CDF endpoint, Dunn-Smyth RQR formulas, and references.
 
 No public-package traces found:
 
-- No prompts, agent traces, ChatGPT/Codex references, or reasoning traces were found in `qresid.ado`, `.sthlp`, README, changelog, pkg, or toc.
+- No prompts, agent traces, ChatGPT/Codex references, or reasoning traces were found in public package files after hardening.
 
 ## Recommendation
 
-Keep the current frozen branch as a valid experimental checkpoint. Do one focused extension hardening iteration before promotion:
+Promote the branch to a local extension prerelease checkpoint:
 
-1. Add `.sthlp` examples for direct `fweight` Gaussian/Poisson and direct `[pweight=]` Gaussian/Poisson/Bernoulli.
-2. Add matching `examples/*.do` scripts or update existing examples runner if the package policy requires repo examples for those routes.
-3. Review `qresid.pkg` and `stata.toc` wording for extension-prerelease accuracy.
-4. Re-run install/help/examples smoke, certification, and R checkers.
+- `qresid/` tag: `v0.1.0-extension-prerelease.1`
+- root tag: `qresid-v0.1.0-extension-prerelease.1`
 
+Do not promote to public RC until a human release-policy decision resolves whether direct `[pweight=]` diagnostic support should be public, hidden, or split into a separate experimental branch.
