@@ -87,6 +87,16 @@ Regla central: no afirmar que una fuente fue leída si solo está listada. Este 
 | R-005 | R_documentation | `gamlss` | CRAN/manual local pendiente | PENDING | Documentación paquete R | Familias flexibles | 2026-05-10 | CDFs amplias |
 | R-006 | R_documentation | `topmodels` | CRAN/manual local pendiente | PENDING | Documentación paquete R | PIT/residuals | 2026-05-10 | ZIP/hurdle/PIT |
 | R-007 | R_documentation | `glmmTMB` | CRAN/manual local pendiente | PENDING | Documentación paquete R | GLMM/ZI | 2026-05-10 | Benchmarks Fase 2 |
+| R-008 | R_documentation | `VGAM::genpoisson0/1/2` | local R package `VGAM` 1.1.14; CRAN refman | AVAILABLE | Package documentation; used for parameter mapping and positive-delta GP-0 CDF check | `QRESID_GENPOISSON_EXTENSION_AUDIT.md` | 2026-05-10 | `pgenpois0` matches pinned `st0279` PMF/CDF for positive delta with `theta=(1-delta)*mu`, `lambda=delta`; negative delta uses analytic CDF replay because modern VGAM restricts the fitted GP-0 lambda route. |
+| R-009 | R_documentation | `glmmTMB::genpois` | local R package `glmmTMB` 1.1.14; online reference | AVAILABLE | Package documentation; secondary family evidence, not exact benchmark for `st0279` | `QRESID_GENPOISSON_EXTENSION_AUDIT.md` | 2026-05-10 | glmmTMB generalized Poisson uses a different variance parameterization; retained for future approximate/simulation work. |
+
+---
+
+## 5b. External Stata ado sources pinned for extension benchmarks
+
+| source_id | source_type | title | local_path_or_url | access_status | license_or_access_note | used_by_md | last_checked | notes |
+|---|---|---|---|---|---|---|---|---|
+| STATA-EXT-001 | Stata_Journal_software | `st0279` / `gpoisson` generalized Poisson regression | `04_RETRIEVAL_CONTEXT/EXTERNAL_REPOS/STATA/st0279`; article https://doi.org/10.1177/1536867X1201200412 | AVAILABLE_PINNED | Stata Journal software installed locally via `net install st0279`; do not copy external ado code into `qresid` | `QRESID_GENPOISSON_EXTENSION_AUDIT.md`, `QRESID_HILBE_COUNT_MODEL_COVERAGE_PLAN.md` | 2026-05-10 | Pinned files include `gpoisson.ado` version 1.1.0 11jun2011 and `gpois_lf.ado` version 1.0.0 31oct2006. `qresid` support is postestimation only and requires the external estimator to be installed separately. |
 
 ---
 

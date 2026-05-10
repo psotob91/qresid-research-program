@@ -8,19 +8,21 @@ Retrieval policy: load before generalized Poisson or hurdle count work
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: generalized Poisson and hurdle research gates opened.
-SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix and math/software evidence matrix reviewed; no support claim added.
+POST_CHANGE_SYNC_DONE: generalized Poisson gate closed for pinned `st0279` route; hurdle research gate remains open.
+SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix and math/software evidence matrix reviewed after generalized Poisson promotion.
 
 ## Decision
 
-`GENERALIZED_POISSON_IMPLEMENTATION_ALLOWED: no`
+`GENERALIZED_POISSON_IMPLEMENTATION_ALLOWED: yes_for_pinned_st0279_unweighted`
 
 `HURDLE_COUNT_IMPLEMENTATION_ALLOWED: no`
 
 `BENCHMARK_RESEARCH_ALLOWED: yes`
 
-This audit opens a separate benchmark-first cycle. It does not authorize changes
-to `qresid.ado`.
+This audit originally opened a separate benchmark-first cycle. It now records
+that the pinned Stata Journal `st0279` / `gpoisson` unweighted route passed
+source, PMF/CDF, Stata and R CDF-replay gates. Hurdle count remains research
+only.
 
 ## Generalized Poisson Gate
 
@@ -35,14 +37,20 @@ Candidate R routes:
 - `VGAM::genpoisson0`, `VGAM::genpoisson1`, `VGAM::genpoisson2`.
 - `glmmTMB::genpois`.
 
-Required closure before implementation:
+Closed implementation route:
 
-- PMF/CDF and support documented.
-- Stata parameter extraction closed from postestimation results.
-- R parameterization mapped or explicitly downgraded to `R_APPROX_BENCHMARK`.
-- Three datasets: underdispersed, overdispersed/moderate, adversarial stable.
-- Layers: sample, coefficients where comparable, fitted mean, ancillary
-  parameters, `F_low`, `F_high`, `U`, qres.
+- Stata Journal `st0279` / `gpoisson` pinned locally in
+  `04_RETRIEVAL_CONTEXT/EXTERNAL_REPOS/STATA/st0279`.
+- Default documented GP-0 route with `mu = predict, n` and `delta = e(delta)`.
+- CDF endpoint replay from the pinned likelihood formula.
+- Three datasets passed: `jaggia_official`, `poisson_like_stable`,
+  `nb_like_overdispersed`.
+- See `QRESID_GENPOISSON_EXTENSION_AUDIT.md`.
+
+Still required before any additional implementation:
+
+- weights, `gp2`, unrelated external commands, or hurdle generalized Poisson
+  must be separately pinned, benchmarked and audited.
 
 ## Hurdle Count Gate
 
@@ -84,6 +92,7 @@ itself; each route still needs extraction, CDF and benchmark evidence.
 
 ## Release Interpretation
 
-Missing generalized Poisson and hurdle support remains `MISSING_NOT_BLOCKING`
-for current package validity. They must stay out of help/README claims until
-the gate closes and tests/certification pass.
+Missing hurdle support remains `MISSING_NOT_BLOCKING` for current package
+validity. Generalized Poisson may be claimed only for the pinned, unweighted
+Stata Journal `gpoisson` route and must retain its external-estimator
+dependency notice.

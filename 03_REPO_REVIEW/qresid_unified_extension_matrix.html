@@ -279,17 +279,17 @@
         </tr>
         <tr>
           <td>Generalized Poisson</td>
-          <td>Stata Journal <code>gpoisson</code>/<code>st0279</code> candidate; <code>gnpoisson</code> SSC candidate if source/version/license pins cleanly; not official</td>
+          <td>Pinned Stata Journal <code>gpoisson</code>/<code>st0279</code> unweighted route; other GP ado routes such as <code>gnpoisson</code> require separate source/version/license pinning</td>
           <td>no</td>
-          <td>Stata Journal/SSC source must be pinned; do not confuse with local <code>gtools/gpoisson.ado</code></td>
-          <td><span class="badge gate">GATED_MODEL_FAMILY</span></td>
-          <td>possible with <code>VGAM::genpoisson*</code> or <code>glmmTMB::genpois</code> after parameter mapping</td>
-          <td>STATA_EXTERNAL_ADO_VALIDATION; possible R_EXACT_BENCHMARK or R_APPROX_BENCHMARK</td>
-          <td>pending PMF/CDF</td>
+          <td><code>04_RETRIEVAL_CONTEXT/EXTERNAL_REPOS/STATA/st0279</code>; do not confuse with local <code>gtools/gpoisson.ado</code></td>
+          <td><span class="badge ready">READY_FOR_EXTENSION_PRERELEASE</span></td>
+          <td><code>VGAM::pgenpois0</code> for positive delta; analytic R CDF replay for all accepted routes; <code>glmmTMB::genpois</code> retained for future approximate work</td>
+          <td>STATA_EXTERNAL_ADO_VALIDATION; R_CDF_REPLAY; positive-delta R_EXACT_BENCHMARK</td>
+          <td>closed for pinned GP-0 route with <code>delta=e(delta)</code></td>
+          <td>yes</td>
           <td>no</td>
-          <td>no</td>
-          <td>Research candidate only; not part of current support.</td>
-          <td>Pin source/version/license and map PMF/CDF before implementation.</td>
+          <td>Pinned unweighted <code>gpoisson</code> postestimation residuals are ready locally; qresid does not include the external estimator.</td>
+          <td>Keep weights, <code>gp2</code>, unrelated GP ado routes and hurdle GP gated.</td>
         </tr>
         <tr>
           <td>Hurdle Poisson/NB</td>

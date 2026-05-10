@@ -131,7 +131,7 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 - `me*`, `xt*`.
 - Tweedie.
 - COM-Poisson.
-- Generalized Poisson.
+- Generalized Poisson fuera de la ruta pinneada `st0279`/`gpoisson` validada.
 - Beta-binomial.
 
 ### Extension prerelease experimental
@@ -143,6 +143,8 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 - zero-inflated count `zip` y `zinb` sin pesos, con rutas validadas localmente.
 - truncated count `tpoisson`, `ztp`, `tnbreg`, y `ztnb` sin pesos, con rutas validadas localmente.
 - censored count `cpoisson` sin pesos, con rutas validadas localmente.
+- generalized Poisson Stata Journal `st0279`/`gpoisson` sin pesos, con fuente
+  externa pinneada y rutas validadas localmente.
 - direct `fweight` solo en combinaciones `READY_FOR_EXTENSION_PRERELEASE` validadas.
 - direct `[pweight=]` solo como diagnostico model-based/Stata-only, no `svy:`.
 

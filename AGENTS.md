@@ -83,6 +83,8 @@ Extension prerelease experimental:
 - zero-inflated count: `zip` y `zinb` solo sin pesos y en rutas validadas localmente, incluidas pruebas de `offset()` y `exposure()` del componente de conteo;
 - truncated count: `tpoisson`, `ztp`, `tnbreg`, y `ztnb` solo sin pesos y en rutas validadas localmente;
 - censored count: `cpoisson` solo sin pesos y en rutas validadas localmente;
+- generalized Poisson: Stata Journal `st0279`/`gpoisson` solo sin pesos y en
+  rutas validadas localmente; requiere estimador externo pinneado/instalado;
 - direct `[pweight=]`: diagnostico model-based/Stata-only, no `svy:` ni soporte survey exacto.
 
 `Extension prerelease experimental` no equivale a public RC ni soporte estable SSC. Mantener claims y help alineados con matriz de soporte, benchmarks y audit reports activos.
@@ -95,7 +97,7 @@ No implementar como soporte activo en Fase 1:
 - hurdle;
 - truncados/censurados fuera de las rutas unweighted ya validadas en extension prerelease;
 - COM-Poisson;
-- generalized Poisson;
+- generalized Poisson fuera de la ruta pinneada `st0279`/`gpoisson` validada;
 - beta-binomial;
 - `glm nbinomial ml` estable;
 - ZIP/ZINB con pesos o rutas no validadas;

@@ -8,7 +8,7 @@ Retrieval policy: load before extension implementation, benchmark or support-sta
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: math/software evidence matrix updated for generalized Poisson, hurdle and simulated PIT scope.
+POST_CHANGE_SYNC_DONE: math/software evidence matrix updated after pinned generalized Poisson validation; hurdle and simulated PIT scope remain gated/sanity-only.
 SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix, glossary and registry were reconciled with this evidence layer.
 
 ## Purpose
@@ -31,7 +31,7 @@ It separates three different ideas:
 | `tpoisson`; `ztp` | Truncated discrete distribution: conditional CDF over observed support | `ANALYTIC_CDF_CLOSED` for lower truncation and tested constant upper truncation | `VGAM::pospoisson` candidate; base R `ppois` CDF replay used | manual PIT/RQR via `ppois`; `VGAM` has residual tooling but qresid endpoint replay is authority here | no supplementary code required | `R_CDF_REPLAY` with official Stata extraction | possible, but not needed for analytic support | no; now ready for extension prerelease |
 | `tnbreg`; `ztnb` | Truncated NB CDF with Stata NB mean-dispersion extraction | `ANALYTIC_CDF_CLOSED` for lower truncation | `VGAM::posnegbinomial` candidate; base R `pnbinom` CDF replay used | manual PIT/RQR via `pnbinom` | no supplementary code required | `R_CDF_REPLAY` with official Stata extraction | possible, but not needed for analytic support | no; now ready for extension prerelease |
 | `cpoisson` | Censored discrete PIT interval: left, right and uncensored intervals | `ANALYTIC_CDF_CLOSED` for tested left, right and two-sided censoring | `VGAM::cens.poisson` candidate; base R `ppois` CDF replay used | manual interval PIT/RQR via `ppois` | no supplementary code required | `STATA_INTERNAL_VALIDATION` plus `R_CDF_REPLAY` | possible, but not needed for analytic support | no; now ready for extension prerelease |
-| generalized Poisson | Generalized Poisson PMF/CDF from Stata Journal `gpoisson`/`st0279` candidate and R generalized Poisson families | `EVIDENCE_PENDING` until source/version/license, PMF/CDF and parameter mapping close | `VGAM::genpoisson0/1/2`; `glmmTMB::genpois` candidate routes | manual PIT/RQR after CDF closure; no accepted RQR package authority yet | Stata Journal source must be pinned; no external code copied into `qresid` | `STATA_EXTERNAL_ADO_VALIDATION`; possible `R_EXACT_BENCHMARK` or `R_APPROX_BENCHMARK` | possible after estimator mapping | no, because route is not claimed |
+| generalized Poisson | Generalized Poisson GP-0 PMF/CDF from pinned Stata Journal `gpoisson`/`st0279` | `ANALYTIC_CDF_CLOSED` for pinned unweighted route | `VGAM::pgenpois0` for positive delta; `glmmTMB::genpois` future approximate candidate | manual PIT/RQR from analytic CDF replay; no separate RQR package authority needed for accepted route | Stata Journal source pinned locally; no external code copied into `qresid` | `STATA_EXTERNAL_ADO_VALIDATION`; `R_CDF_REPLAY`; positive-delta `R_EXACT_BENCHMARK` | yes for local extension prerelease | no; accepted route is claimed with external-estimator dependency |
 | hurdle count Poisson/NB | Hurdle CDF: `P(Y=0)=pi`, `F(y)=pi+(1-pi)F_plus(y)` for `y>0` | `EVIDENCE_PENDING` until Stata estimator/source and parameter extraction close | `glmmTMB` truncated families plus zero component; `VGAM::zapoisson`, `VGAM::zanegbinomial`, `VGAM::pospoisson`, `VGAM::posnegbinomial` candidates | manual PIT/RQR after hurdle CDF closure; DHARMa simulation only as sanity | no Stata estimator source accepted yet; `churdle` not accepted as count-hurdle without separate proof | `NO_OFFICIAL_STATA_COMMAND` until route closes; possible `STATA_EXTERNAL_ADO_VALIDATION` | possible as sanity only | no, because route is not claimed |
 | DHARMa/glmmTMB sanity | Simulated PIT residuals for fitted count models | `DHARMA_SIMULATION_ONLY` | `glmmTMB` installed; DHARMa 0.4.7 installed locally | DHARMa simulation-based scaled residuals | no supplementary code copied | `SIMULATION_SANITY_CHECK` only | yes; latest script status `PASS_SIMULATION_SANITY_CHECK_ONLY` | no; not used for analytic claims |
 
@@ -42,7 +42,8 @@ It separates three different ideas:
   residuals are needed.
 - Truncated and censored official count routes are now analytic CDF/PIT routes
   with local extension-prerelease evidence.
-- Generalized Poisson and hurdle count are now open research gates, not support
-  claims.
+- Generalized Poisson is ready only for the pinned unweighted `st0279`
+  postestimation route; hurdle count remains an open research gate, not a
+  support claim.
 - DHARMa/glmmTMB can help future simulation sanity checks, but cannot replace
   exact CDF endpoint validation for this package.

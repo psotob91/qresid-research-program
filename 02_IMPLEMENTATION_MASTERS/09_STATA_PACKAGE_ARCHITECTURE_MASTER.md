@@ -53,6 +53,8 @@ Rutas experimentales locales actualmente permitidas por evidencia:
 - zero-inflated count `zip` y `zinb` sin pesos, incluyendo rutas validadas de `offset()` y `exposure()` del componente de conteo;
 - truncated count `tpoisson`, `ztp`, `tnbreg`, y `ztnb` sin pesos en rutas validadas localmente;
 - censored count `cpoisson` sin pesos en rutas validadas localmente;
+- generalized Poisson mediante Stata Journal `st0279`/`gpoisson` sin pesos en
+  rutas validadas localmente; requiere estimador externo pinneado/instalado;
 - direct `fweight` solo en combinaciones `READY_FOR_EXTENSION_PRERELEASE` validadas por benchmarks;
 - direct `[pweight=]` solo como diagnostico model-based/Stata-only, no `svy:`.
 
@@ -141,6 +143,7 @@ Opciones:
 | Tweedie | `glm`/externos | futura | `EVIDENCIA PENDIENTE`: CDF aproximada/no cerrada. |
 | ZIP/ZINB | `zip`, `zinb` | extension prerelease | `EXPERIMENTAL_VALIDATED_LOCAL`: rutas no ponderadas validadas localmente; pesos y extensiones correlacionadas siguen gated. |
 | Truncados/censurados oficiales | `tpoisson`, `ztp`, `tnbreg`, `ztnb`, `cpoisson` | extension prerelease | `EXPERIMENTAL_VALIDATED_LOCAL`: rutas no ponderadas validadas localmente; pesos y variantes no probadas siguen gated. |
+| Generalized Poisson | Stata Journal `st0279`/`gpoisson` | extension prerelease | `READY_FOR_EXTENSION_PRERELEASE`: ruta externa pinneada, no ponderada, con CDF GP-0 y benchmarks locales; otros estimadores GP siguen gated. |
 | Hurdle y otros truncados/censurados no validados | `churdle` y rutas no probadas | 2 | `EVIDENCIA PENDIENTE`: extraccion y CDF pendientes. |
 | GLMM/GSEM | `me*`, `xt*`, `gsem`, `fmm` | 2/3 | `EVIDENCIA PENDIENTE`: preferir diseño simulado. |
 
@@ -162,6 +165,7 @@ Opciones:
 | `tpoisson`, `ztp` | `predict double ..., n`; `e(llopt)`, `e(ulopt)` cuando aplica | Poisson truncado | Soportar rutas no ponderadas validadas; pesos y variantes no probadas siguen gated. |
 | `tnbreg`, `ztnb` | `predict double ..., n`; `e(alpha)` | NB truncado | Soportar rutas no ponderadas validadas; pesos y variantes no probadas siguen gated. |
 | `cpoisson` | `predict double ..., n`; `e(llopt)`, `e(ulopt)` | Poisson censurado | Soportar rutas no ponderadas validadas; pesos y variantes no probadas siguen gated. |
+| `gpoisson` | `predict double ..., n`; `e(delta)` | Generalized Poisson GP-0 | Soportar solo Stata Journal `st0279` pinneado, sin pesos; rutas `gp2`, pesos u otros ado GP siguen gated. |
 | `meglm`, `mepoisson`, `menbreg`, `melogit` | Pendiente | Mixtos | `EVIDENCIA PENDIENTE`: error controlado Fase 2. |
 | `gsem`, `fmm`, `xt*` | Pendiente | Latentes/panel | `EVIDENCIA PENDIENTE`: error controlado Fase 2/3. |
 
