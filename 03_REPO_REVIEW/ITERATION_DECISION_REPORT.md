@@ -59,16 +59,16 @@ Further iteration on hardening now has lower return unless it targets final rele
 
 ## 6. Recommendation
 
-Recommendation: `ADVANCE_TO_NEXT_STAGE`
+Recommendation: `READY_TO_TAG_PRERELEASE_LOCAL`
 
-Recommended next stage: `prerelease`
+Recommended next stage: local prerelease tag
 
-Do not mark the package as public release-ready yet. The correct next move is prerelease packaging/release-policy review, not more Phase 1 implementation.
+Do not mark the package as public release-ready yet. The prerelease payload policy is minimal SSC-style ado/help install payload, with README/LICENSE/changelog/examples/tests/certification retained in the GitHub/repo payload.
 
 ## 7. Next Prompt Recommended
 
 ```text
-Actua como release manager SSC/Stata Journal para qresid. Revisa el estado PRERELEASE_READY_LOCAL, decide payload final de qresid.pkg/README/LICENSE/changelog, verifica git status limpio, prepara tag pre-release local y no implementes nuevas familias.
+Actua como release manager SSC/Stata Journal para qresid. Si git status esta limpio, crea tags locales anotados v0.1.0-prerelease.1 en qresid y qresid-v0.1.0-prerelease.1 en el repo raiz. No hagas push automatico y no implementes nuevas familias.
 ```
 
 ## 8. Post-Change Sync

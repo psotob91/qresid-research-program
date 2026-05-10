@@ -21,7 +21,7 @@ Status source: hardening iteration evidence after local tests, smoke checks, cer
 | RB-007 | resolved | RESOLVED | ado error wording | Unsupported-command error used stale Phase 1B wording. | Updated public error to release-neutral wording. | `qresid.ado` updated. | no |
 | RB-008 | resolved | RESOLVED | tests | Dedicated `logistic` test was missing. | Added and ran dedicated `logistic` integration test. | `tests/logs/10_May_2026_114014_run_all_tests.log`: 19 pass, 0 unexpected. | no |
 | RB-009 | resolved | RESOLVED | tests | Dedicated `glm gaussian` and `glm poisson` tests were missing. | Added and ran dedicated GLM path tests. | `tests/logs/10_May_2026_114014_run_all_tests.log`: 19 pass, 0 unexpected. | no |
-| RB-010 | moderate | SHOULD_FIX_BEFORE_PUBLIC_RELEASE | package payload | README/LICENSE/changelog payload decision is not finalized for public release. | Decide final public payload before public SSC/SJ submission. | `qresid.pkg` installs ado/help only; `LICENSE` and README exist in repo. | no |
+| RB-010 | resolved | RESOLVED_FOR_PRERELEASE_LOCAL | package payload | README/LICENSE/changelog payload decision was not finalized for prerelease. | Keep `qresid.pkg` minimal with ado/help only; keep README/LICENSE/changelog/examples/tests/certification as GitHub/repo payload. Review again before public RC. | `QRESID_PRERELEASE_PAYLOAD_DECISION.md`. | no |
 | RB-011 | minor | CAN_DEFER | changelog policy | No root `CHANGELOG.md`; changelog is under `changelog/`. | Decide before public release whether nested changelog is sufficient. | `qresid/changelog/CHANGELOG.md` active. | no |
 | RB-012 | minor | CAN_DEFER | MCP | Formal MCP-mediated execution is not verified. | Defer unless MCP becomes release workflow requirement. | Local Stata/R protocol is approved. | no |
 | RB-013 | minor | CAN_DEFER | stress testing | Broader stress tests beyond local prerelease scope are not complete. | Defer to post-prerelease hardening or SJ track if needed. | Not part of local prerelease gate. | no |
@@ -34,7 +34,7 @@ Status source: hardening iteration evidence after local tests, smoke checks, cer
 
 Readiness: `PRERELEASE_READY_LOCAL`
 
-All prior `MUST_FIX_BEFORE_RC` blockers are closed for local prerelease readiness. Remaining items are release-policy, public payload, future-family or post-prerelease hardening items.
+All prior `MUST_FIX_BEFORE_RC` blockers are closed for local prerelease readiness. Remaining items are public-RC policy, future-family or post-prerelease hardening items.
 
 Next step: prerelease payload and release-policy review before any public RC tag.
 

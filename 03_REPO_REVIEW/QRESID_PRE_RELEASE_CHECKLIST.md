@@ -16,8 +16,8 @@ Current transition: `NOT_READY` -> `PRERELEASE_READY_LOCAL`.
 
 | gate_id | gate | required_status_before_prerelease | current_status |
 |---|---|---|---|
-| PRC-001 | root git status clean or only approved release audit reports pending | pass | pending commit of approved report/package changes |
-| PRC-002 | `qresid/` git status clean | pass | pending commit of approved hardening changes |
+| PRC-001 | root git status clean or only approved release audit reports pending | pass | pending prerelease payload commit |
+| PRC-002 | `qresid/` git status clean | pass | pending prerelease README/changelog commit |
 | PRC-003 | install smoke from package metadata | pass | pass: `10_May_2026_114036_hardening_smoke.log` |
 | PRC-004 | `help qresid` opens | pass | pass: `10_May_2026_114036_hardening_smoke.log` |
 | PRC-005 | all public examples execute | pass | pass: `10_May_2026_114036_hardening_smoke.log` |
@@ -32,6 +32,7 @@ Current transition: `NOT_READY` -> `PRERELEASE_READY_LOCAL`.
 | PRC-014 | no prompts/internal traces in tracked package payload | pass | no issue found in public files touched |
 | PRC-015 | raw logs are not tracked package payload | pass | pass; logs ignored |
 | PRC-016 | README, `.sthlp`, `pkg`, `toc`, changelog synchronized | pass | pass for local prerelease scope |
+| PRC-017 | prerelease payload policy decided | pass | pass: `PRERELEASE_PAYLOAD_MINIMAL_SSC_STYLE` |
 
 ## 2. Latest Commands Run
 
@@ -69,6 +70,9 @@ Do not set public `RC_READY` until:
 - prerelease payload policy is reviewed;
 - git status is clean after commits;
 - a human release threshold decision is made for public RC/tagging.
+
+Set tag readiness to `READY_TO_TAG_PRERELEASE_LOCAL` after README/changelog
+payload wording is committed and both root and `qresid/` are clean.
 
 ## 5. Post-Change Sync
 
