@@ -72,6 +72,31 @@ No support status changed.
 - `POST_CHANGE_SYNC_DONE`
 - `SUPPORT_MATRIX_SYNC_NOT_REQUIRED`
 
+## 2026-05-11 Follow-Up: README PIT/RQR Formula Expansion
+
+Scope: Documentation-only pass expanding the public README statistical
+background. No changes were made to `qresid.ado`, `qresid.pkg`, `stata.toc`,
+support status, help, or public API.
+
+Changes:
+
+- Added terminology for quantile residuals, randomized quantile residuals,
+  RQRs, normal-score PIT residuals, and PIT-based residuals.
+- Expanded the introductory diagnostic motivation to note that, even for
+  larger count outcomes, omnibus tests and dispersion summaries may reject
+  Poisson without identifying the appropriate alternative distribution.
+- Added compact formulas and teaching points for zero-inflated, truncated,
+  censored, and hurdle count fitted CDFs.
+- Kept citation anchors to Dunn and Smyth for the PIT/RQR construction, Bai et
+  al. for zero-inflated count diagnostics, Yee/Yee and Ma for altered and
+  truncated count distributions, and Zeileis, Kleiber, and Jackman for hurdle
+  count models.
+
+Validation:
+
+- `POST_CHANGE_SYNC_DONE`
+- `SUPPORT_MATRIX_SYNC_NOT_REQUIRED`
+
 ## Open Items
 
 - The Quarto website remains deferred.
