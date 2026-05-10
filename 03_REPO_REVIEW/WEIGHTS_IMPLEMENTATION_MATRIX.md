@@ -18,11 +18,11 @@ POST_CHANGE_SYNC_DONE: registered in `DOCUMENT_STATUS_REGISTRY.md`.
 
 | item | result |
 |---|---|
-| `WEIGHTS_IMPLEMENTATION_ALLOWED` | `no` |
+| `WEIGHTS_IMPLEMENTATION_ALLOWED` | `partial_experimental` |
 | `WEIGHTS_BENCHMARK_ALLOWED` | `yes` |
-| first recommended benchmark | `fweight` frequency expansion for Gaussian/Poisson |
+| first recommended benchmark | `fweight` frequency expansion for Gaussian/Poisson passed |
 | second recommended benchmark | Gamma `glm` weighted CDF/dispersion mapping |
-| qresid code changes allowed now | `no` |
+| qresid code changes allowed now | `yes, only for passed narrow experimental combinations` |
 
 ## 2. Decision Tags
 
@@ -41,11 +41,11 @@ POST_CHANGE_SYNC_DONE: registered in `DOCUMENT_STATUS_REGISTRY.md`.
 
 | family | command | link | weight_type | Stata_supported | R_equivalent | qresid_rule | benchmarkable | decision |
 |---|---|---|---|---|---|---|---|---|
-| Gaussian | `regress` | identity | fweight | yes | frequency expansion / `lm(weights=)` comparison | No final multiplier; compare expanded data semantics. | yes | `BENCHMARK_CANDIDATE` |
+| Gaussian | `regress` | identity | fweight | yes | frequency expansion / model-based CDF check | No final multiplier; CDF uses weighted-fit prediction and Stata scale. | yes | `IMPLEMENT_AFTER_BENCHMARK` |
 | Gaussian | `regress` | identity | aweight | yes | possible `lm(weights=)` prior/analytic comparison | Requires scale/dispersion mapping. | yes | `BENCHMARK_CANDIDATE` |
 | Gaussian | `regress` | identity | iweight | yes | no clear residual distribution equivalent | Keep blocked. | no | `REJECT_FOR_NOW` |
 | Gaussian | `regress` | identity | pweight | yes | R `survey` diagnostic candidate; no base R individual-CDF equivalent | Diagnostic only; no final multiplier. | yes, diagnostic only | `PWEIGHT_DIAGNOSTIC_ONLY` |
-| Poisson | `poisson` | log | fweight | yes | frequency expansion / `glm(poisson, weights=)` comparison | CDF Poisson with weighted-fit `mu`; no final multiplier. | yes | `BENCHMARK_CANDIDATE` |
+| Poisson | `poisson` | log | fweight | yes | frequency expansion / model-based CDF check | CDF Poisson with weighted-fit `mu`; no final multiplier. | yes | `IMPLEMENT_AFTER_BENCHMARK` |
 | Poisson | `poisson` | log | aweight | no | n/a | Stata rejects. | no | `STATA_NOT_SUPPORTED` |
 | Poisson | `poisson` | log | iweight | yes | no clear residual distribution equivalent | Keep blocked. | no | `REJECT_FOR_NOW` |
 | Poisson | `poisson` | log | pweight | yes | R `survey` diagnostic candidate; no exact individual CDF equivalent | Diagnostic only with weighted-fit `mu`; no support claim. | yes, diagnostic only | `PWEIGHT_DIAGNOSTIC_ONLY` |
@@ -110,8 +110,8 @@ Weights may be implemented only after:
 - help/tests/examples are updated in a separate implementation plan;
 - no public API changes are required;
 - iweights remain explicitly blocked unless a later human decision changes policy;
-- pweights remain blocked for implementation, but may produce diagnostic-only research evidence.
+- pweights remain blocked for standard RQR implementation; direct `[pweight=]` is tracked separately as experimental model-based diagnostic support.
 
-Until then:
+Current status:
 
-`WEIGHTS_IMPLEMENTATION_ALLOWED: no`
+`WEIGHTS_IMPLEMENTATION_ALLOWED: partial_experimental`

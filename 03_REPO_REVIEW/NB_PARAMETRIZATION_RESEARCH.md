@@ -16,11 +16,11 @@ POST_CHANGE_SYNC_DONE: registered in `DOCUMENT_STATUS_REGISTRY.md`.
 
 ## 1. Decision
 
-`NB_IMPLEMENTATION_ALLOWED: no`
+`NB_IMPLEMENTATION_ALLOWED: yes`
 
 `NB_BENCHMARK_ALLOWED: yes`
 
-NB support must remain blocked in `qresid.ado` until a separate benchmark cycle passes layer-by-layer comparisons on at least three datasets.
+NB support is allowed only for the narrow integrated experimental scope after the benchmark cycle passed CDF/RQR layer comparisons on three datasets.
 
 The allowed benchmark candidate is:
 
@@ -29,6 +29,22 @@ nbreg y x..., dispersion(mean)
 ```
 
 with default log-link mean model and no weights.
+
+Allowed implementation scope:
+
+- `nbreg y x..., dispersion(mean)`;
+- unweighted;
+- default log-link mean model;
+- CDF endpoints using `theta = 1/e(alpha)` and `p = theta/(theta+mu)`.
+
+Still blocked:
+
+- `dispersion(constant)`;
+- `gnbreg`;
+- NB weights;
+- NB offset/exposure until a dedicated benchmark closes;
+- non-log links;
+- `glm, family(nbinomial ml)` as a stable implementation route.
 
 ## 2. Sources Read
 

@@ -16,7 +16,7 @@ POST_CHANGE_SYNC_DONE: registry updated for pweight diagnostic research phase.
 
 ## 1. Decision
 
-`PWEIGHT_IMPLEMENTATION_ALLOWED: no`
+`PWEIGHT_IMPLEMENTATION_ALLOWED: partial_experimental_direct_only`
 
 `PWEIGHT_DIAGNOSTIC_BENCHMARK_ALLOWED: yes`
 
@@ -24,7 +24,9 @@ POST_CHANGE_SYNC_DONE: registry updated for pweight diagnostic research phase.
 
 `PWEIGHT_SURVEY_DIAGNOSTIC_PHASE: open`
 
-Stata `pweight` may be researched as an experimental survey/diagnostic pathway. It must not be implemented as standard RQR support, must not be documented as public support, and must not be treated as exactly equivalent to R base `glm(weights=)`.
+`PWEIGHT_DIRECT_STATA_EXPERIMENTAL_ALLOWED: yes`
+
+Stata direct `[pweight=]` may be used in the integrated experimental branch as model-based diagnostic support for Gaussian, Poisson and Bernoulli. It is not standard RQR support, not `svy:` support, and not exactly equivalent to R base `glm(weights=)`.
 
 ## 2. Purpose
 
@@ -42,11 +44,11 @@ Allowed:
 
 Not allowed:
 
-- changing `qresid.ado` to accept pweights as supported RQR;
+- changing `qresid.ado` to accept pweights as standard/survey-exact RQR;
 - using R base `glm(weights=)` as exact pweight equivalent;
 - multiplying final residuals by a weight;
 - declaring pweight support in help/README;
-- promoting pweight to implementation without human release-policy decision.
+- promoting pweight beyond direct experimental model-based diagnostics without human release-policy decision.
 
 ## 4. Candidate Commands
 

@@ -14,11 +14,23 @@ POST_CHANGE_SYNC_DONE: grouped binomial research reports registered in `04_RETRI
 
 ## Decision
 
-`GROUPED_BINOMIAL_IMPLEMENTATION_ALLOWED: no`
+`GROUPED_BINOMIAL_IMPLEMENTATION_ALLOWED: yes`
 
 `GROUPED_BINOMIAL_BENCHMARK_ALLOWED: yes`
 
-Grouped binomial support is semantically close enough to benchmark, but not yet safe to implement in `qresid.ado`. The next step is a benchmark-only gate comparing Stata and R by layers.
+Grouped binomial support is now allowed for the narrow integrated experimental scope after Stata/R benchmark evidence passed for `glm, family(binomial trials)` across three datasets and five links.
+
+Allowed implementation scope:
+
+- `glm, family(binomial trials)` / `glm, family(binomial #)`;
+- links `logit`, `probit`, `cloglog`, `log`, `identity`;
+- unweighted grouped binomial only.
+
+Still blocked:
+
+- `binreg` aliases until a separate alias benchmark confirms identical layers;
+- grouped binomial with weights;
+- `binreg hr` / log-complement links.
 
 ## Current Package Gate
 
