@@ -46,11 +46,11 @@ matrix.
 | model_group | stata_route | official_stata_command | qresid_current_status | validation_target | R_candidate | priority | action |
 |---|---|---|---|---|---|---|---|
 | Base count | `poisson`; `glm, family(poisson)` | yes | supported | `R_EXACT_BENCHMARK` | `stats::glm(family=poisson)` | maintain | Keep in prerelease and regression tests. |
-| Negative binomial | `nbreg, dispersion(mean)` | yes | experimental validated local | `R_EXACT_BENCHMARK` | `MASS::glm.nb`, `pnbinom` | high | Complete offset/exposure and variant audit before stable claim. |
-| Negative binomial variants | `nbreg, dispersion(constant)` | yes | gated variant | `STATA_INTERNAL_VALIDATION` or `R_APPROX_BENCHMARK` | no exact default identified | high | Close alpha/theta/k and CDF semantics before implementation. |
-| Generalized negative binomial | `gnbreg` | yes | gated variant | `STATA_INTERNAL_VALIDATION` | custom/VGAM-style research only | high | Evaluate observation-specific `alpha_i` and CDF feasibility. |
-| GLM negative binomial | `glm, family(nbinomial #|ml)` | yes | gated variant | `R_EXACT_BENCHMARK` for fixed theta; research for ML | `MASS::negative.binomial(theta)` | high | Map parameter extraction and fitted CDF before support. |
-| Zero-inflated count | `zip`; `zinb` | yes | missing not blocking | `R_EXACT_BENCHMARK` or `R_APPROX_BENCHMARK` | `pscl`, `VGAM`, `glmmTMB` | future | Derive mixture CDF and extraction gate. |
+| Negative binomial | `nbreg, dispersion(mean)` | yes | extension prerelease ready | `R_EXACT_BENCHMARK` | `MASS::glm.nb`, `pnbinom` | maintain | Maintain mean-dispersion, offset and exposure regression tests. |
+| Negative binomial variants | `nbreg, dispersion(constant)` | yes | extension prerelease ready | `STATA_INTERNAL_VALIDATION` plus R CDF replay | `pnbinom` with row-specific size | maintain | Maintain `delta`, row-specific `theta=mu/delta`, endpoint and qres checks. |
+| Generalized negative binomial | `gnbreg` | yes | extension prerelease ready | `STATA_INTERNAL_VALIDATION` plus R CDF replay | `pnbinom` with row-specific `theta_i=1/alpha_i` | maintain | Maintain observation-specific `alpha_i` extraction and CDF checks. |
+| GLM negative binomial | `glm, family(nbinomial #)`; `glm, family(nbinomial ml)` | yes | fixed-parameter route ready; ML route gated variant | `R_EXACT_BENCHMARK` for fixed theta; research for ML | `MASS::negative.binomial(theta)` | high | Keep fixed theta supported; keep ML gated until robust estimated-parameter extraction is closed. |
+| Zero-inflated count | `zip`; `zinb` | yes | extension prerelease ready | `STATA_INTERNAL_VALIDATION` plus R CDF replay | `VGAM`, `glmmTMB`, custom mixture CDF replay | maintain | Maintain mixture CDF extraction for `pi`, `mu`, `alpha/theta`, offset and exposure. |
 | Truncated count | `tpoisson`; `tnbreg`; `ztp`; `ztnb` | yes | missing not blocking | `R_EXACT_BENCHMARK` or `STATA_INTERNAL_VALIDATION` | `VGAM`, `countreg`, custom CDF | future | Validate truncated support and endpoints. |
 | Censored count | `cpoisson` | yes | missing not blocking | `STATA_INTERNAL_VALIDATION` | no exact base R equivalent identified | future | Define censored CDF interval semantics before support. |
 | Population-averaged/panel | `popoisson`; `xpopoisson`; `xtpoisson`; `xtnbreg` | yes | future phase | `STATA_INTERNAL_VALIDATION` | route-specific | future | Requires panel/dependence design; do not mix with current IID-style claims. |
@@ -78,9 +78,10 @@ matrix.
    offset/exposure, weights, ancillary parameters and CDF feasibility.
 
 2. NB full expansion:
-   complete `nbreg, dispersion(mean)` offset/exposure; investigate
-   `dispersion(constant)`; evaluate `gnbreg`; evaluate `glm, family(nbinomial
-   #|ml)`; keep unsupported variants as `GATED_VARIANT`.
+   maintain `nbreg, dispersion(mean)` offset/exposure; maintain accepted
+   `dispersion(constant)`, `gnbreg`, and fixed-parameter
+   `glm, family(nbinomial #)` routes; keep `glm, family(nbinomial ml)` and
+   unsupported weighted NB variants as `GATED_VARIANT`.
 
 3. Binreg/grouped binomial completion:
    complete `binreg, n()` aliases `or`, `rr`, `rd`; evaluate `hr` as Stata-only
@@ -119,8 +120,9 @@ Each validation must compare:
 
 - Current package validity is not harmed by missing Hilbe/count models because
   they are not claimed.
-- Public RC should not claim generalized Poisson, zero-inflated, truncated,
-  censored, panel, mixture, multilevel or Hilbe external models until their
-  gates close.
+- Public RC should not claim generalized Poisson, truncated, censored, panel,
+  mixture, multilevel or Hilbe external models until their gates close.
+  Unweighted ZIP/ZINB is locally validated for extension prerelease only, not a
+  public RC claim.
 - The support matrix answers "what can I use now"; the unified extension matrix
   answers "what exists in Stata/R and what would be needed next."

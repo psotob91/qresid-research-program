@@ -79,6 +79,8 @@ Extension prerelease experimental:
 - grouped binomial: `glm, family(binomial trials)` y `binreg, n(trials)` aliases validados;
 - direct `fweight`: solo familias/comandos listados como validados en la matriz viva;
 - NB2 `nbreg, dispersion(mean)`: incluye rutas validadas de `offset()` y `exposure()`;
+- NB variants: `nbreg, dispersion(constant)`, `gnbreg`, y `glm, family(nbinomial #)` solo para rutas validadas localmente; `glm nbinomial ml` sigue gated;
+- zero-inflated count: `zip` y `zinb` solo sin pesos y en rutas validadas localmente, incluidas pruebas de `offset()` y `exposure()` del componente de conteo;
 - direct `[pweight=]`: diagnostico model-based/Stata-only, no `svy:` ni soporte survey exacto.
 
 `Extension prerelease experimental` no equivale a public RC ni soporte estable SSC. Mantener claims y help alineados con matriz de soporte, benchmarks y audit reports activos.
@@ -88,14 +90,14 @@ Extension prerelease experimental:
 No implementar como soporte activo en Fase 1:
 
 - Tweedie;
-- ZIP/ZINB;
 - hurdle;
 - truncados;
 - censurados;
 - COM-Poisson;
 - generalized Poisson;
 - beta-binomial;
-- `gnbreg`, `nbreg, dispersion(constant)`, `glm nbinomial` estable;
+- `glm nbinomial ml` estable;
+- ZIP/ZINB con pesos o rutas no validadas;
 - NB/grouped-binomial variants no validadas;
 - pesos no listados como validados;
 - modelos mixtos, panel, GLMM, GSEM o FMM;

@@ -34,7 +34,7 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 - `ESTÁNDAR OFICIAL`: leer primero el contexto mínimo indicado por `RETRIEVAL_MAP_FOR_QRESID.md`.
 - `ESTÁNDAR OFICIAL`: verificar si la tarea involucra implementación, tests, benchmarking, documentación pública o auditoría.
 - `ESTÁNDAR OFICIAL`: identificar familia, comando Stata, fase y estado de evidencia antes de abrir código.
-- `RECOMENDACIÓN OPERATIVA`: no abrir documentos de ZIP/ZINB, hurdle, mixed, `gsem` o `xt*` para tareas Fase 1 salvo que la tarea los mencione.
+- `RECOMENDACIÓN OPERATIVA`: no abrir documentos de hurdle, truncated/censored, mixed, `gsem` o `xt*` para tareas Fase 1 salvo que la tarea los mencione; ZIP/ZINB solo se abren para la ruta extension-prerelease validada o su auditoria activa.
 - `EVIDENCIA PENDIENTE`: si una CDF, comando, extractor o parametrización aparece como pendiente, no inspeccionar código para “inferir” soporte no documentado.
 - `RECOMENDACIÓN OPERATIVA`: registrar mentalmente qué documento gobierna la decisión antes de proponer cambios.
 
@@ -120,7 +120,7 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 
 ### Fase 2 postergada
 
-- ZIP/ZINB.
+- ZIP/ZINB ponderados, correlacionados o no validados.
 - Hurdle.
 - Truncados.
 - PIT o diagnósticos simulados.
@@ -139,6 +139,8 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 - inverse Gaussian `glm` solo en rutas validadas localmente.
 - grouped binomial `glm, family(binomial trials)` y `binreg, n()` aliases validados.
 - NB2 `nbreg, dispersion(mean)` con no-offset, `offset()` y `exposure()`.
+- NB variants `nbreg, dispersion(constant)`, `gnbreg`, y fixed-parameter `glm, family(nbinomial #)`; `glm nbinomial ml` sigue gated.
+- zero-inflated count `zip` y `zinb` sin pesos, con rutas validadas localmente.
 - direct `fweight` solo en combinaciones validadas.
 - direct `[pweight=]` solo como diagnostico model-based/Stata-only, no `svy:`.
 
@@ -227,7 +229,7 @@ Detenerse y no modificar código si:
 - `EVIDENCIA PENDIENTE`: parametrización R-Stata no está alineada.
 - `EVIDENCIA PENDIENTE`: fuente documental clave está pendiente o restringida.
 - `ESTÁNDAR OFICIAL`: Gamma es Fase 1 para modelos no ponderados `glm, family(gamma)` si pasan tests CDF y benchmark R; pesos en Gamma siguen bloqueados por la regla general de pesos.
-- `ESTÁNDAR OFICIAL`: NB2 `nbreg, dispersion(mean)` esta permitido como extension prerelease experimental cuando usa `theta=1/e(alpha)` y benchmarks verdes; NB variants siguen `HUMAN_DECISION_REQUIRED` o gated.
+- `ESTÁNDAR OFICIAL`: NB mean/constant, `gnbreg`, y fixed-parameter `glm nbinomial #` estan permitidos como extension prerelease experimental cuando benchmarks verdes; `glm nbinomial ml` sigue `HUMAN_DECISION_REQUIRED` o gated.
 - `ESTÁNDAR OFICIAL`: direct `fweight` queda limitado a combinaciones validadas; otros pesos requieren regla final por familia.
 - `ESTÁNDAR OFICIAL`: direct `[pweight=]` puede documentarse solo como diagnostico experimental/model-based/Stata-only; soporte survey/public RC requiere decisión humana explícita.
 - `ESTÁNDAR OFICIAL`: API pública Fase 1 está cerrada; cambios futuros requieren aprobación humana y actualización de help/examples/tests/changelog.
@@ -280,9 +282,10 @@ Crear issue o nota de revisión cuando el bloqueo sea reproducible, tenga archiv
 ## 18. Gaps y contradicciones registradas
 
 - `ESTÁNDAR OFICIAL`: Gamma queda resuelto como Fase 1 para modelos no ponderados con validación técnica de `phi`, forma/escala, CDF y benchmark; pesos en Gamma siguen pendientes.
-- `ESTÁNDAR OFICIAL`: NB2 `nbreg, dispersion(mean)` queda validado para extension prerelease; `dispersion(constant)`, `gnbreg`, `glm nbinomial` y otras variantes siguen gated.
+- `ESTÁNDAR OFICIAL`: NB mean/constant, `gnbreg`, y fixed-parameter `glm nbinomial #` quedan validados para extension prerelease; `glm nbinomial ml` y otras variantes no validadas siguen gated.
 - `ESTÁNDAR OFICIAL`: direct `fweight` validado se limita a las combinaciones de la matriz viva; no usar `sqrt(w_i)` global.
 - `HUMAN_DECISION_REQUIRED`: pweights requieren decisión de política survey antes de cualquier soporte público; hasta entonces solo diagnóstico experimental/model-based.
 - `ESTÁNDAR OFICIAL`: API pública Fase 1 resuelta: `newvarname`, `family()` condicional, sin `replace`, sin `generate()` y `savev()` separado de `saveu()`.
 
 `ESTÁNDAR OFICIAL`: estos gaps no bloquean documentación interna, pero bloquean claims públicos, soporte estable y release.
+

@@ -127,6 +127,10 @@
     <section class="panel">
       <label for="filter"><strong>Search matrix</strong></label><br>
       <input id="filter" type="search" placeholder="Search: zip, nbreg, generalized Poisson, R_EXACT_BENCHMARK, Hilbe, BLOCKS...">
+      <p><strong>Validation vocabulary:</strong> <code>R_EXACT_BENCHMARK</code> is pointwise R/Stata evidence;
+      <code>R_APPROX_BENCHMARK</code> is comparable but not exact evidence; <code>R_CDF_REPLAY</code> recomputes CDF
+      endpoints, PIT and qres from Stata-exported parameters; <code>STATA_INTERNAL_VALIDATION</code> validates a
+      Stata-only route through extractor, support and CDF invariants.</p>
     </section>
 
     <table id="matrix">
@@ -172,22 +176,22 @@
           <td>closed for tested route</td>
           <td>yes</td>
           <td>no</td>
-          <td>NB mean-dispersion route works locally, including tested offset() and exposure(); other NB options remain gated.</td>
-          <td>Keep dispersion(constant), gnbreg, glm nbinomial, and other NB variants behind separate gates.</td>
+          <td>NB mean-dispersion route works locally, including tested offset() and exposure(); broader NB variants now have a separate ready row.</td>
+          <td>Keep NB weights beyond tested fweight and glm nbinomial ml behind separate gates.</td>
         </tr>
         <tr>
           <td>Negative binomial variants</td>
-          <td><code>nbreg, dispersion(constant)</code>; <code>gnbreg</code>; <code>glm, family(nbinomial #|ml)</code></td>
+          <td><code>nbreg, dispersion(constant)</code>; <code>gnbreg</code>; fixed-parameter <code>glm, family(nbinomial #)</code>; <code>glm, family(nbinomial ml)</code> gated</td>
           <td>yes</td>
           <td>none</td>
-          <td><span class="badge gate">GATED_VARIANT</span></td>
-          <td>partial or route-specific</td>
-          <td>STATA_INTERNAL_VALIDATION; R_EXACT_BENCHMARK where fixed theta maps cleanly</td>
-          <td>pending</td>
+          <td><span class="badge ready">READY_FOR_EXTENSION_PRERELEASE</span></td>
+          <td>route-specific: exact CDF replay and fixed-theta GLM mapping</td>
+          <td>STATA_INTERNAL_VALIDATION; R_EXACT_BENCHMARK for fixed theta; R CDF replay for all accepted routes</td>
+          <td>closed for accepted routes; glm nbinomial ml pending</td>
+          <td>yes</td>
           <td>no</td>
-          <td>no</td>
-          <td>These are official Stata routes but not yet claimed by qresid.</td>
-          <td>Investigate alpha/theta/k, observation-specific alpha and CDF layers.</td>
+          <td>NB constant, gnbreg, and fixed-theta GLM NB are ready locally; glm nbinomial ml remains a gated variant.</td>
+          <td>Do not claim glm nbinomial ml until robust estimated-parameter extraction is closed.</td>
         </tr>
         <tr>
           <td>Grouped binomial</td>
@@ -208,14 +212,14 @@
           <td><code>zip</code>; <code>zinb</code></td>
           <td>yes</td>
           <td>none</td>
-          <td><span class="badge info">MISSING_NOT_BLOCKING</span></td>
-          <td>yes/approx depending on package and parametrization</td>
-          <td>R_EXACT_BENCHMARK or R_APPROX_BENCHMARK</td>
-          <td>pending mixture CDF</td>
+          <td><span class="badge ready">READY_FOR_EXTENSION_PRERELEASE</span></td>
+          <td>yes for CDF replay; estimator-level R exactness remains package-dependent</td>
+          <td>R_CDF_REPLAY; STATA_INTERNAL_VALIDATION</td>
+          <td>closed for unweighted zip/zinb with offset/exposure</td>
+          <td>yes</td>
           <td>no</td>
-          <td>no</td>
-          <td>Stata has official estimators; qresid does not claim support yet.</td>
-          <td>Open zero-inflated CDF/extraction benchmark gate.</td>
+          <td>Unweighted zip/zinb are ready locally with mixture CDF endpoints; weights and correlated/mixture extensions remain gated.</td>
+          <td>Keep zero-inflated weights and hurdle/truncated/censored counts behind separate gates.</td>
         </tr>
         <tr>
           <td>Truncated count</td>
