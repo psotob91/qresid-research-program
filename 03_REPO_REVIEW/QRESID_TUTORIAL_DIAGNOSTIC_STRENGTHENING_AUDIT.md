@@ -77,3 +77,29 @@ No support status changed.
 - The Quarto website remains deferred.
 - Future manual examples can add applied health datasets, but this pass used
   reproducible simulated datasets to keep the repository self-contained.
+
+## 2026-05-11 Follow-Up: Count And Binary Diagnostic Contrast
+
+Scope: Documentation-only pass strengthening the count, special-count and
+binary functional-form tutorials. No changes were made to `qresid.ado`,
+`qresid.pkg`, `stata.toc`, support status or public API.
+
+Additional visual iterations:
+
+1. Added traditional count summaries to the tutorial output: mean/variance,
+   variance-to-mean ratio, Pearson goodness-of-fit where available and
+   information criteria.
+2. Simulated a zero-inflated negative-binomial-like process and compared
+   Poisson, negative binomial, generalized Poisson, ZIP and ZINB residual
+   diagnostics.
+3. Checked Q-Q plots visually: Poisson and ZIP retain strong tail departures,
+   while NB, generalized Poisson and especially ZINB give clearer fitted-CDF
+   behavior for the simulated process.
+4. Replaced public binary functional-form figures based on grouped summaries
+   with raw scatter plus lowess overlays.
+5. Removed grouped-summary binary image assets from the tracked manual.
+
+Sync:
+
+- `POST_CHANGE_SYNC_DONE`
+- `SUPPORT_MATRIX_SYNC_NOT_REQUIRED`
