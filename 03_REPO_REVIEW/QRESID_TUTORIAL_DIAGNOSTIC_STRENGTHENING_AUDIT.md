@@ -103,3 +103,60 @@ Sync:
 
 - `POST_CHANGE_SYNC_DONE`
 - `SUPPORT_MATRIX_SYNC_NOT_REQUIRED`
+
+## 2026-05-11 Follow-Up: Manual Narrative And Seasonal Diagnostics
+
+Scope: Documentation-only pass polishing the public GitHub README and Markdown
+manual. No changes were made to `qresid.ado`, `qresid.pkg`, `stata.toc`,
+support status, help, or public API.
+
+Changes:
+
+- Converted README feature and documentation lists into compact Markdown
+  tables.
+- Replaced remaining "Learning goal" openings with teaching prose that states
+  the applied diagnostic problem, interprets Stata output, introduces each
+  figure, and closes with a take-home message.
+- Added a seasonal Bernoulli functional-form example to
+  `qresid/docs/link-functional-form.md`.
+- Extended `qresid/docs/scripts/build_manual_assets.do` with reproducible
+  seasonal binary data, Pearson/deviance plots, quantile-residual plots, Q-Q
+  plots, and a Stata output excerpt.
+- Added an optional lowess bandwidth argument for manual figures, used only to
+  tune the seasonal teaching plots.
+- Made the underdispersed count asset build robust to negative-binomial
+  endpoint instability by skipping that illustrative residual when the fitted
+  endpoints are not stable.
+- Removed the stale underdispersed negative-binomial residual figure from the
+  public tutorial; the text now explains that the NB fit collapses to the
+  Poisson boundary in that example.
+
+Additional visual iterations:
+
+1. Generated the first seasonal Bernoulli example with a mild Fourier signal;
+   the quantile-residual smooth was too flat for teaching.
+2. Increased sample size and seasonal amplitudes while keeping fitted
+   probabilities away from separation.
+3. Added a plot-specific lowess bandwidth option to avoid changing existing
+   tutorial plots.
+4. Compared Pearson, deviance, linear-time quantile, and Fourier quantile
+   residuals visually; kept the setting where the linear-time quantile smooth
+   shows seasonal drift and the Fourier smooth is flatter.
+5. Reviewed the final prose so the example explains what the Stata output
+   decides, what the plots add, and why the residual remains tied to the
+   Bernoulli CDF.
+
+Validation:
+
+- `do docs/scripts/build_manual_assets.do`: PASS
+- Markdown link check: PASS
+- Public README/manual language scan for internal terms: PASS
+- `Rscript tests/check_support_report_consistency.R`: PASS
+- `git diff -- qresid.ado qresid.pkg stata.toc --exit-code`: PASS
+- `do examples/run_examples.do`: PASS
+- `do tests/hardening_smoke.do`: PASS
+
+Sync:
+
+- `POST_CHANGE_SYNC_DONE`
+- `SUPPORT_MATRIX_SYNC_NOT_REQUIRED`
