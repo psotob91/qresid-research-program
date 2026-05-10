@@ -208,3 +208,67 @@ Sync:
 
 - `POST_CHANGE_SYNC_DONE`
 - `SUPPORT_MATRIX_SYNC_NOT_REQUIRED`
+
+## 2026-05-11 Follow-Up: README Citations And Binomial Link Tutorial
+
+Scope: Documentation-only pass requested for the public GitHub README and
+Markdown manual. No changes were made to `qresid.ado`, `qresid.pkg`,
+`stata.toc`, support status, help, or public API.
+
+Changes:
+
+- Reordered the README documentation table so each section name is the
+  hyperlink and the navigation order matches the manual sequence.
+- Revised the README introduction and statistical background with in-text
+  citations to Dunn and Smyth, Feng et al., Bai et al., Yee, Yee and Ma,
+  Zeileis et al., and the R benchmark packages documented by `citation()`.
+- Added verified package references for base R, `statmod`, `MASS`, `VGAM`,
+  `pscl`, and `glmtoolbox`.
+- Replaced the initial link-function tutorial with a binomial-count example
+  with five trials per observation. The simulated mean follows a complementary
+  log-log link and the comparison uses a reverse-asymmetry log-log fit versus
+  the complementary log-log fit.
+- Updated `binary-binomial.md` so it no longer points to stale Bernoulli/link
+  assets and instead describes the same binomial-count link example.
+
+Visual iterations:
+
+1. Started with a logit versus complementary-log-log comparison. Pearson and
+   deviance residuals showed the intended parallel bands, but the quantile
+   residuals for both links were visually too similar for teaching.
+2. Increased the complementary-log-log slope and widened the fitted probability
+   range. The classical bands became clearer, but the two quantile-residual
+   displays still did not separate enough.
+3. Switched the comparison link to log-log, which preserves a legitimate GLM
+   link comparison while reversing the tail asymmetry relative to the
+   data-generating complementary-log-log curve.
+4. Regenerated the manual assets and inspected Pearson, deviance,
+   quantile-residual-versus-covariate, and Q-Q plots. The classical residuals
+   now emphasize the few-value binomial support, while the quantile-residual
+   Q-Q and covariate plots more clearly display the worse tail behavior of the
+   log-log fit.
+5. Revised the tutorial text so it teaches why the banding occurs, what Stata
+   output contributes, and what the quantile-residual panels add.
+
+Citation sources checked:
+
+- `citation()` for R Core Team.
+- `citation("statmod")` for Dunn and Smyth (1996) and Giner and Smyth (2016).
+- `citation("MASS")` for Venables and Ripley (2002).
+- `citation("VGAM")` for Yee (2010, 2015) and Yee and Ma (2024).
+- `citation("pscl")` for Zeileis, Kleiber, and Jackman (2008).
+- `citation("glmtoolbox")` for Vanegas, Rondon, and Paula (2024).
+
+Validation:
+
+- `do docs/scripts/build_manual_assets.do`: PASS
+- Visual inspection of the new binomial-count link plots: PASS
+- Markdown link check: PASS
+- Public README/manual language scan for internal terms: PASS
+- `Rscript tests/check_support_report_consistency.R`: PASS
+- `git diff -- qresid.ado qresid.pkg stata.toc --exit-code`: PASS
+- `do examples/run_examples.do`: PASS
+- `do tests/hardening_smoke.do`: PASS after removing transient ignored log
+  files created by the immediately preceding example run.
+- `POST_CHANGE_SYNC_DONE`
+- `SUPPORT_MATRIX_SYNC_NOT_REQUIRED`
