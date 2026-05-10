@@ -43,7 +43,7 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 ## 4. Reglas antes de modificar código
 
 - `ESTÁNDAR OFICIAL`: no modificar `qresid/` sin leer el archivo específico de familia y las reglas de extracción aplicables.
-- `ESTÁNDAR OFICIAL`: confirmar que el cambio pertenece a Fase 1 o que existe aprobación explícita para fases posteriores.
+- `ESTÁNDAR OFICIAL`: confirmar que el cambio pertenece a Fase 1 base o a una ruta `extension prerelease experimental` ya aprobada por reportes activos; fases posteriores requieren aprobacion explicita.
 - `ESTÁNDAR OFICIAL`: todo cambio en CDF, PIT, RNG o `invnormal()` requiere leer `STATA_NUMERICAL_STABILITY_RULES.md`.
 - `ESTÁNDAR OFICIAL`: todo cambio en dispatcher o soporte de comandos requiere leer `STATA_BUILTIN_COMMANDS_MAP.md`.
 - `ESTÁNDAR OFICIAL`: todo cambio que use `predict`, `e()`, offset, exposure, pesos o muestra requiere leer `STATA_MODEL_EXTRACTION_RULES.md`.
@@ -129,11 +129,20 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 
 - GLMM/GSEM/FMM.
 - `me*`, `xt*`.
-- Inverse Gaussian.
 - Tweedie.
 - COM-Poisson.
 - Generalized Poisson.
 - Beta-binomial.
+
+### Extension prerelease experimental
+
+- inverse Gaussian `glm` solo en rutas validadas localmente.
+- grouped binomial `glm, family(binomial trials)` y `binreg, n()` aliases validados.
+- NB2 `nbreg, dispersion(mean)` con no-offset, `offset()` y `exposure()`.
+- direct `fweight` solo en combinaciones validadas.
+- direct `[pweight=]` solo como diagnostico model-based/Stata-only, no `svy:`.
+
+`ESTÁNDAR OFICIAL`: estas rutas pueden documentarse como experimentales locales si los benchmarks y matrices vivas estan sincronizados. No son public RC ni soporte estable SSC.
 
 `ESTÁNDAR OFICIAL`: comandos fuera de fase deben devolver error controlado o stub. No se permite cálculo parcial.
 
@@ -218,9 +227,9 @@ Detenerse y no modificar código si:
 - `EVIDENCIA PENDIENTE`: parametrización R-Stata no está alineada.
 - `EVIDENCIA PENDIENTE`: fuente documental clave está pendiente o restringida.
 - `ESTÁNDAR OFICIAL`: Gamma es Fase 1 para modelos no ponderados `glm, family(gamma)` si pasan tests CDF y benchmark R; pesos en Gamma siguen bloqueados por la regla general de pesos.
-- `HUMAN_DECISION_REQUIRED`: NB requiere decisión `alpha/theta/k` o NB1/NB2.
-- `HUMAN_DECISION_REQUIRED`: pesos requieren regla final por familia.
-- `ESTÁNDAR OFICIAL`: `pweight` puede investigarse como diagnóstico experimental/survey, pero no implementarse ni documentarse como soporte RQR exacto sin decisión humana explícita.
+- `ESTÁNDAR OFICIAL`: NB2 `nbreg, dispersion(mean)` esta permitido como extension prerelease experimental cuando usa `theta=1/e(alpha)` y benchmarks verdes; NB variants siguen `HUMAN_DECISION_REQUIRED` o gated.
+- `ESTÁNDAR OFICIAL`: direct `fweight` queda limitado a combinaciones validadas; otros pesos requieren regla final por familia.
+- `ESTÁNDAR OFICIAL`: direct `[pweight=]` puede documentarse solo como diagnostico experimental/model-based/Stata-only; soporte survey/public RC requiere decisión humana explícita.
 - `ESTÁNDAR OFICIAL`: API pública Fase 1 está cerrada; cambios futuros requieren aprobación humana y actualización de help/examples/tests/changelog.
 - `ESTÁNDAR OFICIAL`: si un benchmark falla antes de CDF/PIT, no ajustar el residuo final para ocultar el fallo.
 
@@ -258,7 +267,7 @@ Crear issue o nota de revisión cuando el bloqueo sea reproducible, tenga archiv
 | Benchmark R-Stata | Comparar por capas y usar `uvar()` | `STATA_R_BENCHMARK_MAPPING.md`, testing rules | Solo si benchmark define fallo |
 | Tests unitarios | Cubrir CDF, endpoints, soporte y PIT | `STATA_TESTING_CERTIFICATION_RULES.md` | Sí, en tests |
 | Help o examples | Verificar soporte certificado | `STATA_PACKAGE_STYLE_RULES.md`, `09` | Sí, solo documentación |
-| Familia fuera de Fase 1 | Crear error controlado o issue | `09`, archivo de familia, retrieval map | No, salvo stub aprobado |
+| Familia fuera de Fase 1 base | Crear error controlado o issue, salvo ruta `extension prerelease experimental` ya aprobada | `09`, archivo de familia, retrieval map, matriz viva | Solo si hay gate y tests verdes |
 | NB `alpha/theta/k` ambiguo | Marcar bloqueo | count rules, benchmark mapping, numerical rules | No |
 | Gamma Fase 1 | Validar parametrización y benchmarks antes de claim público | `09`, numerical rules, testing rules | Sí, solo con tests |
 | Pesos sin regla cerrada | No activar transformación final ni `sqrt(w_i)` global | extraction rules, numerical rules, testing rules, weights evidence review | No |
@@ -271,9 +280,9 @@ Crear issue o nota de revisión cuando el bloqueo sea reproducible, tenga archiv
 ## 18. Gaps y contradicciones registradas
 
 - `ESTÁNDAR OFICIAL`: Gamma queda resuelto como Fase 1 para modelos no ponderados con validación técnica de `phi`, forma/escala, CDF y benchmark; pesos en Gamma siguen pendientes.
-- `HUMAN_DECISION_REQUIRED`: NB requiere decisión estable sobre `alpha/theta/k`, NB1/NB2 y CDF exacta.
-- `HUMAN_DECISION_REQUIRED`: pesos requieren regla final por familia antes de activar transformación del residuo; no usar `sqrt(w_i)` global.
-- `HUMAN_DECISION_REQUIRED`: pweights requieren decisión de política survey antes de cualquier soporte público; hasta entonces solo diagnóstico experimental.
+- `ESTÁNDAR OFICIAL`: NB2 `nbreg, dispersion(mean)` queda validado para extension prerelease; `dispersion(constant)`, `gnbreg`, `glm nbinomial` y otras variantes siguen gated.
+- `ESTÁNDAR OFICIAL`: direct `fweight` validado se limita a las combinaciones de la matriz viva; no usar `sqrt(w_i)` global.
+- `HUMAN_DECISION_REQUIRED`: pweights requieren decisión de política survey antes de cualquier soporte público; hasta entonces solo diagnóstico experimental/model-based.
 - `ESTÁNDAR OFICIAL`: API pública Fase 1 resuelta: `newvarname`, `family()` condicional, sin `replace`, sin `generate()` y `savev()` separado de `saveu()`.
 
 `ESTÁNDAR OFICIAL`: estos gaps no bloquean documentación interna, pero bloquean claims públicos, soporte estable y release.

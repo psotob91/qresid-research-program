@@ -40,6 +40,20 @@ Familias/modelos:
 
 `EVIDENCIA PENDIENTE`: GLMM, GSEM, FMM, `xt*`, modelos bayesianos y correlacionados requieren revisión humana antes de cualquier soporte activo.
 
+### Extension prerelease experimental
+
+`ESTÁNDAR OFICIAL`: una ruta puede existir como `extension prerelease experimental` si tiene CDF/PIT definido, extractor Stata cerrado, tests, benchmarks y matrices vivas sincronizadas, pero aun no constituye public RC ni soporte estable SSC.
+
+Rutas experimentales locales actualmente permitidas por evidencia:
+
+- inverse Gaussian `glm, family(igaussian)` para links validados localmente;
+- grouped binomial `glm, family(binomial trials)` y `binreg, n(trials)` aliases validados;
+- NB2 `nbreg, dispersion(mean)` incluyendo `offset()` y `exposure()`;
+- direct `fweight` solo en combinaciones validadas por benchmarks;
+- direct `[pweight=]` solo como diagnostico model-based/Stata-only, no `svy:`.
+
+`ESTÁNDAR OFICIAL`: estas rutas deben permanecer separadas de Fase 1 estable y de public RC hasta decision humana de release policy.
+
 ---
 
 ## 3. Estructura final esperada del paquete
@@ -119,10 +133,10 @@ Opciones:
 | Poisson | `poisson`, `glm` | 1 | `ESTÁNDAR OFICIAL` |
 | Negative binomial | `nbreg`, `glm` si aplica | 1 | `RECOMENDACIÓN OPERATIVA`: requiere validar NB1/NB2, `alpha/theta/k`. |
 | Gamma | `glm` | 1 | `ESTÁNDAR OFICIAL`: Fase 1 activa; requiere validar `y > 0`, `mu > 0`, `phi > 0`, `shape = 1/phi`, `scale = mu*phi`, CDF y benchmark R. |
-| Inverse Gaussian | `glm` | futura | `EVIDENCIA PENDIENTE`: CDF Stata nativa no validada. |
+| Inverse Gaussian | `glm` | extension prerelease | `EXPERIMENTAL_VALIDATED_LOCAL`: CDF y benchmarks locales cerrados para rutas listadas en la matriz viva; no public RC. |
 | Tweedie | `glm`/externos | futura | `EVIDENCIA PENDIENTE`: CDF aproximada/no cerrada. |
-| ZIP/ZINB | `zip`, `zinb` | 2 | `RECOMENDACIÓN OPERATIVA`: no Fase 1. |
-| Hurdle/truncados | `churdle`, `tpoisson`, `tnbreg` | 2 | `EVIDENCIA PENDIENTE`: extracción y CDF truncada pendientes. |
+| ZIP/ZINB | `zip`, `zinb` | 2 | `RECOMENDACIÓN OPERATIVA`: no Fase 1; requiere gate CDF/extraccion. |
+| Hurdle/truncados/censurados | `churdle`, `tpoisson`, `tnbreg`, `cpoisson` | 2 | `EVIDENCIA PENDIENTE`: extracción y CDF truncada/censurada pendientes. |
 | GLMM/GSEM | `me*`, `xt*`, `gsem`, `fmm` | 2/3 | `EVIDENCIA PENDIENTE`: preferir diseño simulado. |
 
 ---
@@ -134,10 +148,10 @@ Opciones:
 | `regress` | `predict double ..., xb` | Gaussian | Soportar Fase 1. |
 | `glm` | `predict double ..., mu` | `e(family)` | Soportar solo familias Fase 1/1b validadas. |
 | `poisson` | `predict double ..., n` | Poisson | Soportar Fase 1. |
-| `nbreg` | `predict double ..., n` | Negative binomial | Soportar con gate de parametrización. |
+| `nbreg` | `predict double ..., n` | Negative binomial | Soportar solo rutas validadas; NB2 `dispersion(mean)` con `offset()`/`exposure()` esta validado para extension prerelease. |
 | `logit` | `predict double ..., pr` | Bernoulli | Soportar Fase 1. |
 | `logistic` | `predict double ..., pr` | Bernoulli | Soportar Fase 1. |
-| `binreg` | `predict double ..., mu` | Binomial/Bernoulli | Soportar tras validar `e(m)`. |
+| `binreg` | `predict double ..., mu` | Binomial/Bernoulli | Soportar tras validar `e(m)`; grouped aliases validados son extension prerelease, `hr` solo Stata-internal. |
 | `zip`, `zinb` | Pendiente | Inflados | `EVIDENCIA PENDIENTE`: error controlado Fase 2. |
 | `meglm`, `mepoisson`, `menbreg`, `melogit` | Pendiente | Mixtos | `EVIDENCIA PENDIENTE`: error controlado Fase 2. |
 | `gsem`, `fmm`, `xt*` | Pendiente | Latentes/panel | `EVIDENCIA PENDIENTE`: error controlado Fase 2/3. |
@@ -225,7 +239,8 @@ Cuándo usar `.mlib`:
 
 Qué no implementar aún:
 
-- CDF inverse Gaussian, Tweedie, COM-Poisson o generalized Poisson sin evidencia.
+- CDF Tweedie, COM-Poisson o generalized Poisson sin evidencia.
+- CDF inverse Gaussian fuera de las rutas ya validadas en extension prerelease.
 - Integración marginal GLMM/GSEM.
 - Simulación DHARMa-like antes de cerrar Fase 1 analítica.
 
@@ -331,7 +346,7 @@ No iniciar implementación Fase 1 hasta que:
 - `ESTÁNDAR OFICIAL`: exista estrategia `uvar()` para discretas.
 - `ESTÁNDAR OFICIAL`: tolerancias estén fijadas.
 - `ESTÁNDAR OFICIAL`: Gamma Fase 1 queda cerrada para modelos no ponderados `glm, family(gamma)` con soporte, `phi`, forma/escala, CDF y benchmark R; pesos en Gamma siguen pendientes.
-- `EVIDENCIA PENDIENTE`: NB no se declara estable hasta alinear `alpha/theta/k` con R.
+- `ESTÁNDAR OFICIAL`: NB2 `nbreg, dispersion(mean)` con `theta=1/e(alpha)` esta validado para extension prerelease, incluidas rutas `offset()` y `exposure()`. NB no se declara soporte estable/public RC para variantes no validadas.
 
 ---
 
@@ -361,11 +376,11 @@ No iniciar implementación Fase 1 hasta que:
 
 `EVIDENCIA PENDIENTE`:
 
-- Confirmar extracción estable de `alpha/theta/k` para `nbreg` y equivalencia con R.
+- NB2 `nbreg, dispersion(mean)` queda cerrado para extension prerelease con `theta=1/e(alpha)`; faltan variantes `dispersion(constant)`, `gnbreg` y `glm nbinomial`.
 - Gamma queda decidido como Fase 1 y cerrado para modelos no ponderados con evidencia técnica de forma/escala, CDF y benchmark R; pesos en Gamma siguen pendientes.
 - Confirmar uso y transformación final de pesos por familia; no activar `sqrt(w_i)` global.
 - API pública Fase 1 queda cerrada: `qresid newvarname [if] [in], ...`; `family()` es condicional, `replace` no se expone, y `savev()` queda separado de `saveu()`.
-- Confirmar CDF inverse Gaussian antes de cualquier soporte.
+- Inverse Gaussian queda validada solo para rutas listadas en la matriz viva; nuevas variantes requieren gate CDF/benchmark.
 - Confirmar estrategia para Tweedie, COM-Poisson y generalized Poisson.
 - Confirmar diseño Fase 2 para ZIP/ZINB/hurdle/truncados.
 - Confirmar si GLMM/GSEM se abordarán solo por simulación.

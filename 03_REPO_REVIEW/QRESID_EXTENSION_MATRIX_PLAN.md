@@ -10,9 +10,9 @@ Date: 2026-05-10
 
 Branch: `dev-qresid-nb-weights-grouped-binomial`
 
-Status source: root `ecd0140` / qresid `388e595`, prerelease tags `qresid-v0.1.0-prerelease.2` and `v0.1.0-prerelease.2`.
+Status source: reconciled after count-extension freeze root `dde04ef` / qresid `bb77c15`; count tags `qresid-count-extension-freeze.1` and `v0.1.0-extension-count.1`.
 
-POST_CHANGE_SYNC_DONE: registry updated for this plan. No `qresid.ado`, tests or implementation files were modified by this planning step.
+POST_CHANGE_SYNC_DONE: registry updated for this plan. This document is now a historical planning matrix plus active roadmap; current support status is governed by the live support matrix and execution audits.
 
 ## 1. Purpose
 
@@ -58,10 +58,10 @@ This document is a planning and gatekeeping artifact. It does not authorize impl
 | Bernoulli | `glm, family(binomial)` | supported only individual Bernoulli (`e(m)==1`) | logit, probit, cloglog, log, identity when convergent | none, fweight, aweight, iweight, pweight if Stata permits | default/fixed if meaningful | individual unweighted `TESTABLE_NOW`; grouped/weights `NEEDS_RESEARCH` |
 | Bernoulli/binomial | `binreg` | supported only individual Bernoulli (`e(m)==1`) | logit/or, log/rr, identity/rd, hazard link if mappable | none, supported Stata weights by command | default | individual unweighted `TESTABLE_NOW`; grouped/weights `NEEDS_RESEARCH` |
 | Gamma | `glm, family(gamma)` | supported unweighted | log, inverse, identity when convergent | none, fweight, aweight, iweight, pweight if Stata permits | default, fixed, estimated | unweighted links `TESTABLE_NOW`; scale/weights `NEEDS_RESEARCH` |
-| Negative binomial | `nbreg` | not implemented | Stata-supported NB links/options | none, supported Stata weights by command | alpha/theta/k, NB1/NB2, default/fixed if available | `NEEDS_RESEARCH` |
+| Negative binomial | `nbreg` | NB2 `dispersion(mean)` implemented for extension prerelease, including tested `offset()` and `exposure()` | default/log for validated route; other Stata-supported NB options gated | none; tested direct `fweight` separately | `alpha`, `theta=1/e(alpha)` for validated route; other parametrizations gated | validated route `READY_FOR_EXTENSION_PRERELEASE`; variants `NEEDS_RESEARCH` |
 | Negative binomial | `glm, family(nbinomial)` | not implemented | only if Stata supports and R equivalent exists | none, supported Stata weights by command | NB parameterization and scale | `NEEDS_RESEARCH` or `STATA_NOT_SUPPORTED` after inspection |
-| Grouped binomial | `glm, family(binomial)` | blocked by current qresid gate | logit, probit, cloglog, log, identity when convergent | none first; weights later | trials/denominator extraction | `NEEDS_RESEARCH` |
-| Grouped binomial | `binreg` | blocked by current qresid gate | logit/or, log/rr, identity/rd, hazard link if mappable | none first; weights later | trials/denominator extraction | `NEEDS_RESEARCH` |
+| Grouped binomial | `glm, family(binomial)` | implemented for extension prerelease | logit, probit, cloglog, log, identity when convergent | none first; weights later | trials/denominator extraction | base route `READY_FOR_EXTENSION_PRERELEASE`; weights `NEEDS_RESEARCH` |
+| Grouped binomial | `binreg` | aliases `or`/`rr`/`rd` implemented for extension prerelease; `hr` Stata-internal | logit/or, log/rr, identity/rd, hazard link Stata-internal | none first; weights later | trials/denominator extraction | base aliases `READY_FOR_EXTENSION_PRERELEASE`; weights/custom links `NEEDS_RESEARCH` |
 
 ## 5. Link Matrix To Inventory
 

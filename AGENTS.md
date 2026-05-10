@@ -61,9 +61,11 @@ Antes de cambios publicos, help, examples, pkg o release:
 6. Extensiones complejas.
 7. Preparacion SSC/Stata Journal.
 
-## 6. Fase 1 permitida
+## 6. Fase 1 base y extension prerelease
 
-Familias y comandos elegibles solo si pasan extraccion, CDF, tests y benchmark:
+Familias y comandos elegibles solo si pasan extraccion, CDF, tests y benchmark.
+
+Fase 1 base/estable:
 
 - Gaussian: `regress`, `glm`;
 - Poisson: `poisson`, `glm, family(poisson)`;
@@ -71,18 +73,31 @@ Familias y comandos elegibles solo si pasan extraccion, CDF, tests y benchmark:
 - Negative binomial: `nbreg`, con parametrizacion documentada;
 - Gamma: `glm, family(gamma)`.
 
+Extension prerelease experimental:
+
+- inverse Gaussian: `glm, family(igaussian)` solo para rutas validadas localmente;
+- grouped binomial: `glm, family(binomial trials)` y `binreg, n(trials)` aliases validados;
+- direct `fweight`: solo familias/comandos listados como validados en la matriz viva;
+- NB2 `nbreg, dispersion(mean)`: incluye rutas validadas de `offset()` y `exposure()`;
+- direct `[pweight=]`: diagnostico model-based/Stata-only, no `svy:` ni soporte survey exacto.
+
+`Extension prerelease experimental` no equivale a public RC ni soporte estable SSC. Mantener claims y help alineados con matriz de soporte, benchmarks y audit reports activos.
+
 ## 7. Postergado o prohibido sin evidencia
 
 No implementar como soporte activo en Fase 1:
 
-- inverse Gaussian;
 - Tweedie;
 - ZIP/ZINB;
 - hurdle;
 - truncados;
+- censurados;
 - COM-Poisson;
 - generalized Poisson;
 - beta-binomial;
+- `gnbreg`, `nbreg, dispersion(constant)`, `glm nbinomial` estable;
+- NB/grouped-binomial variants no validadas;
+- pesos no listados como validados;
 - modelos mixtos, panel, GLMM, GSEM o FMM;
 - modelos bayesianos;
 - modelos correlacionados complejos;
