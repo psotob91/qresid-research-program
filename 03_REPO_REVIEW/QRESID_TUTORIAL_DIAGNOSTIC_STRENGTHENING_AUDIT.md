@@ -104,6 +104,54 @@ Sync:
 - `POST_CHANGE_SYNC_DONE`
 - `SUPPORT_MATRIX_SYNC_NOT_REQUIRED`
 
+## 2026-05-11 Follow-Up: Binary Direct Plots And Roadmap Placement
+
+Scope: Documentation-only pass requested after visual review of the README and
+binary tutorials. No changes were made to `qresid.ado`, `qresid.pkg`,
+`stata.toc`, support status, help, or public API.
+
+Changes:
+
+- Removed the future-roadmap paragraph from the README `Features` section;
+  future work remains described in `Project Scope`.
+- Reworked binary tutorial figures so direct scatter/Q-Q plots are the primary
+  diagnostic display.
+- Added deviance-vs-covariate direct plots to the nonlinear binary example.
+- Retained lowess only as an explicitly labeled optional reading aid for the
+  seasonal quantile-residual comparison.
+- Strengthened the seasonal Fourier simulation to make the omitted seasonal
+  form more visible while avoiding separation.
+- Deleted stale binary lowess assets that are no longer referenced by the
+  public manual.
+
+Additional visual iterations:
+
+1. Inspected the prior seasonal example and confirmed the direct qresid scatter
+   showed the seasonal pattern only weakly.
+2. Increased Fourier amplitudes and kept the intercept negative enough to
+   avoid near-deterministic Bernoulli outcomes.
+3. Regenerated direct Pearson, deviance and quantile residual plots for the
+   seasonal example.
+4. Compared direct Pearson/deviance bands against the direct quantile-residual
+   display; kept qresid as the main teaching scale.
+5. Kept lowess only for qresid seasonal residuals, where it acts as a reading
+   aid rather than the primary diagnostic.
+
+Validation:
+
+- `do docs/scripts/build_manual_assets.do`: PASS
+- Markdown link check: PASS
+- Public README/manual language scan for internal terms: PASS
+- `Rscript tests/check_support_report_consistency.R`: PASS
+- `git diff -- qresid.ado qresid.pkg stata.toc --exit-code`: PASS
+- `do examples/run_examples.do`: PASS
+- `do tests/hardening_smoke.do`: PASS
+
+Sync:
+
+- `POST_CHANGE_SYNC_DONE`
+- `SUPPORT_MATRIX_SYNC_NOT_REQUIRED`
+
 ## 2026-05-11 Follow-Up: Manual Narrative And Seasonal Diagnostics
 
 Scope: Documentation-only pass polishing the public GitHub README and Markdown
