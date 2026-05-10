@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qresid Math and Software Evidence Matrix</title>
+  <style>
+    body { font-family: "Segoe UI", Arial, sans-serif; margin:0; background:#f7f9f9; color:#1f2933; }
+    header { background:#16324f; color:white; padding:24px 32px; }
+    main { padding:22px 32px 40px; }
+    a { color:#0b5cab; }
+    table { width:100%; border-collapse:collapse; background:white; }
+    th,td { border:1px solid #d7dbdd; padding:8px 10px; vertical-align:top; font-size:13px; }
+    th { background:#e9eef2; position:sticky; top:0; }
+    input { width:min(760px,100%); padding:10px; margin:14px 0; border:1px solid #ccd1d1; border-radius:5px; }
+    code { background:#eef2f3; padding:1px 4px; border-radius:4px; }
+    .note { background:white; border-left:4px solid #1f618d; padding:14px; margin:18px 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>qresid Math and Software Evidence Matrix</h1>
+    <p>Active evidence layer for model mathematics, R/Stata software comparators, PIT/RQR tooling and benchmark type.</p>
+    <p><a href="qresid_current_feature_support_matrix.html">Support matrix</a> | <a href="qresid_unified_extension_matrix.html">Unified extension matrix</a> | <a href="../04_RETRIEVAL_CONTEXT/qresid_support_status_glossary.html">Glossary</a></p>
+  </header>
+  <main>
+    <input id="search" type="search" placeholder="Search: nbinomial ml, tpoisson, cpoisson, DHARMa, R_CDF_REPLAY...">
+    <table id="matrix">
+      <thead><tr><th>route</th><th>math_reference</th><th>cdf_formula_status</th><th>estimation_R_package_function</th><th>pit_rqr_R_package_function</th><th>paper_code_or_supplement</th><th>benchmark_type</th><th>simulation_benchmark_possible</th><th>blocks_prerelease</th></tr></thead>
+      <tbody>
+        <tr><td><code>glm, family(nbinomial ml)</code></td><td>NB2 CDF theory; Stata GLM uses internal NB ML fit</td><td><code>NO_RELIABLE_PARAMETER_EXTRACTION</code></td><td><code>MASS::glm.nb</code>; <code>MASS::negative.binomial(theta)</code> only after theta is known</td><td><code>statmod::qresiduals</code> for compatible NB GLM objects; manual <code>pnbinom</code> replay if theta is known</td><td>No package code copied; local Stata <code>glm.ado</code> shows alpha is retained internally and rounded in <code>e(varfuncf)</code>.</td><td><code>STATA_INTERNAL_VALIDATION</code> for gate; no support claim</td><td><code>DHARMA_SIMULATION_ONLY</code></td><td>no; route remains gated and alternatives exist</td></tr>
+        <tr><td><code>tpoisson</code>; <code>ztp</code></td><td>Conditional CDF over observed truncated Poisson support</td><td><code>ANALYTIC_CDF_CLOSED</code></td><td><code>VGAM::pospoisson</code> candidate; base R <code>ppois</code> replay used</td><td>manual PIT/RQR via <code>ppois</code></td><td>No supplementary code required.</td><td><code>R_CDF_REPLAY</code></td><td>possible, not needed</td><td>no; ready for extension prerelease</td></tr>
+        <tr><td><code>tnbreg</code>; <code>ztnb</code></td><td>Conditional CDF over observed truncated NB support</td><td><code>ANALYTIC_CDF_CLOSED</code></td><td><code>VGAM::posnegbinomial</code> candidate; base R <code>pnbinom</code> replay used</td><td>manual PIT/RQR via <code>pnbinom</code></td><td>No supplementary code required.</td><td><code>R_CDF_REPLAY</code></td><td>possible, not needed</td><td>no; ready for extension prerelease</td></tr>
+        <tr><td><code>cpoisson</code></td><td>Censored discrete PIT interval for left, right and uncensored observations</td><td><code>ANALYTIC_CDF_CLOSED</code></td><td><code>VGAM::cens.poisson</code> candidate; base R <code>ppois</code> replay used</td><td>manual interval PIT/RQR via <code>ppois</code></td><td>No supplementary code required.</td><td><code>STATA_INTERNAL_VALIDATION</code> plus <code>R_CDF_REPLAY</code></td><td>possible, not needed</td><td>no; ready for extension prerelease</td></tr>
+        <tr><td>DHARMa/glmmTMB sanity</td><td>Simulated PIT residuals for fitted count models</td><td><code>DHARMA_SIMULATION_ONLY</code></td><td><code>glmmTMB</code> installed; DHARMa not installed here</td><td>DHARMa simulation residuals when available</td><td>No supplementary code copied.</td><td><code>SIMULATION_SANITY_CHECK</code> only</td><td>yes</td><td>no; not used for analytic claims</td></tr>
+      </tbody>
+    </table>
+    <div class="note">Missing a route is not a validity problem unless qresid claims it. Analytic CDF/PIT evidence remains the controlling standard for qresid support claims.</div>
+  </main>
+  <script>
+    const input = document.getElementById('search');
+    const rows = [...document.querySelectorAll('#matrix tbody tr')];
+    input.addEventListener('input', () => {
+      const q = input.value.toLowerCase();
+      rows.forEach(row => row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none');
+    });
+  </script>
+</body>
+</html>

@@ -51,8 +51,8 @@ matrix.
 | Generalized negative binomial | `gnbreg` | yes | extension prerelease ready | `STATA_INTERNAL_VALIDATION` plus R CDF replay | `pnbinom` with row-specific `theta_i=1/alpha_i` | maintain | Maintain observation-specific `alpha_i` extraction and CDF checks. |
 | GLM negative binomial | `glm, family(nbinomial #)`; `glm, family(nbinomial ml)` | yes | fixed-parameter route ready; ML route gated variant | `R_EXACT_BENCHMARK` for fixed theta; research for ML | `MASS::negative.binomial(theta)` | high | Keep fixed theta supported; keep ML gated until robust estimated-parameter extraction is closed. |
 | Zero-inflated count | `zip`; `zinb` | yes | extension prerelease ready | `STATA_INTERNAL_VALIDATION` plus R CDF replay | `VGAM`, `glmmTMB`, custom mixture CDF replay | maintain | Maintain mixture CDF extraction for `pi`, `mu`, `alpha/theta`, offset and exposure. |
-| Truncated count | `tpoisson`; `tnbreg`; `ztp`; `ztnb` | yes | missing not blocking | `R_EXACT_BENCHMARK` or `STATA_INTERNAL_VALIDATION` | `VGAM`, `countreg`, custom CDF | future | Validate truncated support and endpoints. |
-| Censored count | `cpoisson` | yes | missing not blocking | `STATA_INTERNAL_VALIDATION` | no exact base R equivalent identified | future | Define censored CDF interval semantics before support. |
+| Truncated count | `tpoisson`; `tnbreg`; `ztp`; `ztnb` | yes | extension prerelease ready | `R_CDF_REPLAY` with official Stata extraction; `VGAM` estimator candidates documented | `VGAM::pospoisson`; `VGAM::posnegbinomial`; base R CDF replay | maintain | Maintain lower-truncation and tested upper-truncation endpoint checks. |
+| Censored count | `cpoisson` | yes | extension prerelease ready | `STATA_INTERNAL_VALIDATION` plus R CDF replay | `VGAM::cens.poisson` candidate; base R CDF replay | maintain | Maintain left, right and two-sided censored interval PIT checks. |
 | Population-averaged/panel | `popoisson`; `xpopoisson`; `xtpoisson`; `xtnbreg` | yes | future phase | `STATA_INTERNAL_VALIDATION` | route-specific | future | Requires panel/dependence design; do not mix with current IID-style claims. |
 | Specialized official Poisson | `dspoisson`; `expoisson`; `etpoisson`; `heckpoisson`; `ivpoisson` | yes | future phase | `STATA_INTERNAL_VALIDATION` | route-specific | future | Treatment/selection/endogeneity structure needs separate residual policy. |
 | Multilevel and mixtures | `mepoisson`; `menbreg`; `fmm: poisson`; `fmm: nbreg`; `fmm: tpoisson` | yes | future phase | `STATA_INTERNAL_VALIDATION` | `lme4`, `glmmTMB`, mixture packages | future | Conditional vs marginal CDF decision required before support. |
@@ -73,8 +73,8 @@ matrix.
 ## Workstreams
 
 1. Official Stata count support:
-   prioritize `zip`, `zinb`, `tpoisson`, `tnbreg`, `ztnb`, `ztp`, `cpoisson`,
-   then `gnbreg`. For each route inspect `e(cmd)`, `e()`, `predict`, support,
+   maintain `zip`, `zinb`, `tpoisson`, `tnbreg`, `ztnb`, `ztp`, `cpoisson`,
+   and `gnbreg`. For each route inspect `e(cmd)`, `e()`, `predict`, support,
    offset/exposure, weights, ancillary parameters and CDF feasibility.
 
 2. NB full expansion:
@@ -120,7 +120,7 @@ Each validation must compare:
 
 - Current package validity is not harmed by missing Hilbe/count models because
   they are not claimed.
-- Public RC should not claim generalized Poisson, truncated, censored, panel,
+- Public RC should not claim generalized Poisson, panel,
   mixture, multilevel or Hilbe external models until their gates close.
   Unweighted ZIP/ZINB is locally validated for extension prerelease only, not a
   public RC claim.

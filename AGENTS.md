@@ -81,6 +81,8 @@ Extension prerelease experimental:
 - NB2 `nbreg, dispersion(mean)`: incluye rutas validadas de `offset()` y `exposure()`;
 - NB variants: `nbreg, dispersion(constant)`, `gnbreg`, y `glm, family(nbinomial #)` solo para rutas validadas localmente; `glm nbinomial ml` sigue gated;
 - zero-inflated count: `zip` y `zinb` solo sin pesos y en rutas validadas localmente, incluidas pruebas de `offset()` y `exposure()` del componente de conteo;
+- truncated count: `tpoisson`, `ztp`, `tnbreg`, y `ztnb` solo sin pesos y en rutas validadas localmente;
+- censored count: `cpoisson` solo sin pesos y en rutas validadas localmente;
 - direct `[pweight=]`: diagnostico model-based/Stata-only, no `svy:` ni soporte survey exacto.
 
 `Extension prerelease experimental` no equivale a public RC ni soporte estable SSC. Mantener claims y help alineados con matriz de soporte, benchmarks y audit reports activos.
@@ -91,8 +93,7 @@ No implementar como soporte activo en Fase 1:
 
 - Tweedie;
 - hurdle;
-- truncados;
-- censurados;
+- truncados/censurados fuera de las rutas unweighted ya validadas en extension prerelease;
 - COM-Poisson;
 - generalized Poisson;
 - beta-binomial;

@@ -219,35 +219,35 @@
           <td>yes</td>
           <td>no</td>
           <td>Unweighted zip/zinb are ready locally with mixture CDF endpoints; weights and correlated/mixture extensions remain gated.</td>
-          <td>Keep zero-inflated weights and hurdle/truncated/censored counts behind separate gates.</td>
+          <td>Keep zero-inflated weights and hurdle/correlated count routes behind separate gates.</td>
         </tr>
         <tr>
           <td>Truncated count</td>
           <td><code>tpoisson</code>; <code>tnbreg</code>; <code>ztp</code>; <code>ztnb</code></td>
           <td>yes</td>
           <td>none</td>
-          <td><span class="badge info">MISSING_NOT_BLOCKING</span></td>
-          <td>route-specific</td>
-          <td>R_EXACT_BENCHMARK or STATA_INTERNAL_VALIDATION</td>
-          <td>pending truncated support CDF</td>
+          <td><span class="badge ready">READY_FOR_EXTENSION_PRERELEASE</span></td>
+          <td><code>VGAM</code> route candidates; exact CDF replay with exported Stata parameters</td>
+          <td>R_CDF_REPLAY; STATA_INTERNAL_VALIDATION</td>
+          <td>closed for unweighted lower-truncated routes; <code>tpoisson</code> constant upper truncation tested</td>
+          <td>yes</td>
           <td>no</td>
-          <td>no</td>
-          <td>Official Stata support exists, but qresid has not validated endpoints.</td>
-          <td>Design truncated-support datasets and CDF endpoint formulas.</td>
+          <td>Unweighted official truncated count routes are ready locally with conditional support CDF endpoints.</td>
+          <td>Keep weighted truncated and untested truncation variants gated.</td>
         </tr>
         <tr>
           <td>Censored count</td>
           <td><code>cpoisson</code></td>
           <td>yes</td>
           <td>none</td>
-          <td><span class="badge info">MISSING_NOT_BLOCKING</span></td>
-          <td>not exact in base R</td>
-          <td>STATA_INTERNAL_VALIDATION</td>
-          <td>pending censored interval CDF</td>
+          <td><span class="badge ready">READY_FOR_EXTENSION_PRERELEASE</span></td>
+          <td><code>VGAM::cens.poisson</code> candidate; exact CDF replay with exported Stata parameters</td>
+          <td>STATA_INTERNAL_VALIDATION; R_CDF_REPLAY</td>
+          <td>closed for unweighted left, right and two-sided censoring intervals</td>
+          <td>yes</td>
           <td>no</td>
-          <td>no</td>
-          <td>Needs Stata-only validation unless an exact R route is identified.</td>
-          <td>Define censored PIT interval and endpoint audit.</td>
+          <td>Unweighted cpoisson is ready locally with censored interval PIT endpoints.</td>
+          <td>Keep weighted censored and non-Poisson censored counts gated.</td>
         </tr>
         <tr>
           <td>Specialized official count</td>

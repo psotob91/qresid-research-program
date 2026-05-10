@@ -34,7 +34,7 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 - `ESTÁNDAR OFICIAL`: leer primero el contexto mínimo indicado por `RETRIEVAL_MAP_FOR_QRESID.md`.
 - `ESTÁNDAR OFICIAL`: verificar si la tarea involucra implementación, tests, benchmarking, documentación pública o auditoría.
 - `ESTÁNDAR OFICIAL`: identificar familia, comando Stata, fase y estado de evidencia antes de abrir código.
-- `RECOMENDACIÓN OPERATIVA`: no abrir documentos de hurdle, truncated/censored, mixed, `gsem` o `xt*` para tareas Fase 1 salvo que la tarea los mencione; ZIP/ZINB solo se abren para la ruta extension-prerelease validada o su auditoria activa.
+- `RECOMENDACIÓN OPERATIVA`: no abrir documentos de hurdle, truncated/censored no validados, mixed, `gsem` o `xt*` para tareas Fase 1 salvo que la tarea los mencione; ZIP/ZINB y truncados/censurados solo se abren para rutas extension-prerelease validadas o su auditoria activa.
 - `EVIDENCIA PENDIENTE`: si una CDF, comando, extractor o parametrización aparece como pendiente, no inspeccionar código para “inferir” soporte no documentado.
 - `RECOMENDACIÓN OPERATIVA`: registrar mentalmente qué documento gobierna la decisión antes de proponer cambios.
 
@@ -122,7 +122,7 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 
 - ZIP/ZINB ponderados, correlacionados o no validados.
 - Hurdle.
-- Truncados.
+- Truncados/censurados fuera de rutas unweighted ya validadas.
 - PIT o diagnósticos simulados.
 
 ### Fase 2/3 o evidencia pendiente
@@ -141,6 +141,8 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 - NB2 `nbreg, dispersion(mean)` con no-offset, `offset()` y `exposure()`.
 - NB variants `nbreg, dispersion(constant)`, `gnbreg`, y fixed-parameter `glm, family(nbinomial #)`; `glm nbinomial ml` sigue gated.
 - zero-inflated count `zip` y `zinb` sin pesos, con rutas validadas localmente.
+- truncated count `tpoisson`, `ztp`, `tnbreg`, y `ztnb` sin pesos, con rutas validadas localmente.
+- censored count `cpoisson` sin pesos, con rutas validadas localmente.
 - direct `fweight` solo en combinaciones validadas.
 - direct `[pweight=]` solo como diagnostico model-based/Stata-only, no `svy:`.
 
@@ -283,6 +285,7 @@ Crear issue o nota de revisión cuando el bloqueo sea reproducible, tenga archiv
 
 - `ESTÁNDAR OFICIAL`: Gamma queda resuelto como Fase 1 para modelos no ponderados con validación técnica de `phi`, forma/escala, CDF y benchmark; pesos en Gamma siguen pendientes.
 - `ESTÁNDAR OFICIAL`: NB mean/constant, `gnbreg`, y fixed-parameter `glm nbinomial #` quedan validados para extension prerelease; `glm nbinomial ml` y otras variantes no validadas siguen gated.
+- `ESTÁNDAR OFICIAL`: truncados/censurados oficiales `tpoisson`, `ztp`, `tnbreg`, `ztnb`, y `cpoisson` quedan validados para extension prerelease en rutas unweighted; pesos y variantes no probadas siguen gated.
 - `ESTÁNDAR OFICIAL`: direct `fweight` validado se limita a las combinaciones de la matriz viva; no usar `sqrt(w_i)` global.
 - `HUMAN_DECISION_REQUIRED`: pweights requieren decisión de política survey antes de cualquier soporte público; hasta entonces solo diagnóstico experimental/model-based.
 - `ESTÁNDAR OFICIAL`: API pública Fase 1 resuelta: `newvarname`, `family()` condicional, sin `replace`, sin `generate()` y `savev()` separado de `saveu()`.
