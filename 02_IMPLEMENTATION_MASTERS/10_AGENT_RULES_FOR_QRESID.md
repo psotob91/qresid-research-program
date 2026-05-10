@@ -91,6 +91,7 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 - `ESTÁNDAR OFICIAL`: la API pública Fase 1 es `qresid newvarname [if] [in], options`; no aceptar `generate()` ni interfaz híbrida.
 - `ESTÁNDAR OFICIAL`: `replace` no forma parte de Fase 1; si la variable de salida ya existe, fallar con error claro.
 - `ESTÁNDAR OFICIAL`: `family()` es opción condicional; no debe contradecir `e(family)`.
+- `ESTÁNDAR OFICIAL`: `type(quantile)` es el default; `type(studentized)` queda limitado a rutas unweighted `regress`/`glm` validadas contra `glmtoolbox`; `type(adjusted)` debe seguir como error controlado hasta cerrar el gate matematico.
 - `ESTÁNDAR OFICIAL`: usar `marksample` y cruzar con `e(sample)`.
 - `ESTÁNDAR OFICIAL`: usar `tempvar`, `tempname` y `tempfile` para objetos internos.
 - `ESTÁNDAR OFICIAL`: crear `mu`, `xb`, `pr`, `n`, `F_low`, `F_high`, `V`, `U` y residuos como `double`.

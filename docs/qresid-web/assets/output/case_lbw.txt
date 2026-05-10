@@ -1,0 +1,78 @@
+-------------------------------------------------------------------------------
+      name:  web_case
+       log:  C:/qresid-research-program/docs/qresid-web/assets/output/case_lbw.
+> txt
+  log type:  text
+ opened on:  10 May 2026, 23:16:32
+
+. capture noisily webuse lbw, clear
+(Hosmer & Lemeshow data)
+
+. if _rc {
+.     clear
+.     set obs 120
+.     set seed 20260510
+.     generate age = 18 + floor(22*runiform())
+.     generate smoke = runiform() > .65
+.     generate double xb = -1.2 + .9*smoke - .03*(age - 28)
+.     generate low = runiform() < invlogit(xb)
+. }
+
+. logit low smoke age
+
+Iteration 0:  Log likelihood =   -117.336  
+Iteration 1:  Log likelihood = -113.66733  
+Iteration 2:  Log likelihood = -113.63815  
+Iteration 3:  Log likelihood = -113.63815  
+
+Logistic regression                                     Number of obs =    189
+                                                        LR chi2(2)    =   7.40
+                                                        Prob > chi2   = 0.0248
+Log likelihood = -113.63815                             Pseudo R2     = 0.0315
+
+------------------------------------------------------------------------------
+         low | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       smoke |   .6918486   .3218061     2.15   0.032     .0611202    1.322577
+         age |  -.0497792    .031972    -1.56   0.119    -.1124431    .0128846
+       _cons |   .0609051   .7573199     0.08   0.936    -1.423415    1.545225
+------------------------------------------------------------------------------
+
+. qresid qr_lbw, seed(20260510) family(bernoulli)
+
+. predict fitted_lbw, pr
+
+. summarize qr_lbw
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+      qr_lbw |        189   -.0032345    .9644062  -2.558374   3.399046
+
+. qnorm qr_lbw, name(qnorm_lbw, replace) title("Low birthweight example qresid 
+> QQ plot")
+
+. graph export "`web'/assets/img/case_lbw_qnorm.png", replace width(1200)
+(file
+    C:/qresid-research-program/docs/qresid-web/assets/img/case_lbw_qnorm.png
+    not found)
+file C:/qresid-research-program/docs/qresid-web/assets/img/case_lbw_qnorm.png
+    saved as PNG format
+
+. scatter qr_lbw fitted_lbw, yline(0) name(rvfit_lbw, replace) title("Case stud
+> y qresid vs fitted probability")
+
+. graph export "`web'/assets/img/case_lbw_fitted.png", replace width(1200)
+(file
+    C:/qresid-research-program/docs/qresid-web/assets/img/case_lbw_fitted.png
+    not found)
+file
+    C:/qresid-research-program/docs/qresid-web/assets/img/case_lbw_fitted.png
+    saved as PNG format
+
+. log close web_case
+      name:  web_case
+       log:  C:/qresid-research-program/docs/qresid-web/assets/output/case_lbw.
+> txt
+  log type:  text
+ closed on:  10 May 2026, 23:16:34
+-------------------------------------------------------------------------------

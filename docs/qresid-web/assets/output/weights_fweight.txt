@@ -1,0 +1,55 @@
+-------------------------------------------------------------------------------
+      name:  web_weight
+       log:  C:/qresid-research-program/docs/qresid-web/assets/output/weights_f
+> weight.txt
+  log type:  text
+ opened on:  10 May 2026, 23:16:31
+
+. sysuse auto, clear
+(1978 automobile data)
+
+. generate int fw = 1 + mod(_n, 3)
+
+. regress price mpg [fweight=fw]
+
+      Source |       SS           df       MS      Number of obs   =       149
+-------------+----------------------------------   F(1, 147)       =     43.48
+       Model |   286511288         1   286511288   Prob > F        =    0.0000
+    Residual |   968588571       147   6589037.9   R-squared       =    0.2283
+-------------+----------------------------------   Adj R-squared   =    0.2230
+       Total |  1.2551e+09       148  8480404.45   Root MSE        =    2566.9
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -240.3292   36.44573    -6.59   0.000    -312.3545   -168.3039
+       _cons |   11380.04   805.0516    14.14   0.000     9789.069    12971.01
+------------------------------------------------------------------------------
+
+. qresid qr_fweight
+
+. summarize qr_fweight
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+  qr_fweight |         74   -.0375627    1.015085  -1.278756   3.729334
+
+. qnorm qr_fweight, name(qnorm_fweight, replace) title("fweight Gaussian qresid
+>  QQ plot")
+
+. graph export "`web'/assets/img/weights_fweight_qnorm.png", replace width(1200
+> )
+(file
+    C:/qresid-research-program/docs/qresid-web/assets/img/weights_fweight_qno
+    > rm.png not found)
+file
+    C:/qresid-research-program/docs/qresid-web/assets/img/weights_fweight_qno
+    > rm.png saved as PNG format
+
+. log close web_weight
+      name:  web_weight
+       log:  C:/qresid-research-program/docs/qresid-web/assets/output/weights_f
+> weight.txt
+  log type:  text
+ closed on:  10 May 2026, 23:16:32
+-------------------------------------------------------------------------------

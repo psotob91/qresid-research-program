@@ -37,6 +37,9 @@ SUPPORT_MATRIX_SYNC_NOT_REQUIRED: this map does not change support claims; it ma
 | `03_REPO_REVIEW/qresid_hurdle_count_postestimation_extraction_audit.html` | `REGENERATOR_GAP` | current tracked canonical view, consistency checked | preserve; do not delete in clean run |
 | `03_REPO_REVIEW/qresid_hurdle_stata_ado_pinning_audit.html` | `REGENERATOR_GAP` | current tracked canonical view, consistency checked | preserve; do not delete in clean run |
 | `docs/qresid-web/_site/` | `IGNORED_REGENERABLE` | `quarto render docs/qresid-web` | may delete/regenerate; source `.qmd` files are tracked |
+| `docs/qresid-web/assets/output/*.txt` | `TRACKED_GENERATED_CANONICAL` | `StataSE-64.exe /e do docs/qresid-web/assets/stata/qresid_web_examples.do` | keep; regenerate when teaching examples change |
+| `docs/qresid-web/assets/img/*.png` | `TRACKED_GENERATED_CANONICAL` | `StataSE-64.exe /e do docs/qresid-web/assets/stata/qresid_web_examples.do` | keep; regenerate when teaching examples change |
+| `docs/qresid-web/assets/stata/qresid_web_examples.do` | `TRACKED_SOURCE` | source script for website Stata outputs and figures | keep |
 
 ## Ignored Regenerables To Archive
 

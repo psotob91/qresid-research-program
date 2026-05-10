@@ -110,7 +110,8 @@ Sintaxis final:
 
 ```stata
 qresid newvarname [if] [in] [, seed(integer) uvar(varname numeric) ///
-    savev(name) saveflo(name) savefhi(name) saveu(name) family(string) ]
+    savev(name) saveflo(name) savefhi(name) saveu(name) ///
+    type(string) family(string) ]
 ```
 
 Opciones:
@@ -123,6 +124,7 @@ Opciones:
 | `saveflo(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar `F_low`. |
 | `savefhi(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar `F_high`. |
 | `saveu(name)` | Fase 1 | `ESTÁNDAR OFICIAL`: guardar `U` final antes de `invnormal()`; no es alias de `savev()`. |
+| `type(string)` | Extension prerelease | `ESTÁNDAR OFICIAL`: `type(quantile)` es el default; `type(studentized)` solo para rutas unweighted `regress`/`glm` validadas contra `glmtoolbox`; `type(adjusted)` debe fallar con error controlado hasta cerrar formula y benchmark. |
 | `family(string)` | Fase 1 condicional | `ESTÁNDAR OFICIAL`: permitir solo si el comando activo no permite inferencia segura; nunca debe contradecir `e(family)`. |
 
 `ESTÁNDAR OFICIAL`: `replace` no forma parte de la API pública Fase 1. Si `newvarname` o una variable solicitada con `save*()` ya existe, el comando debe fallar con error claro.
@@ -131,13 +133,15 @@ Opciones:
 
 `ESTÁNDAR OFICIAL`: no cambiar la API pública sin actualizar `.sthlp`, examples, tests y changelog.
 
-`ESTÁNDAR OFICIAL`: el residuo producido por la API actual ya esta en escala
-normal estandar porque aplica `invnormal(U)` al PIT. No agregar una opcion
-publica llamada simplemente `standardized` para este comportamiento existente.
-Opciones futuras de residuos ajustados, studentizados o leverage-adjusted
-requieren cerrar primero `QRESID_STANDARDIZED_QUANTILE_RESIDUALS_GATE.md`,
-incluyendo revision de formulas, paquetes R/codigo fuente y benchmarks por
-ruta.
+`ESTÁNDAR OFICIAL`: el residuo producido por `type(quantile)` ya esta en
+escala normal estandar porque aplica `invnormal(U)` al PIT. No agregar una
+opcion publica llamada simplemente `standardized` para este comportamiento
+existente. `type(studentized)` es una excepcion limitada: divide el residuo
+cuantilico por `sqrt(1-h)` solo despues de `regress`/`glm` sin pesos, con `h`
+obtenido de `predict, hat` y benchmark contra `glmtoolbox`. Opciones futuras de
+residuos ajustados o nuevas variantes studentizadas requieren cerrar primero
+`QRESID_STANDARDIZED_QUANTILE_RESIDUALS_GATE.md`, incluyendo revision de
+formulas, paquetes R/codigo fuente y benchmarks por ruta.
 
 ---
 

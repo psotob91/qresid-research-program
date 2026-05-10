@@ -1,0 +1,31 @@
+---
+title: "Reference"
+---
+
+Use this page to jump to the support authorities and evidence reports.
+
+## Package files
+
+- [Stata help source](file:///C:/qresid-research-program/qresid/qresid.sthlp)
+- [README](file:///C:/qresid-research-program/qresid/README.md)
+- [Changelog](file:///C:/qresid-research-program/qresid/changelog/CHANGELOG.md)
+
+## Support and evidence
+
+- [Current feature support matrix](file:///C:/qresid-research-program/03_REPO_REVIEW/qresid_current_feature_support_matrix.html)
+- [Unified extension matrix](file:///C:/qresid-research-program/03_REPO_REVIEW/qresid_unified_extension_matrix.html)
+- [GLM/link and evidence report](file:///C:/qresid-research-program/qresid/certification/reports/qresid_glm_link_matrix.html)
+- [Support glossary](file:///C:/qresid-research-program/04_RETRIEVAL_CONTEXT/qresid_support_status_glossary.html)
+
+## Residual variants
+
+- `type(quantile)`: default Dunn-Smyth normal-score quantile residual.
+- `type(studentized)`: leverage-standardized quantile residual for unweighted `regress` and `glm`.
+- `type(adjusted)`: reserved and currently gated.
+
+## Core references
+
+- Cox and Snell (1968), general residual definition.
+- Dunn and Smyth (1996), randomized quantile residuals.
+- Warton, Thibaut, and Wang (2017), PIT interpretation cautions.
+- `statmod::qresiduals`, `glmtoolbox::residuals2`, `gamlss`, and `topmodels` documentation for R-side residual taxonomy and benchmarks.

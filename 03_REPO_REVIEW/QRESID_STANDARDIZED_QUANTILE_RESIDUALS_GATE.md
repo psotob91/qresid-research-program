@@ -8,8 +8,8 @@ Retrieval policy: load before any adjusted, studentized, scaled, or standardized
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: created as the live gate for standardized/adjusted quantile residual terminology and implementation decisions.
-SUPPORT_MATRIX_SYNC_NOT_REQUIRED: no support status changed; this gate blocks new API until formulas and benchmarks close.
+POST_CHANGE_SYNC_DONE: updated after local R package source audit and implementation of the gateable `type()` API.
+SUPPORT_MATRIX_SYNC_DONE: studentized residual support is now route-limited and must remain visible in support matrices and help.
 
 ## Decision Summary
 
@@ -23,18 +23,18 @@ r_i = Phi^{-1}(U_i)
 
 This is the Dunn-Smyth randomized quantile residual construction and is the same normal-score scale used by `statmod::qresiduals`. In this sense, the current residual is already a standard-normal quantile residual.
 
-A different object, such as an adjusted, studentized, leverage-adjusted, bias-adjusted, or otherwise rescaled quantile residual, is not currently implemented. It must not be added by analogy. It requires a route-specific mathematical formula, an R package/source-code audit when available, and a benchmark or replay test.
+A different object, such as an adjusted, studentized, leverage-adjusted, bias-adjusted, or otherwise rescaled quantile residual, must not be added by analogy. It requires a route-specific mathematical formula, an R package/source-code audit when available, and a benchmark or replay test. The only route currently promoted is leverage-standardized quantile residuals after unweighted `regress` and `glm`, exposed as `type(studentized)`.
 
 ## Formula And Evidence Matrix
 
 | residual_variant | formula_or_operational_rule | family_or_route_scope | primary_reference | R_package_function | R_source_status | mathematical_double_check | decision |
 |---|---|---|---|---|---|---|---|
 | normal_score_qresid | `r_i = Phi^{-1}(U_i)` after PIT/randomized PIT | all currently supported `qresid` routes with valid CDF endpoints | Dunn and Smyth (1996); Cox and Snell (1968); Warton et al. (2017) | `statmod::qresiduals`; route-specific manual CDF replay | local `statmod` 1.5.1 inspected | PIT gives uniform with true parameters; normal quantile maps to standard normal. With estimated parameters, normality is approximate/asymptotic. No leverage correction is implied. | `ALREADY_IMPLEMENTED` |
+| leverage-standardized quantile residual | `r_i^* = r_i / sqrt(1-h_i)`, where `r_i = Phi^{-1}(U_i)` and `h_i` is the diagonal from `predict, hat` | unweighted `regress` and `glm` only | `glmtoolbox::residuals2` documentation/source; GLM leverage convention | `glmtoolbox::residuals2(type="quantile", standardized=TRUE)` | local `glmtoolbox` 0.1.12 installed and source inspected | This is an operational leverage standardization, not a new PIT. It rescales the already normal-score residual by the fitted-model leverage factor. It is route-limited because hat values and their meaning are estimator-specific. | `IMPLEMENTED_AFTER_BENCHMARK` |
 | DHARMa scaled residual | simulated PIT on uniform scale; optional `qnorm()` transform by user | simulation sanity checks, especially complex models | DHARMa documentation; Warton et al. PIT logic | `DHARMa::simulateResiduals`; `DHARMa::getQuantile` | local DHARMa 0.4.7 source inspected via `getAnywhere()` | This is Monte Carlo PIT, not analytic CDF replay. It can diagnose simulation-calibrated models but is not an exact Dunn-Smyth analytic residual. | `NOT_A_QRESID_API_TARGET` |
-| adjusted quantile residual | candidate adjustment to reduce finite-sample bias or improve GLM diagnostics | GLM routes only until proven otherwise | Scudilio and Pereira (2020), metadata known; full formulas not yet audited locally | candidate packages: `glmtoolbox::residuals2` if installed/audited | package not installed locally at gate creation | No implementation until paper formulas and R function code are both inspected. Need prove whether adjustment changes location, variance, leverage, or bias and whether it preserves intended null behavior. | `GATED_RESEARCH` |
-| studentized/leverage-adjusted qresid | candidate form such as `r_i / sqrt(1-h_i)` only if derived for qresid, not borrowed from Pearson/deviance residuals | potentially Gaussian/GLM; not mixtures, hurdle, censored, external ML without route-specific hat values | no active qresid-specific reference in current masters | no accepted R reference yet | not found locally | Borrowing GLM Pearson/deviance standardization is mathematically insufficient for RQR. Requires route-specific derivation of variance of `Phi^{-1}(F_i(Y_i; theta_hat))` under estimated parameters. | `GATED_RESEARCH` |
-| normalized residuals in GAMLSS | often randomized quantile residuals in standard normal scale, possibly with family-specific distribution functions | GAMLSS-style families | GAMLSS documentation to be audited if installed | `gamlss` residual functions | package not installed locally at gate creation | Treat as a candidate source for formulas and examples only after source-code and paper audit. | `GATED_RESEARCH` |
-| topmodels probabilistic residuals | PIT/probability-scale residual infrastructure, with quantile residual variants | probabilistic model objects | `topmodels` documentation | `topmodels::qresiduals`; `topmodels::proresiduals` | package not installed locally at gate creation | Candidate for residual taxonomy and model-object design, not automatic proof of studentization. | `GATED_RESEARCH` |
+| adjusted quantile residual | candidate adjustment to reduce finite-sample bias or improve GLM diagnostics | GLM routes only until proven otherwise | Scudilio and Pereira (2020), abstract and metadata audited; full closed formula still requires paper-level audit | no installed function found that implements the Scudilio-Pereira adjusted formula directly | `glmtoolbox` provides quantile and leverage-standardized quantile residuals, not the adjusted formula | No implementation until paper formulas and R function code are both inspected. Need prove whether adjustment changes location, variance, leverage, or bias and whether it preserves intended null behavior. | `GATED_RESEARCH` |
+| normalized residuals in GAMLSS | `object$residuals` / `object$rqres` z-scores using family CDFs | GAMLSS-style families, not Stata GLM postestimation | GAMLSS documentation/source | `gamlss::residuals(..., what="z-scores")`; `gamlss::get.rqres` | local `gamlss` 5.5.0 installed and source inspected | Confirms normal-score/RQR taxonomy and frequency-weight handling. It does not provide a universal adjusted/studentized formula for `qresid` Stata routes. | `REFERENCE_ONLY` |
+| topmodels probabilistic residuals | PIT/proresidual infrastructure; quantile residuals use `qnorm(PIT)` | probabilistic model objects | `topmodels` documentation/source | `topmodels::proresiduals(type="quantile")` | local `topmodels` 0.3.0 installed from R-Forge and source inspected | Confirms generic PIT/randomized PIT design. It does not provide leverage/studentization for Stata postestimation routes. | `REFERENCE_ONLY` |
 
 ## Mandatory Reverse-Engineering Protocol
 
@@ -60,8 +60,8 @@ When parameters are estimated, `F_i(y_i; theta_hat)` is a plug-in CDF. The resid
 ## Implementation Policy
 
 - Do not add `standardized` as a public option for the current residual; document that the default is already on the standard normal scale.
-- If a future adjusted variant is validated, use an explicit option name such as `adjusted` or `studentized`.
-- Do not support adjusted/studentized variants for external, mixture, truncated, censored, hurdle, or weighted routes until a route-specific derivation and benchmark exist.
+- Public API is `type(quantile|studentized|adjusted)`. `type(quantile)` is default; `type(studentized)` is route-limited to unweighted `regress` and `glm`; `type(adjusted)` must fail with a controlled gate message until a formula closes.
+- Do not support adjusted/studentized variants for external, mixture, truncated, censored, hurdle, weighted, survey, or non-`glm` routes until a route-specific derivation and benchmark exist.
 - Keep this gate synchronized with help, glossary, API docs, and changelog before any implementation.
 
 ## References And Sources To Audit

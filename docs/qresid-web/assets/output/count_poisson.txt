@@ -1,0 +1,66 @@
+-------------------------------------------------------------------------------
+      name:  web_count
+       log:  C:/qresid-research-program/docs/qresid-web/assets/output/count_poi
+> sson.txt
+  log type:  text
+ opened on:  10 May 2026, 23:16:25
+
+. sysuse auto, clear
+(1978 automobile data)
+
+. poisson rep78 mpg if rep78 < .
+
+Iteration 0:  Log likelihood = -114.65178  
+Iteration 1:  Log likelihood = -114.65178  
+
+Poisson regression                                      Number of obs =     69
+                                                        LR chi2(1)    =   3.05
+                                                        Prob > chi2   = 0.0806
+Log likelihood = -114.65178                             Pseudo R2     = 0.0131
+
+------------------------------------------------------------------------------
+       rep78 | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |   .0188662   .0106071     1.78   0.075    -.0019234    .0396558
+       _cons |   .8175587   .2419551     3.38   0.001     .3433354    1.291782
+------------------------------------------------------------------------------
+
+. qresid qr_poisson, seed(20260510)
+
+. predict fitted_rep78, n
+
+. summarize qr_poisson
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+  qr_poisson |         69    .0763791    .5121543  -1.255924   1.134676
+
+. qnorm qr_poisson, name(qnorm_poisson, replace) title("Poisson qresid QQ plot"
+> )
+
+. graph export "`web'/assets/img/count_poisson_qnorm.png", replace width(1200)
+(file
+    C:/qresid-research-program/docs/qresid-web/assets/img/count_poisson_qnorm
+    > .png not found)
+file
+    C:/qresid-research-program/docs/qresid-web/assets/img/count_poisson_qnorm
+    > .png saved as PNG format
+
+. scatter qr_poisson fitted_rep78, yline(0) name(rvfit_poisson, replace) title(
+> "Poisson qresid vs fitted")
+
+. graph export "`web'/assets/img/count_poisson_fitted.png", replace width(1200)
+(file
+    C:/qresid-research-program/docs/qresid-web/assets/img/count_poisson_fitte
+    > d.png not found)
+file
+    C:/qresid-research-program/docs/qresid-web/assets/img/count_poisson_fitte
+    > d.png saved as PNG format
+
+. log close web_count
+      name:  web_count
+       log:  C:/qresid-research-program/docs/qresid-web/assets/output/count_poi
+> sson.txt
+  log type:  text
+ closed on:  10 May 2026, 23:16:29
+-------------------------------------------------------------------------------

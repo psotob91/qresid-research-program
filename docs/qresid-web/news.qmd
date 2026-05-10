@@ -1,0 +1,18 @@
+---
+title: "News"
+---
+
+This page summarizes user-facing changes. The canonical development changelog remains in `qresid/changelog/CHANGELOG.md`.
+
+## Current extension prerelease line
+
+- Added broad local extension-prerelease support for non-correlated continuous, binomial, count, zero-inflated, truncated, censored, generalized Poisson, and pinned hurdle routes documented in the support matrix.
+- Added `type(quantile|studentized|adjusted)`.
+  - `type(quantile)` is the default.
+  - `type(studentized)` is available only after unweighted `regress` and `glm`.
+  - `type(adjusted)` is intentionally gated until a formula and benchmark close.
+- Added a teaching website prototype with Stata output and exported diagnostic graphs.
+
+## What remains gated
+
+`svy:`, `aweight`, `iweight`, unsupported weighted routes, correlated/panel/multilevel models, and adjusted quantile residuals remain outside public claims.

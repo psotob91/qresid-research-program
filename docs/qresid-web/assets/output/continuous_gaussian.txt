@@ -1,0 +1,67 @@
+-------------------------------------------------------------------------------
+      name:  web_cont
+       log:  C:/qresid-research-program/docs/qresid-web/assets/output/continuou
+> s_gaussian.txt
+  log type:  text
+ opened on:  10 May 2026, 23:16:15
+
+. sysuse auto, clear
+(1978 automobile data)
+
+. regress price mpg
+
+      Source |       SS           df       MS      Number of obs   =        74
+-------------+----------------------------------   F(1, 72)        =     20.26
+       Model |   139449474         1   139449474   Prob > F        =    0.0000
+    Residual |   495615923        72  6883554.48   R-squared       =    0.2196
+-------------+----------------------------------   Adj R-squared   =    0.2087
+       Total |   635065396        73  8699525.97   Root MSE        =    2623.7
+
+------------------------------------------------------------------------------
+       price | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |  -238.8943   53.07669    -4.50   0.000    -344.7008   -133.0879
+       _cons |   11253.06   1170.813     9.61   0.000     8919.088    13587.03
+------------------------------------------------------------------------------
+
+. qresid qr_gaussian
+
+. predict fitted_price, xb
+
+. summarize qr_gaussian
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+ qr_gaussian |         74   -1.01e-16    .9931271  -1.213641   3.685594
+
+. qnorm qr_gaussian, name(qnorm_gaussian, replace) title("Gaussian qresid QQ pl
+> ot")
+
+. graph export "`web'/assets/img/continuous_gaussian_qnorm.png", replace width(
+> 1200)
+(file
+    C:/qresid-research-program/docs/qresid-web/assets/img/continuous_gaussian
+    > _qnorm.png not found)
+file
+    C:/qresid-research-program/docs/qresid-web/assets/img/continuous_gaussian
+    > _qnorm.png saved as PNG format
+
+. scatter qr_gaussian fitted_price, yline(0) name(rvfit_gaussian, replace) titl
+> e("Gaussian qresid vs fitted")
+
+. graph export "`web'/assets/img/continuous_gaussian_fitted.png", replace width
+> (1200)
+(file
+    C:/qresid-research-program/docs/qresid-web/assets/img/continuous_gaussian
+    > _fitted.png not found)
+file
+    C:/qresid-research-program/docs/qresid-web/assets/img/continuous_gaussian
+    > _fitted.png saved as PNG format
+
+. log close web_cont
+      name:  web_cont
+       log:  C:/qresid-research-program/docs/qresid-web/assets/output/continuou
+> s_gaussian.txt
+  log type:  text
+ closed on:  10 May 2026, 23:16:25
+-------------------------------------------------------------------------------

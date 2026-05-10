@@ -18,6 +18,10 @@ website:
         text: Weights
       - href: cases.qmd
         text: Case studies
+      - href: news.qmd
+        text: News
+      - href: reference.qmd
+        text: Reference
       - href: future.qmd
         text: Future
 

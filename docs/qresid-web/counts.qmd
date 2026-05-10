@@ -2,20 +2,40 @@
 title: "Count models"
 ---
 
-Count outcomes are where quantile residuals become especially helpful: ordinary residuals often show bands because the response is discrete. `qresid` uses Dunn-Smyth randomization inside the CDF jump.
+Count outcomes are where quantile residuals are especially useful. Ordinary residuals often form bands because the outcome is discrete; `qresid` randomizes inside each fitted CDF jump and maps the result to the normal scale.
+
+## Poisson starting point
 
 ```stata
-clear
-set obs 150
-set seed 20260510
-generate double x = rnormal()
-generate double mu = exp(.2 + .5*x)
-generate int y = rpoisson(mu)
-poisson y x
-qresid rq_pois, seed(101)
-qnorm rq_pois
-predict double n_pois, n
-scatter rq_pois n_pois, yline(0)
+sysuse auto, clear
+poisson rep78 mpg if rep78 < .
+qresid qr_poisson, seed(20260510)
+qnorm qr_poisson
+predict fitted_rep78, n
+scatter qr_poisson fitted_rep78, yline(0)
 ```
 
-For teaching, compare Poisson, negative binomial, zero-inflated, truncated, censored, generalized Poisson, and hurdle routes on the same synthetic or applied dataset when the support matrix marks them ready.
+[Full Stata output](assets/output/count_poisson.txt)
+
+![Poisson QQ-normal plot](assets/img/count_poisson_qnorm.png)
+
+![Poisson residuals versus fitted mean](assets/img/count_poisson_fitted.png)
+
+Interpretation: curvature or tail departures in the QQ-normal plot suggest the Poisson variance or support may be inadequate. A patterned residual-versus-fitted plot suggests trying NB, zero-inflated, truncated/censored, generalized Poisson, or pinned hurdle routes when the data-generating story supports them.
+
+## Extension count routes
+
+`qresid` has local extension-prerelease evidence for NB variants, ZIP/ZINB, truncated count, censored count, generalized Poisson, and pinned hurdle estimators. These pages teach use, but the support matrix remains the authority for which route is ready.
+
+```stata
+nbreg y x, dispersion(mean)
+qresid rq_nb, seed(20260510)
+
+zip y x, inflate(z)
+qresid rq_zip, seed(20260510)
+
+tpoisson y x, ll(0)
+qresid rq_tpois, seed(20260510)
+```
+
+Use a simpler model first, then compare residual plots after moving to the model that matches the support: overdispersion, structural zeros, truncation, censoring, or a hurdle process.

@@ -1,0 +1,71 @@
+-------------------------------------------------------------------------------
+      name:  web_binom
+       log:  C:/qresid-research-program/docs/qresid-web/assets/output/binomial_
+> logit.txt
+  log type:  text
+ opened on:  10 May 2026, 23:16:29
+
+. sysuse auto, clear
+(1978 automobile data)
+
+. generate byte foreign01 = foreign
+
+. logit foreign01 mpg
+
+Iteration 0:  Log likelihood =  -45.03321  
+Iteration 1:  Log likelihood = -39.380959  
+Iteration 2:  Log likelihood = -39.288802  
+Iteration 3:  Log likelihood =  -39.28864  
+Iteration 4:  Log likelihood =  -39.28864  
+
+Logistic regression                                     Number of obs =     74
+                                                        LR chi2(1)    =  11.49
+                                                        Prob > chi2   = 0.0007
+Log likelihood = -39.28864                              Pseudo R2     = 0.1276
+
+------------------------------------------------------------------------------
+   foreign01 | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         mpg |   .1597621   .0525876     3.04   0.002     .0566922     .262832
+       _cons |  -4.378866   1.211295    -3.62   0.000    -6.752961   -2.004771
+------------------------------------------------------------------------------
+
+. qresid qr_logit, seed(20260510) family(bernoulli)
+
+. predict fitted_foreign, pr
+
+. summarize qr_logit
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+    qr_logit |         74    .0770387    .9211054  -2.302357   1.838465
+
+. qnorm qr_logit, name(qnorm_logit, replace) title("Bernoulli qresid QQ plot")
+
+. graph export "`web'/assets/img/binomial_logit_qnorm.png", replace width(1200)
+(file
+    C:/qresid-research-program/docs/qresid-web/assets/img/binomial_logit_qnor
+    > m.png not found)
+file
+    C:/qresid-research-program/docs/qresid-web/assets/img/binomial_logit_qnor
+    > m.png saved as PNG format
+
+. scatter qr_logit fitted_foreign, yline(0) name(rvfit_logit, replace) title("B
+> ernoulli qresid vs fitted probability")
+
+. graph export "`web'/assets/img/binomial_logit_fitted.png", replace width(1200
+> )
+(file
+    C:/qresid-research-program/docs/qresid-web/assets/img/binomial_logit_fitt
+    > ed.png not found)
+file
+    C:/qresid-research-program/docs/qresid-web/assets/img/binomial_logit_fitt
+    > ed.png saved as PNG format
+
+. log close web_binom
+      name:  web_binom
+       log:  C:/qresid-research-program/docs/qresid-web/assets/output/binomial_
+> logit.txt
+  log type:  text
+ closed on:  10 May 2026, 23:16:31
+-------------------------------------------------------------------------------
