@@ -177,11 +177,15 @@ Detener la tarea si:
 
 Despues de cualquier cambio que afecte soporte implementado, benchmarks, status experimental/diagnostico, help, README, changelog, release readiness o claims publicos:
 
+- actualizar primero `03_REPO_REVIEW/QRESID_SUPPORT_REPORT_CANONICAL_ROWS.md` si se agrega una familia, se divide un modelo/gate en varias filas, cambia un status, cambia una ruta R de estimacion o cambia la funcion R/PIT/RQR usada para validar; despues regenerar o reconciliar las tres vistas activas desde esa tabla;
+- actualizar o regenerar `qresid/certification/reports/qresid_support_evidence_index.csv` mediante `qresid/tests/build_support_evidence_index.R` si cambia cualquier benchmark, validacion Stata-internal, ruta diagnostica o evidencia de soporte;
 - actualizar `04_RETRIEVAL_CONTEXT/QRESID_SUPPORT_STATUS_GLOSSARY.md` y `04_RETRIEVAL_CONTEXT/qresid_support_status_glossary.html` si cambio la semantica de algun termino;
 - actualizar `03_REPO_REVIEW/QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md` y `03_REPO_REVIEW/qresid_current_feature_support_matrix.html` si cambio una funcionalidad, benchmark, status, semaforo de validez o claim;
 - actualizar o revisar `03_REPO_REVIEW/QRESID_HILBE_COUNT_MODEL_COVERAGE_PLAN.md` y `03_REPO_REVIEW/qresid_unified_extension_matrix.html` si cambio el alcance de modelos count, Hilbe-style, comandos oficiales Stata, rutas externas, tipos de validacion o decision de si un faltante bloquea la validez actual;
 - revisar `qresid/certification/reports/qresid_glm_link_matrix.html` y sus generadores si cambio soporte de familia, comando GLM, funcion de enlace, offset/exposure o evidencia familia x link, aunque el prompt no lo mencione explicitamente;
-- verificar coherencia cruzada entre la matriz de soporte viva, el reporte GLM/link, el registry y benchmarks separados; si una ruta esta validada fuera del reporte visible, usar un estado granular como `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK` o `GATED_VARIANT`, no un `GATED_FUTURE` absoluto que oculte soporte existente;
+- verificar coherencia cruzada entre la tabla canonica, la matriz de soporte viva, la matriz unificada, el reporte GLM/link, el glosario, el registry y benchmarks separados; si una ruta esta validada fuera del reporte visible, usar un estado granular como `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK` o `GATED_VARIANT`, no un `GATED_FUTURE` absoluto que oculte soporte existente;
+- mantener badges/etiquetas visuales automaticas en los HTML activos; los colores deben derivarse de `status`, `qresid_status`, `validation_type` o `evidence_scope`, no de decisiones manuales por fila;
+- registrar `CANONICAL_SUPPORT_ROW_SYNC` cuando la tabla canonica o sus vistas cambien;
 - ejecutar o justificar el chequeo `qresid/tests/check_support_report_consistency.R` despues de cualquier cambio de soporte, benchmark, familia/link GLM, pesos o claim publico;
 - si no aplica, registrar explicitamente `SUPPORT_MATRIX_SYNC_NOT_REQUIRED` en el resumen de cierre;
 - no reescribir snapshots historicos para sincronizar esta matriz; el registry y los reportes vivos mandan.

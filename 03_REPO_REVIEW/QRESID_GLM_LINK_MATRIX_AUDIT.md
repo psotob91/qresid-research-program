@@ -8,7 +8,9 @@ Retrieval policy: load before GLM/link, benchmark, certification or release-scop
 
 Date: 2026-05-10
 
-Status source: local Stata/R execution after GLM/link matrix reconciliation for inverse Gaussian support.
+Status source: local Stata/R execution after GLM/link matrix reconciliation for inverse Gaussian support and canonical support/report row synchronization.
+
+CANONICAL_SUPPORT_ROW_SYNC: GLM/link inventory now reads from `QRESID_SUPPORT_REPORT_CANONICAL_ROWS.md`; every canonical model/gate row must appear in the support matrix, unified matrix and GLM/link inventory.
 
 ## Executive Summary
 
@@ -48,7 +50,11 @@ Families and commands covered:
 | grouped binomial | validated in grouped-binomial benchmarks, not executed in this family-by-link matrix | `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK`; `READY_FOR_EXTENSION_PRERELEASE` in the support matrix for `glm, family(binomial trials)` and `binreg, n()` aliases `or`/`rr`/`rd`; `binreg hr` is `STATA_INTERNAL_VALIDATION`; grouped-binomial untested weights remain `GATED_VARIANT` |
 | NB | validated in NB benchmarks for `nbreg, dispersion(mean)`, not executed in this family-by-link matrix | `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK`; `READY_FOR_EXTENSION_PRERELEASE` in the support matrix for NB2 with tested `offset()`/`exposure()`; `dispersion(constant)`, `gnbreg`, `glm nbinomial`, and untested variants remain `GATED_VARIANT` |
 | weights | separate benchmark evidence | `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK` for tested direct `fweight`; `GATED_VARIANT` for unclaimed weight types/routes |
-| quasi, ZIP/ZINB, hurdle, truncados, mixed/GLMM/GSEM | inventoried only | `DEFERRED_PHASE2` or `EVIDENCIA_PENDIENTE` |
+| Official truncated count | validated in separate truncated-count benchmarks, not executed in this family-by-link matrix | `READY_FOR_EXTENSION_PRERELEASE`; evidence is `SEPARATE_BENCHMARK` |
+| Official censored count | validated in separate censored-count benchmarks, not executed in this family-by-link matrix | `READY_FOR_EXTENSION_PRERELEASE`; evidence is `SEPARATE_BENCHMARK` |
+| Hurdle count Poisson/NB | distribution theory documented, no accepted Stata estimator/source gate closed | `GATED_MODEL_FAMILY`; row is `REPORT_SCOPE_ONLY` |
+| Stata `churdle` Cragg bounded/continuous | separate continuous/bounded Cragg gate, not count-hurdle support | `GATED_MODEL_FAMILY`; row is `REPORT_SCOPE_ONLY` |
+| quasi, Tweedie, mixed/GLMM/GSEM and external Hilbe-style count models | inventoried only | `FUTURE_PHASE`, `GATED_MODEL_FAMILY` or `NO_OFFICIAL_STATA_COMMAND` |
 
 ## Evidence
 
@@ -94,9 +100,11 @@ variants are shown as `GATED_VARIANT`. The live support matrix remains the quick
 answer for "what can I use?".
 
 The automatic consistency check `qresid/tests/check_support_report_consistency.R`
-must pass whenever support matrix, GLM/link report, glossary or registry status
-changes. It fails if grouped binomial, NB or `fweight` separate-benchmark routes
-regress to an absolute `GATED_FUTURE` status.
+must pass whenever canonical rows, support matrix, unified matrix, GLM/link
+report, glossary or registry status changes. It fails if a canonical model/gate
+row is absent from any active HTML view, if the R PIT/RQR column is missing, if
+the obsolete `hurdle_truncated_censored_count` aggregate returns, or if validated
+separate-benchmark routes regress to an absolute `GATED_FUTURE` status.
 
 ## Remaining Gaps
 

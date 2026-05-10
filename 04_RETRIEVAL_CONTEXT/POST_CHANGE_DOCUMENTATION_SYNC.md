@@ -20,7 +20,7 @@ Run this checklist after any change that touches:
 - tests, certification scripts or benchmarks;
 - public API, options, returned results, outputs or help;
 - supported families, commands, CDF/PIT/RNG logic or extraction rules;
-- support status, experimental/diagnostic classification, feature matrix, public claims or release validity semaphore;
+- support status, experimental/diagnostic classification, canonical support rows, feature matrix, public claims or release validity semaphore;
 - retrieval maps, lifecycle status, source logs or terminology;
 - MCP protocols, readiness, setup logs or execution workflows;
 - audit/review snapshots, roadmaps, changelogs or release notes.
@@ -60,10 +60,11 @@ If uncertain, add a short `sync_notes` entry in the registry rather than rewriti
 | cambio en API publica | `09`, `.sthlp`, README, tests, style rules | `09`, help, README, tests, changelog | si |
 | cambio en familia soportada | `09`, benchmark, testing, retrieval, extraction rules | `09`, tests, benchmark map, help | si |
 | cambio en familia/link GLM | GLM/link benchmark scripts, `qresid_glm_link_matrix.html`, support matrix, registry | GLM/link producer/checker, HTML report, support matrix | si |
-| cambio en soporte/status/claims | support glossary, feature matrix, terminology, registry, help/README/changelog | `QRESID_SUPPORT_STATUS_GLOSSARY.md`, `QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md`, HTML derivados | si |
-| cambio en cobertura count/Hilbe/external ado | support matrix, unified extension matrix, source rules, registry, glossary | `QRESID_HILBE_COUNT_MODEL_COVERAGE_PLAN.md`, `qresid_unified_extension_matrix.html`, glossary validation terms | si |
+| cambio en soporte/status/claims | canonical support rows, support glossary, feature matrix, terminology, registry, help/README/changelog | `QRESID_SUPPORT_REPORT_CANONICAL_ROWS.md`, `QRESID_SUPPORT_STATUS_GLOSSARY.md`, `QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md`, HTML derivados | si |
+| cambio en cobertura count/Hilbe/external ado | canonical support rows, support matrix, unified extension matrix, source rules, registry, glossary | `QRESID_SUPPORT_REPORT_CANONICAL_ROWS.md`, `QRESID_HILBE_COUNT_MODEL_COVERAGE_PLAN.md`, `qresid_unified_extension_matrix.html`, glossary validation terms | si |
 | cambio en evidencia separada de benchmark | support matrix, GLM/link report if adjacent, registry, glossary | scoped report notes and granular statuses | si |
-| cambio en matriz de soporte, GLM/link report o estado de evidencia | support matrix, GLM/link report, glossary, registry, `qresid/tests/check_support_report_consistency.R` | HTML regenerado y/o chequeo de consistencia | si |
+| cambio en matriz de soporte, GLM/link report o estado de evidencia | canonical support rows, support matrix, unified matrix, GLM/link report, glossary, registry, `qresid/tests/check_support_report_consistency.R` | HTML regenerado y/o chequeo de consistencia | si |
+| cambio en benchmark ejecutado o validacion Stata-internal/diagnostica | evidence index, GLM/link report, support matrix, registry, checker | `qresid_support_evidence_index.csv`, `qresid_glm_link_matrix.html`, badges/labels, consistency checker | si |
 | cambio en retrieval | `AGENTS`, retrieval map, lifecycle rules, registry | retrieval map, registry | si |
 | cambio en MCP | execution protocols, readiness checklist, resolution log | readiness checklist, setup log | si |
 | cambio menor editorial | registry/lifecycle only if status changes | normalmente ninguno | no |
@@ -105,9 +106,12 @@ When a snapshot finding is resolved:
 - [ ] Cambio equivalente R o benchmark R-Stata?
 - [ ] Cambio cobertura count/Hilbe, comando oficial Stata, ruta externa o tipo de validacion (`R_EXACT_BENCHMARK`, `STATA_INTERNAL_VALIDATION`, etc.)?
 - [ ] Debe actualizarse `QRESID_HILBE_COUNT_MODEL_COVERAGE_PLAN.md`?
+- [ ] CANONICAL_SUPPORT_ROW_SYNC: si se agrego/dividio una familia, comando, gate, peso o ruta RQR/PIT, se actualizo `QRESID_SUPPORT_REPORT_CANONICAL_ROWS.md` antes de regenerar las vistas?
+- [ ] SUPPORT_EVIDENCE_INDEX_SYNC: si cambio un benchmark, validacion interna o diagnostico, se ejecuto `Rscript qresid/tests/build_support_evidence_index.R` y el GLM/link report consume ese indice?
+- [ ] VISUAL_BADGE_SYNC: si cambio un estado o tipo de validacion, las vistas HTML mantienen badges automaticos verde/azul/ambar/gris/rojo/morado?
 - [ ] Debe actualizarse `qresid_unified_extension_matrix.html`?
 - [ ] Debe actualizarse `qresid/certification/reports/qresid_glm_link_matrix.html` porque cambio familia/link GLM?
-- [ ] Hay coherencia cruzada entre matriz de soporte, GLM/link report, benchmarks separados y registry?
+- [ ] Hay coherencia cruzada entre tabla canonica, matriz de soporte, matriz unificada, GLM/link report, glosario, benchmarks separados y registry?
 - [ ] Alguna ruta validada en benchmark separado esta marcada como `GATED_FUTURE` absoluto en otro reporte?
 - [ ] Debe usarse `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK`, `GATED_VARIANT` o `REPORT_SCOPE_ONLY` para evitar ambiguedad?
 - [ ] SUPPORT_REPORT_CONSISTENCY_CHECK: se ejecuto `Rscript qresid/tests/check_support_report_consistency.R` o se justifico por que no aplica?

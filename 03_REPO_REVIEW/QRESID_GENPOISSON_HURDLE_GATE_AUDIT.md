@@ -8,8 +8,8 @@ Retrieval policy: load before generalized Poisson or hurdle count work
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: generalized Poisson gate closed for pinned `st0279` route; hurdle research gate remains open.
-SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix and math/software evidence matrix reviewed after generalized Poisson promotion.
+POST_CHANGE_SYNC_DONE: hurdle RQR theory gate created; generalized Poisson remains closed for pinned `st0279` route and hurdle research gate remains open.
+SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix and math/software evidence matrix reviewed after hurdle gate formalization.
 
 ## Decision
 
@@ -21,8 +21,8 @@ SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix and math/soft
 
 This audit originally opened a separate benchmark-first cycle. It now records
 that the pinned Stata Journal `st0279` / `gpoisson` unweighted route passed
-source, PMF/CDF, Stata and R CDF-replay gates. Hurdle count remains research
-only.
+source, PMF/CDF, Stata and R CDF-replay gates. Hurdle count has a documented
+PIT/RQR target but remains research only until a Stata estimator route closes.
 
 ## Generalized Poisson Gate
 
@@ -63,6 +63,8 @@ Candidate Stata route:
 
 Candidate R routes:
 
+- `pscl::hurdle` for Poisson/NB hurdle count estimation if installed or
+  authorized for benchmark use.
 - `glmmTMB` hurdle-style count models through truncated count families and a
   zero component.
 - `VGAM` zero-altered and positive-count families such as `zapoisson`,
@@ -73,6 +75,9 @@ Mathematical target:
 - `P(Y=0)=pi`.
 - For `y > 0`, `F(y)=pi+(1-pi)*F_plus(y)`, where `F_plus` is the positive
   truncated count CDF.
+- For `y=0`, `F_low=0` and `F_high=pi`.
+- For `y>0`, `F_low=pi+(1-pi)*F_plus(y-1)` and
+  `F_high=pi+(1-pi)*F_plus(y)`.
 
 Required closure before implementation:
 

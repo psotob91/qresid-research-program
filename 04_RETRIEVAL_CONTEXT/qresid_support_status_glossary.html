@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -27,6 +27,13 @@
     .block { color:#fff; background:var(--red); }
     .footnote { margin-top:24px; padding:16px 18px; background:#fff; border-left:4px solid var(--blue); border-radius:4px; }
     a { color:var(--blue); }
+      .badge { display:inline-block; padding:2px 7px; border-radius:999px; color:#fff; font-weight:700; font-size:11px; white-space:nowrap; }
+    .badge-green { background:#1e8449; }
+    .badge-blue { background:#1f618d; }
+    .badge-amber { background:#9a6700; }
+    .badge-gray { background:#566573; }
+    .badge-red { background:#922b21; }
+    .badge-purple { background:#6c3483; }
   </style>
 </head>
 <body>
@@ -60,6 +67,7 @@
         <tr><td><code>R_EXACT_BENCHMARK</code></td><td>R can be used as the pointwise gold standard.</td><td>Same model, parameters, support, CDF endpoints, <code>U</code> and residuals can be aligned against R.</td><td>Promote a route after layer-by-layer benchmark passes.</td><td>Assuming all Stata options have an exact R equivalent.</td><td>Unified extension matrix, benchmark plans.</td><td>Benchmark mapping.</td></tr>
         <tr><td><code>R_APPROX_BENCHMARK</code></td><td>R is comparable, but not identical.</td><td>R route is useful for sanity checks or approximate validation, but parametrization/support is not pointwise identical.</td><td>Use as secondary evidence with caveats.</td><td>Stable support claim without additional validation.</td><td>Unified extension matrix.</td><td>Benchmark mapping.</td></tr>
         <tr><td><code>R_CDF_REPLAY</code></td><td>R checks the CDF math from Stata-exported parameters.</td><td>Stata is the estimator authority; R recomputes CDF endpoints, PIT U, and qres from exported mu, ancillary parameters and V.</td><td>Validate CDF/residual layers when estimator-level R equivalence is unavailable or route-specific.</td><td>Claiming R fitted the same estimator pointwise.</td><td>NB variants, ZIP/ZINB benchmarks.</td><td>Benchmark mapping, count extraction rules.</td></tr>
+        <tr><td><code>R_CDF_REPLAY_THEORY_AUDIT</code></td><td>Check that replay has mathematical support.</td><td>Route-level audit linking CDF formula, PIT/RQR formula, Stata parameters, R replay function, citations and implementation decision.</td><td>Promote internal validation to replay only when theory and extraction are closed.</td><td>Treating a Stata-only invariant as independent R replay.</td><td>Replay theory audit, evidence index.</td><td>Dunn-Smyth, package docs, Stata manuals.</td></tr>
         <tr><td><code>ANALYTIC_CDF_CLOSED</code></td><td>The CDF formula is settled.</td><td>Support, parameter mapping, F_low, F_high, PIT interval and clipping rules are mathematically specified.</td><td>Move to benchmark or implementation gate.</td><td>Claiming estimator extraction is also solved.</td><td>Math/software evidence matrix.</td><td>Theory and algorithm masters.</td></tr>
         <tr><td><code>R_PACKAGE_ESTIMATOR</code></td><td>R has an estimator route.</td><td>An installed or documented R package can estimate a comparable model.</td><td>Use as benchmark candidate when parametrization aligns.</td><td>Treating comparable estimation as exact CDF validation.</td><td>Math/software evidence matrix.</td><td>R package research.</td></tr>
         <tr><td><code>RQR_PACKAGE_AVAILABLE</code></td><td>R has residual tooling.</td><td>A package such as statmod, VGAM or DHARMa provides analytic or simulated PIT/RQR tooling for a compatible class.</td><td>Inform validation design.</td><td>Replacing qresid endpoint audits.</td><td>Math/software evidence matrix.</td><td>RQR package research.</td></tr>
@@ -70,6 +78,11 @@
         <tr><td><code>GATED_MODEL_FAMILY</code></td><td>The whole family is still research-only.</td><td>Estimator, source, CDF, parameter mapping or benchmark design is unresolved.</td><td>Keep the family visible as future work.</td><td>Implementing or documenting active support.</td><td>Unified extension matrix.</td><td>AGENTS, extension plans.</td></tr>
         <tr><td><code>NO_OFFICIAL_STATA_COMMAND</code></td><td>Stata has no built-in estimator for this family.</td><td>Any support would depend on external ado/source or a separate estimator policy.</td><td>Trigger source/version/license research.</td><td>Treating the feature as normal postestimation for official Stata.</td><td>Unified extension matrix.</td><td>Package style/source rules.</td></tr>
         <tr><td><code>NO_ACTION_REQUIRED</code></td><td>The option does not change the residual target.</td><td>No new CDF/support/benchmark branch is needed for the current support claim.</td><td>Document and move on.</td><td>Skipping sync when support status actually changed.</td><td>Sync checklist, extension matrix.</td><td>Post-change sync.</td></tr>
+        <tr><td><code>ANALYTIC_CDF_CLOSED_FOR_DISTRIBUTION</code></td><td>The distribution formula is known, but implementation is not ready.</td><td>The CDF/PIT endpoints can be written mathematically, but estimator source, parameter extraction or benchmark evidence is still missing.</td><td>Open benchmark/source gates without touching qresid.ado.</td><td>Claiming support or implementation readiness.</td><td>Hurdle gate, math/software matrix.</td><td>AGENTS, benchmark mapping.</td></tr>
+        <tr><td><code>CHURDLE_CRAGG_GATE_OPEN</code></td><td>Stata churdle needs its own gate.</td><td>Official churdle is Cragg hurdle for bounded/continuous outcomes, not count-hurdle Poisson/NB support.</td><td>Plan a future continuous/interval PIT gate.</td><td>Treating churdle as count-model support.</td><td>Churdle gate audit.</td><td>Stata churdle docs, count extraction rules.</td></tr>
+        <tr><td><code>CANONICAL_SUPPORT_ROW_SYNC</code></td><td>Keep the row contract synchronized first.</td><td>Any new support route, model split, gate split, benchmark promotion or status change must update <code>QRESID_SUPPORT_REPORT_CANONICAL_ROWS.md</code> before regenerating support, unified and GLM/link views.</td><td>Prevent drift between active reports.</td><td>Treating any HTML matrix as an independent row source.</td><td>Sync checklist, consistency checker.</td><td>AGENTS, post-change sync.</td></tr>
+        <tr><td><code>SUPPORT_EVIDENCE_INDEX_SYNC</code></td><td>Keep executed evidence indexed.</td><td>Benchmark, CDF replay, Stata-internal and diagnostic evidence must flow through <code>qresid_support_evidence_index.csv</code> before the GLM/link evidence report is regenerated.</td><td>Add future benchmarks without hand-editing the HTML evidence table.</td><td>Treating logs alone as synchronized report evidence.</td><td>GLM/link report, checker.</td><td>AGENTS, post-change sync.</td></tr>
+        <tr><td><code>VISUAL_BADGE_SYNC</code></td><td>Keep status colors automatic.</td><td>HTML support views derive colored labels from status/evidence terms such as PASS, READY, R_CDF_REPLAY, GATED_VARIANT and FAIL.</td><td>Make reports readable and consistent.</td><td>Changing support meaning; colors are display only.</td><td>Support HTMLs.</td><td>AGENTS, post-change sync.</td></tr>
         <tr><td><code>EVIDENCE_PENDING</code></td><td>Evidence is missing.</td><td>Needed CDF, extractor, parameter mapping, benchmark or source is unresolved.</td><td>Research request or controlled error.</td><td>Support claim.</td><td>Support matrix, registry.</td><td>AGENTS, source log.</td></tr>
         <tr><td><code>FUTURE_PHASE</code></td><td>Out of current scope.</td><td>Feature belongs to a later phase or public release track.</td><td>Describe as deferred.</td><td>Blocking current validity if not claimed.</td><td>Feature matrix.</td><td>09, registry.</td></tr>
         <tr><td><code>MISSING_NOT_BLOCKING</code></td><td>Missing but harmless.</td><td>qresid does not implement the route and docs do not claim it.</td><td>Proceed with current scope.</td><td>Treat absence as validity failure.</td><td>Feature matrix.</td><td>Release blockers.</td></tr>
@@ -85,6 +98,8 @@
         <tr><td><code>uvar()</code></td><td>User-supplied uniforms.</td><td>External <code>V</code> used for exact discrete R/Stata benchmark comparisons.</td><td>Exact pointwise discrete residual comparison.</td><td>Replacing CDF validation.</td><td>API, examples.</td><td>09, 10.</td></tr>
         <tr><td><code>seed()</code></td><td>Stata RNG seed.</td><td>Sets Stata RNG before internal uniforms.</td><td>Reproducibility inside Stata.</td><td>Exact equality with R RNG.</td><td>API, examples.</td><td>09, 10.</td></tr>
         <tr><td><code>R equivalent</code></td><td>R route for comparison.</td><td>R package/function used as benchmark reference.</td><td>R/Stata benchmark when aligned.</td><td>Assuming all Stata options map exactly to R.</td><td>Support matrix.</td><td>Benchmark mapping.</td></tr>
+        <tr><td><code>r_quantile_residual_package_function</code></td><td>Where R-side PIT/RQR evidence comes from.</td><td>Matrix column naming the R function used for quantile residuals, simulated PIT or manual CDF replay, such as <code>statmod::qresiduals</code>, <code>topmodels::qresiduals</code>, <code>DHARMa::simulateResiduals</code> or <code>manual_CDF_replay</code>.</td><td>See whether validation used an R residual package or hand-audited CDF endpoints.</td><td>Claiming every route has an R package residual function.</td><td>Support matrix, unified matrix, GLM/link inventory.</td><td>Benchmark mapping, canonical row contract.</td></tr>
+        <tr><td><code>manual_CDF_replay</code></td><td>R recomputes endpoints from exported parameters.</td><td>R does not fit or supply a residual method for the route; instead it recomputes <code>F_low</code>, <code>F_high</code>, <code>U</code> and qres from Stata-exported fitted distribution parameters.</td><td>Validate PIT/RQR layers when estimator equivalence is not available.</td><td>Treating the route as an estimator-level R exact benchmark.</td><td>Support matrix, benchmarks.</td><td>Benchmark mapping.</td></tr>
         <tr><td><code>offset</code></td><td>Additive model term.</td><td>Usually enters the linear predictor directly.</td><td>Use if <code>predict</code> carries it correctly.</td><td>Duplicating offset manually.</td><td>Support matrix.</td><td>Extraction rules.</td></tr>
         <tr><td><code>exposure</code></td><td>Exposure denominator/time.</td><td>Usually becomes log-offset in count models.</td><td>Tested log-link count routes.</td><td>Assuming non-log exposure equivalence.</td><td>Support matrix.</td><td>Extraction rules.</td></tr>
         <tr><td><code>weights</code></td><td>Weighted estimation metadata.</td><td>Stata <code>e(wtype)</code>/<code>e(wexp)</code>; semantics depend on family/type.</td><td>Family/type-specific support after evidence.</td><td>Global <code>sqrt(w_i)</code> rule.</td><td>Weights docs, matrix.</td><td>Weights research.</td></tr>
@@ -95,6 +110,28 @@
     </div>
   </main>
   <script>
+    const badgeMap = {
+      PASS:'badge-green', READY_FOR_EXTENSION_PRERELEASE:'badge-green', R_EXACT_BENCHMARK:'badge-green', SUPPORTED_TESTED:'badge-green',
+      EXPERIMENTAL_VALIDATED_LOCAL:'badge-blue', EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK:'badge-blue', R_CDF_REPLAY:'badge-blue', THIS_REPORT:'badge-blue', SEPARATE_BENCHMARK:'badge-blue',
+      STATA_INTERNAL_VALIDATION:'badge-amber', R_APPROX_BENCHMARK:'badge-amber', STATA_ONLY_DIAGNOSTIC:'badge-amber', DIAGNOSTIC_ONLY:'badge-amber', STATA_EXTERNAL_ADO_VALIDATION:'badge-amber',
+      MISSING_NOT_BLOCKING:'badge-gray', REPORT_SCOPE_ONLY:'badge-gray', FUTURE_PHASE:'badge-gray', NO_ACTION_REQUIRED:'badge-gray',
+      FAIL:'badge-red', BLOCKS_CURRENT_VALIDITY:'badge-red', UNEXPECTED_FAIL_STOP:'badge-red',
+      GATED_MODEL_FAMILY:'badge-purple', GATED_VARIANT:'badge-purple', GATED_RESEARCH:'badge-purple', NO_OFFICIAL_STATA_COMMAND:'badge-purple', CHURDLE_CRAGG_GATE_OPEN:'badge-purple'
+    };
+    function applyBadges() {
+      const terms = Object.keys(badgeMap).sort((a,b) => b.length - a.length);
+      document.querySelectorAll('td').forEach(td => {
+        if (td.dataset.badged === '1') return;
+        let html = td.innerHTML;
+        terms.forEach(term => {
+          const cls = badgeMap[term];
+          html = html.split(term).join(`<span class="badge ${cls}">${term}</span>`);
+        });
+        td.innerHTML = html;
+        td.dataset.badged = '1';
+      });
+    }
+    applyBadges();
     const input = document.getElementById('search');
     const rows = [...document.querySelectorAll('#glossary tbody tr')];
     const count = document.getElementById('count');
@@ -113,3 +150,4 @@
   </script>
 </body>
 </html>
+

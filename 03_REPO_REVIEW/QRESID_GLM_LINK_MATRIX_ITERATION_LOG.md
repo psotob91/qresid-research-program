@@ -87,6 +87,20 @@ benchmark artifact name. The new `qresid/tests/check_support_report_consistency.
 script verifies the GLM/link report, support matrix, glossary and registry stay
 aligned.
 
+## Canonical Row Sync Addendum
+
+The GLM/link inventory is now generated from
+`03_REPO_REVIEW/QRESID_SUPPORT_REPORT_CANONICAL_ROWS.md`. The support matrix,
+unified extension matrix and GLM/link inventory must all contain every canonical
+`model_group` row, including split gates such as `Hurdle count Poisson/NB` and
+`Stata churdle Cragg bounded/continuous`. This prevents future prompts from
+updating one matrix while leaving the others stale.
+
+Required shared columns now include `r_estimator_package_function`,
+`r_quantile_residual_package_function` and `pit_rqr_method`, so each view shows
+whether R validation used `statmod::qresiduals`, `topmodels::qresiduals`,
+`DHARMa::simulateResiduals`, `manual_CDF_replay`, or no R residual route.
+
 ## Count-Extension Addendum
 
 NB2 and grouped-binomial routes were expanded after the status harmonization

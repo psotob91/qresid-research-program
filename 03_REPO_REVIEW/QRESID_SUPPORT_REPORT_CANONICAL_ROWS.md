@@ -2,44 +2,26 @@
 Status: ACTIVE
 Authority: diagnostic
 Superseded by: NONE
-Retrieval policy: load for support, release and feature-status questions
+Retrieval policy: load before support/report matrix updates
 
-# QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md
+# QRESID_SUPPORT_REPORT_CANONICAL_ROWS.md
 
 Date: 2026-05-10
 
-Status source: inverse Gaussian, expanded fweight, NB2 offset/exposure, NB variants, zero-inflated count, truncated count, censored count, grouped-binomial/binreg validation cycle plus Hilbe/count model coverage reconciliation and pinned `st0279` generalized Poisson validation, 2026-05-10. See `QRESID_IGAUSSIAN_FWEIGHT_EXTENSION_AUDIT.md` for IG/fweight logs, `QRESID_COUNT_MODEL_EXTENSION_EXECUTION_AUDIT.md` for NB/grouped-binomial logs, `QRESID_NB_ZEROINFLATED_EXTENSION_AUDIT.md` for NB variants and ZIP/ZINB logs, `QRESID_TRUNCATED_COUNT_RESEARCH.md` and `QRESID_CENSORED_COUNT_RESEARCH.md` for truncated/censored count logs, `QRESID_GENPOISSON_EXTENSION_AUDIT.md` for generalized Poisson logs, and `QRESID_HILBE_COUNT_MODEL_COVERAGE_PLAN.md` for count-model roadmap scope.
-
-POST_CHANGE_SYNC_DONE: feature support matrix created and registered as a live status reference.
-SUPPORT_MATRIX_SYNC_DONE: matrix and searchable HTML are synchronized with the support glossary.
+POST_CHANGE_SYNC_DONE: canonical support-report rows created to synchronize support matrix, unified extension matrix and GLM/link report.
+SUPPORT_MATRIX_SYNC_DONE: this table is the row contract for active support/status reports.
 
 ## Purpose
 
-This matrix answers whether each feature is ready, experimental, diagnostic
-only, missing but non-blocking, or blocking. It is designed to make package
-validity easy to assess: missing inverse Gaussian, Tweedie or Phase 2 models do
-not invalidate the current package because they are not claimed as supported.
+This table defines the minimum rows that must appear in the live support
+matrix, unified extension matrix and GLM/link report inventory. It is a
+diagnostic contract, not a public support claim by itself.
 
-Read this matrix together with the GLM/link evidence report. If the GLM/link
-report says `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK`, the route is supported
-or experimental in `qresid` but its detailed evidence lives in another active
-benchmark report. `GATED_VARIANT` means a specific variant remains unclaimed; it
-does not cancel a validated base route.
+Any new family, split gate, external estimator route, weight type or public
+claim must add or update a row here, then regenerate/reconcile the three
+report views and run `qresid/tests/check_support_report_consistency.R`.
 
-Cross-report rule: the support matrix is the quick answer to "what can I use?";
-the GLM/link report now exposes `evidence_scope` and `evidence_artifact` so a
-viewer can see whether evidence was generated in that report (`THIS_REPORT`) or
-validated in a separate benchmark (`SEPARATE_BENCHMARK`). The two reports are
-complementary, not competing authorities.
-
-Count-model roadmap rule: the unified extension matrix
-`qresid_unified_extension_matrix.html` is the quick answer to "what exists in
-Stata/R or Hilbe-style count workflows, and what validation would be required
-next?" It does not expand support claims by itself. Missing official or
-external count-model routes remain `MISSING_NOT_BLOCKING` or
-`GATED_MODEL_FAMILY` unless a support row below says otherwise.
-
-## Matrix
+## Canonical Rows
 
 | model_group | stata_route | qresid_status | evidence_scope | validation_type | r_estimator_package_function | r_quantile_residual_package_function | pit_rqr_method | blocks_current_validity | blocks_public_rc | next_action |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -65,27 +47,6 @@ external count-model routes remain `MISSING_NOT_BLOCKING` or
 | aweight/iweight | not claimed | MISSING_NOT_BLOCKING | REPORT_SCOPE_ONLY | GATED_RESEARCH | partial/no exact equivalent | none yet | weight semantics unresolved | no | no | Separate weights research. |
 | svy | not implemented | MISSING_NOT_BLOCKING | REPORT_SCOPE_ONLY | FUTURE_PHASE | R `survey` candidates | none yet | survey/design PIT unresolved | no | no | Human design decision. |
 | unsupported weighted routes | routes outside tested fweight and direct pweight diagnostic scope | MISSING_NOT_BLOCKING | REPORT_SCOPE_ONLY | GATED_VARIANT | not established | none yet | unresolved | no | no | Keep out of claims. |
-
-## Validity Summary
-
-- Current local extension prerelease validity: acceptable.
-- `BLOCKS_CURRENT_VALIDITY`: none.
-- `BLOCKS_PUBLIC_RC`: pweight public policy.
-- Missing hurdle count, Tweedie, specialized official count routes,
-  external Hilbe-style count models, mixed models, `svy:`, `aweight`,
-  `iweight`, `glm nbinomial ml`, and unsupported weighted routes do not invalidate the package
-  because current public docs do not claim support for them.
-
-## Footnote
-
-PIT transforms an observation through the fitted CDF to the uniform scale.
-RQR/Dunn-Smyth residuals transform that PIT value to normal scale with
-`invnormal()`. For discrete outcomes, `F_low` and `F_high` define the CDF jump
-around the observed value. `uvar()` supplies the same uniform draws to Stata and
-R for exact discrete residual benchmarking. Missing functionality is a validity
-problem only if `qresid` claims to support it or if a critical benchmark for a
-claimed route fails.
-
 
 
 
