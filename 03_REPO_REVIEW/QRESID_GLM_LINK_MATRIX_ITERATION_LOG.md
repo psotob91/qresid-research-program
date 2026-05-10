@@ -37,6 +37,11 @@ Evidence:
 - `qresid/tests/logs/10_May_2026_122110_glm_link_matrix_r.log`: `QRESID_GLM_LINK_MATRIX_R_STATUS PASS`.
 - `qresid/tests/logs/10_May_2026_154140_glm_link_matrix_stata.log`: reconciled matrix with inverse Gaussian, `QRESID_GLM_LINK_MATRIX_STATA_STATUS PASS`.
 - `qresid/tests/logs/10_May_2026_154140_glm_link_matrix_r.log`: reconciled matrix with inverse Gaussian, `QRESID_GLM_LINK_MATRIX_R_STATUS PASS`.
+- `qresid/tests/logs/10_May_2026_160031_glm_link_matrix_stata.log`: harmonized scoped-status matrix, `QRESID_GLM_LINK_MATRIX_STATA_STATUS PASS`.
+- `qresid/tests/logs/10_May_2026_160031_glm_link_matrix_r.log`: harmonized scoped-status matrix, `QRESID_GLM_LINK_MATRIX_R_STATUS PASS`.
+- `qresid/tests/logs/10_May_2026_160036_grouped_binomial_benchmark_r.log`: separate grouped-binomial evidence, `PASS`.
+- `qresid/tests/logs/10_May_2026_160037_nb_benchmark_r.log`: separate NB evidence, `PASS`.
+- `qresid/tests/logs/10_May_2026_160039_fweight_extended_benchmark_r.log`: separate fweight evidence, `PASS`.
 
 ## Findings Removed As False Blockers
 
@@ -64,6 +69,14 @@ GLM/link HTML report was stale because it still listed inverse Gaussian as
 `glm` links `power -2`, `log`, `identity`, and `power -1` across the same three
 dataset classes. The HTML report also notes that expanded direct `fweight`
 evidence is validated separately in `benchmark_fweight_extended_*`.
+
+## Status Harmonization Addendum
+
+Grouped binomial and NB were not actually unsupported; their validated routes
+were evidenced in separate benchmark reports. The GLM/link inventory now uses
+`EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK` for those validated routes and
+`GATED_VARIANT` for the specific variants that remain unclaimed. This prevents
+the report from hiding support that is visible in the live support matrix.
 
 ## Post-Change Sync
 

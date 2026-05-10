@@ -36,6 +36,7 @@ The integrated experimental branch now includes inverse Gaussian support and exp
 - `QRESID_IGAUSSIAN_BENCHMARK_R_STATUS PASS`
 - `QRESID_FWEIGHT_EXTENDED_BENCHMARK_R_STATUS PASS`
 - `QRESID_GLM_LINK_MATRIX_R_STATUS PASS` after GLM/link reconciliation; inverse Gaussian now appears in the generated HTML as `EXPERIMENTAL_VALIDATED_LOCAL`.
+- GLM/link inventory harmonized after support-matrix review: grouped binomial, NB and tested `fweight` routes now point to separate benchmark evidence instead of appearing as absolute `GATED_FUTURE`.
 - Existing Gamma, Phase 1, GLM/link, grouped binomial, NB, fweight and pweight diagnostics remain passing in the latest validation cycle.
 
 ## Remaining Gated Items

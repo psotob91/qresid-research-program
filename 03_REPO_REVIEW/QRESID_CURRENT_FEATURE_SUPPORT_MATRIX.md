@@ -20,6 +20,12 @@ only, missing but non-blocking, or blocking. It is designed to make package
 validity easy to assess: missing inverse Gaussian, Tweedie or Phase 2 models do
 not invalidate the current package because they are not claimed as supported.
 
+Read this matrix together with the GLM/link evidence report. If the GLM/link
+report says `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK`, the route is supported
+or experimental in `qresid` but its detailed evidence lives in another active
+benchmark report. `GATED_VARIANT` means a specific variant remains unclaimed; it
+does not cancel a validated base route.
+
 ## Matrix
 
 | feature_group | stata_command | link_function | weights | offset_exposure | dispersion_parameters | implemented_in_qresid | stata_tests | r_equivalent | r_benchmark_status | public_claim_status | validity_for_current_package | plain_language_summary | next_action |
