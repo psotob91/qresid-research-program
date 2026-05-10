@@ -124,7 +124,7 @@ Opciones:
 | `saveflo(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar `F_low`. |
 | `savefhi(name)` | Recomendado | `RECOMENDACIÓN OPERATIVA`: guardar `F_high`. |
 | `saveu(name)` | Fase 1 | `ESTÁNDAR OFICIAL`: guardar `U` final antes de `invnormal()`; no es alias de `savev()`. |
-| `type(string)` | Extension prerelease | `ESTÁNDAR OFICIAL`: `type(quantile)` es el default; `type(studentized)` solo para rutas unweighted `regress`/`glm` validadas contra `glmtoolbox`; `type(adjusted)` debe fallar con error controlado hasta cerrar formula y benchmark. |
+| `type(string)` | Extension prerelease | `ESTÁNDAR OFICIAL`: `type(quantile)` es el default; `type(studentized)` solo para rutas unweighted `regress` y GLM testeadas; `type(adjusted)` solo para GLM Gamma/inverse Gaussian unweighted con formula Scudilio-Pereira. |
 | `family(string)` | Fase 1 condicional | `ESTÁNDAR OFICIAL`: permitir solo si el comando activo no permite inferencia segura; nunca debe contradecir `e(family)`. |
 
 `ESTÁNDAR OFICIAL`: `replace` no forma parte de la API pública Fase 1. Si `newvarname` o una variable solicitada con `save*()` ya existe, el comando debe fallar con error claro.
@@ -137,8 +137,10 @@ Opciones:
 escala normal estandar porque aplica `invnormal(U)` al PIT. No agregar una
 opcion publica llamada simplemente `standardized` para este comportamiento
 existente. `type(studentized)` es una excepcion limitada: divide el residuo
-cuantilico por `sqrt(1-h)` solo despues de `regress`/`glm` sin pesos, con `h`
-obtenido de `predict, hat` y benchmark contra `glmtoolbox`. Opciones futuras de
+cuantilico por `sqrt(1-h)` solo despues de `regress` y GLM testeadas sin pesos,
+con `h` obtenido de `predict, hat` y benchmark contra `glmtoolbox` o R CDF
+replay. `type(adjusted)` usa la misma correccion Scudilio-Pereira solo para
+GLM Gamma/inverse Gaussian sin pesos. Opciones futuras de
 residuos ajustados o nuevas variantes studentizadas requieren cerrar primero
 `QRESID_STANDARDIZED_QUANTILE_RESIDUALS_GATE.md`, incluyendo revision de
 formulas, paquetes R/codigo fuente y benchmarks por ruta.

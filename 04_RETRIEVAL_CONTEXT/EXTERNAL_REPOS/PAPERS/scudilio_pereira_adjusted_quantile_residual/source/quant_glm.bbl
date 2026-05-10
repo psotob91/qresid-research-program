@@ -1,0 +1,107 @@
+\begin{thebibliography}{xx}
+
+\harvarditem{Anderson \harvardand\ Darling}{1952}{anderson}
+Anderson, T.~W. \harvardand\ Darling, D.~A.  \harvardyearleft
+  1952\harvardyearright , `Asymptotic theory of certain" goodness of fit"
+  criteria based on stochastic processes', {\em The annals of mathematical
+  statistics} {\bf 23},~193--212.
+
+\harvarditem[Anholeto et~al.]{Anholeto, Sandoval \harvardand\
+  Botter}{2014}{anholeto2014}
+Anholeto, T., Sandoval, M.~C. \harvardand\ Botter, D.~A.  \harvardyearleft
+  2014\harvardyearright , `Adjusted pearson residuals in beta regression
+  models', {\em Journal of Statistical Computation and Simulation} {\bf
+  84},~999--1014.
+
+\harvarditem{Atkinson}{1985}{atkinson}
+Atkinson, A.~C.  \harvardyearleft 1985\harvardyearright , {\em Plots,
+  transformations, and regression: an introduction to graphical methods of
+  diagnostic regression analysis}, Oxford.
+
+\harvarditem{Cordeiro}{2004}{cordeiro2004pearson}
+Cordeiro, G.~M.  \harvardyearleft 2004\harvardyearright , `On pearson's
+  residuals in generalized linear models', {\em Statistics \& probability
+  letters} {\bf 66}(3),~213--219.
+
+\harvarditem{Davison \harvardand\ Gigli}{1989}{davison}
+Davison, A. \harvardand\ Gigli, A.  \harvardyearleft 1989\harvardyearright ,
+  `Deviance residuals and normal scores plots', {\em Biometrika} {\bf
+  76}(2),~211--221.
+
+\harvarditem{Dunn \harvardand\ Smyth}{1996}{dunn}
+Dunn, P.~K. \harvardand\ Smyth, G.~K.  \harvardyearleft 1996\harvardyearright ,
+  `Randomized quantile residuals', {\em Journal of Computational and Graphical
+  Statistics} {\bf 5}(3),~236--244.
+
+\harvarditem[Feng et~al.]{Feng, Sadeghpour \harvardand\
+  Li}{2017}{feng2017randomized}
+Feng, C., Sadeghpour, A. \harvardand\ Li, L.  \harvardyearleft
+  2017\harvardyearright , `Randomized quantile residuals: an omnibus model
+  diagnostic tool with unified reference distribution', {\em arXiv preprint
+  arXiv:1708.08527} .
+
+\harvarditem[Hardin et~al.]{Hardin, Hilbe \harvardand\
+  Hilbe}{2007}{hardin2007generalized}
+Hardin, J.~W., Hilbe, J.~M. \harvardand\ Hilbe, J.  \harvardyearleft
+  2007\harvardyearright , {\em Generalized linear models and extensions}, Stata
+  press.
+
+\harvarditem{Klar \harvardand\ Meintanis}{2012}{klar2012specification}
+Klar, B. \harvardand\ Meintanis, S.~G.  \harvardyearleft 2012\harvardyearright
+  , `Specification tests for the response distribution in generalized linear
+  models', {\em Computational Statistics} {\bf 27}(2),~251--267.
+
+\harvarditem{Lawless}{2011}{lawless}
+Lawless, J.~F.  \harvardyearleft 2011\harvardyearright , {\em Statistical
+  models and methods for lifetime data}, Vol. 362, John Wiley \& Sons.
+
+\harvarditem{McCullagh \harvardand\ Nelder}{1989}{mccullagh}
+McCullagh, P. \harvardand\ Nelder, J.~A.  \harvardyearleft
+  1989\harvardyearright , {\em Generalized linear models}, 2 edn, CRC press.
+
+\harvarditem{Nelder \harvardand\ Wedderburn}{1972}{nelder72}
+Nelder, J.~A. \harvardand\ Wedderburn, R. W.~M.  \harvardyearleft
+  1972\harvardyearright , `Generalized linear models', {\em Journal of the
+  Royal Statistical Society} {\bf 10}(3),~370--384.
+
+\harvarditem{Pereira}{2017}{pereira2017quantile}
+Pereira, G. H.~A.  \harvardyearleft 2017\harvardyearright , `On quantile
+  residuals in beta regression', {\em Communications in Statistics-Simulation
+  and Computation} {\bf , in press}.
+
+\harvarditem{Pierce \harvardand\ Schafer}{1986}{pierce1986residuals}
+Pierce, D.~A. \harvardand\ Schafer, D.~W.  \harvardyearleft
+  1986\harvardyearright , `Residuals in generalized linear models', {\em
+  Journal of the American Statistical Association} {\bf 81}(396),~977--986.
+
+\harvarditem{Rigby \harvardand\ Stasinopoulos}{2005}{rigby2005}
+Rigby, R.~A. \harvardand\ Stasinopoulos, D.~M.  \harvardyearleft
+  2005\harvardyearright , `Generalized additive models for location, scale and
+  shape', {\em Journal of the Royal Statistical Society: Series C (Applied
+  Statistics)} {\bf 54}(3),~507--554.
+
+\harvarditem[Stasinopoulos et~al.]{Stasinopoulos, Rigby, Voudouris, Heller
+  \harvardand\ De~Bastiani}{2017}{rigby2015}
+Stasinopoulos, D.~M., Rigby, R.~A., Voudouris, V., Heller, G. \harvardand\
+  De~Bastiani, F.  \harvardyearleft 2017\harvardyearright , {\em Flexible
+  Regression and Smoothing: Using GAMLSS in R}, Taylor \& Francis.
+
+\harvarditem[Stasinopoulos et~al.]{Stasinopoulos, Rigby \harvardand\
+  Akantziliotou}{2014}{stasinopoulos08}
+Stasinopoulos, D., Rigby, B. \harvardand\ Akantziliotou, C.  \harvardyearleft
+  2014\harvardyearright , `Instructions on how to use the gamlss package in r,
+  2008'.
+
+\harvarditem[Urbano et~al.]{Urbano, Borges~Dem{\'e}trio \harvardand\
+  Cordeiro}{2012}{urbano2012wald}
+Urbano, M.~R., Borges~Dem{\'e}trio, C.~G. \harvardand\ Cordeiro, G.~M.
+  \harvardyearleft 2012\harvardyearright , `On wald residuals in generalized
+  linear models', {\em Communications in Statistics-Theory and Methods} {\bf
+  41}(4),~741--758.
+
+\harvarditem{Williams}{1987}{williams}
+Williams, D.  \harvardyearleft 1987\harvardyearright , `Generalized linear
+  model diagnostics using the deviance and single case deletions', {\em Applied
+  Statistics} pp.~181--191.
+
+\end{thebibliography}

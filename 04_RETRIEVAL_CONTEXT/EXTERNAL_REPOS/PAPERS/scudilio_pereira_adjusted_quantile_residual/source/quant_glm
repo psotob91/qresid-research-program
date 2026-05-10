@@ -1,0 +1,707 @@
+@article{anscombe,
+ title={Contribution to the discussion of H. Hotelling’s paper},
+ author={Anscombe, FJ},
+ journal={Journal of the Royal Statistical Society},
+volume={15},
+number={2},
+pages={229--230},
+year={1953},
+}
+
+
+@article{abdo,
+title={Influence of dyslipidemia and diabetes mellitus on chronic periodontal disease},
+author={Abdo,  Almeida  and  Ribeiro, Fabiano and Juliane and Cirano and Casat and Zaffalon, Marcio  and Ribeiro, Fernanda Vieira and Giampaoli, Viviana and Viana Casarin, Renato Corr{\^e}a and Pimentel, Suzana Peres},
+journal={Journal of periodontology},
+volume={84},
+number={10},
+pages={1401--1408},
+year={2013},
+}
+
+
+
+@article{akaike,
+author={Akaike, Hirotugu},
+title  ={A new look at the statistical model identification},
+journal={IEEE Transactions on Automatic Control},
+volume={19},
+number={6},
+pages ={716-723},
+year={1974},
+}
+
+@article{anderson,
+title={Asymptotic theory of certain" goodness of fit" criteria based on stochastic processes},
+author={Anderson, Theodore W and Darling, Donald A},
+journal={The annals of mathematical statistics},
+volume={23},
+pages={193--212},
+year={1952},
+publisher={JSTOR.}
+}
+
+@article{anholeto2014,
+title={Adjusted Pearson residuals in beta regression models},
+author={Anholeto, Tatiana and Sandoval, M{\^o}nica C and Botter, Denise A},
+ journal={Journal of Statistical Computation and Simulation},
+volume={84},
+pages={999--1014},
+year={2014},
+publisher={Taylor \& Francis.}
+}
+
+@book{atkinson,
+title={Plots, transformations, and regression: an introduction to graphical methods of diagnostic regression analysis},
+author={Atkinson, Anthony Curtis},
+edition = {},
+publishe={Clarendon Press},
+address={Oxford},
+year={1985},
+}
+
+@misc{belsley,
+  title={Recession Diagnostics},
+  author={Belsley, David A and Kuh, Edwin and Welsch, Roy E},
+  year={1980},
+  publisher={John Wiley and Sons, New York}
+}
+
+@article{bic,
+  title={Estimating the dimension of a model},
+  author={Schwarz, Gideon and others},
+  journal={The annals of statistics},
+  volume={6},
+  number={2},
+  pages={461--464},
+  year={1978},
+  publisher={Institute of Mathematical Statistics}
+}
+
+
+@article{bortoluzzo2011,
+  title={Estimating total claim size in the auto insurance industry: a comparison between tweedie and zero-adjusted inverse gaussian distribution},
+  author={Bortoluzzo, Adriana Bruscato and Claro, Danny Pimentel and Caetano, Marco Antonio Leonel and Artes, Rinaldo},
+  journal={BAR-Brazilian Administration Review},
+  volume={8},
+  number={1},
+  pages={37--47},
+  year={2011},
+  publisher={SciELO Brasil.}
+}
+
+@article{cook2008,
+  title={Regression analysis of proportions in finance with self selection},
+  author={Cook, Douglas O and Kieschnick, Robert and McCullough, Bruce D},
+  journal={Journal of empirical finance},
+  volume={15},
+  number={5},
+  pages={860--867},
+  year={2008},
+  publisher={Elsevier.}
+}
+
+
+@article{cole1992,
+  title={Smoothing reference centile curves: the LMS method and penalized likelihood},
+  author={Cole, Timothy J and Green, Pamela J},
+  journal={Statistics in medicine},
+  volume={11},
+  number={10},
+  pages={1305--1319},
+  year={1992},
+  publisher={Wiley Online Library}
+}
+
+
+@article{cook1977,
+  title={Detection of influential observation in linear regression},
+  author={Cook, R Dennis},
+  journal={Technometrics},
+  volume={19},
+  pages={15--18},
+  year={1977},
+  publisher={JSTOR}
+}
+
+
+
+@article{cook1982,
+ title={Residuals and influence in regression},
+author={Cook, R Dennis and Weisberg, Sanford},
+journal={Chapman and Hall},
+volume={19},
+pages={15--18},
+year={1982},
+publisher={New York: Chapman and Hall}
+}
+
+@book{cordeiro,
+title={Modelos lineares generalizados e Extens{\~o}es},
+author={Cordeiro, Gauss Moutinho and Dem{\'e}trio, Clarice GB},
+year={2008},
+publisher={Recife: UFRPE}
+}
+
+@article{cordeiro2009,
+  title={The distribution of Pearson residuals in generalized linear models},
+  author={Cordeiro, Gauss M and Simas, Alexandre B},
+  journal={Computational Statistics \& Data Analysis},
+  volume={53},
+  number={9},
+  pages={3397--3411},
+  year={2009},
+  publisher={Elsevier}
+}
+
+@article{cordeiro2004pearson,
+  title={On Pearson's residuals in generalized linear models},
+  author={Cordeiro, Gauss M},
+  journal={Statistics \& probability letters},
+  volume={66},
+  number={3},
+  pages={213--219},
+  year={2004},
+  publisher={Elsevier}
+}
+
+
+@ONLINE{cvm,
+author = {Pereira, Leonardo and Novaes, D. Ana and Dias, P. Luciana and others},
+title = {Fundos de investimentos,},
+year = {2014},
+url = {http://www.investidor.gov.br}
+}
+
+@article{davison,
+  title={Deviance residuals and normal scores plots},
+  author={Davison, AC and Gigli, A},
+  journal={Biometrika},
+  volume={76},
+  number={2},
+  pages={211--221},
+  year={1989},
+  publisher={Biometrika Trust}
+}
+
+@phdthesis{dias,
+title={Modelos assim{\'e}tricos in aficionados de zeros},
+author={Dias, Mariana Ferreira},
+school={Universidade de S{\~a}o Paulo},
+year={2014},
+type={Disserta{\c{c}}{\~a}o de Mestrado em Estat\'istica.}
+}
+
+
+@article{dunn,
+  title={Randomized quantile residuals},
+  author={Dunn, Peter K and Smyth, Gordon K},
+  journal={Journal of Computational and Graphical Statistics},
+  volume={5},
+  number={3},
+  pages={236--244},
+  year={1996},
+  publisher={Taylor \& Francis.}
+}
+
+
+@article{dunnseries,
+  title={Series evaluation of Tweedie exponential dispersion model densities},
+  author={Dunn, Peter K and Smyth, Gordon K},
+  journal={Statistics and Computing},
+  volume={15},
+  number={4},
+  pages={267--280},
+  year={2005},
+  publisher={Springer.}
+}
+
+@article{feng2017randomized,
+  title={Randomized Quantile Residuals: an Omnibus Model Diagnostic Tool with Unified Reference Distribution},
+  author={Feng, Cindy and Sadeghpour, Alireza and Li, Longhai},
+  journal={arXiv preprint arXiv:1708.08527},
+  year={2017}
+}
+
+
+@article{feuerverger,
+  title={On some methods of analysis for weather experiments},
+  author={Feuerverger, Andrey},
+  journal={Biometrika},
+  volume={66},
+  number={3},
+  pages={655--658},
+  year={1979},
+  publisher={Biometrika Trust.}
+}
+
+
+@phdthesis{ferreira2005,
+  title={Uma Abordagem Cl{\'a}ssica e Bayesiana para o Modelo de Tweedie},
+  author={Ferreira, Fl{\'a}via},
+  year={2005},
+ school={Departamento de  Estat{\'\i}stica da Universidade Federal de S{\~a}o Carlos},
+type={Disserta{\c{c}}{\~a}o do Programa de P{\'o}s-Gradua{\c{c}}{\~a}o em Estat{\'\i}stica}
+}
+
+
+@phdthesis{ferreira2008,
+  title={Modelos de previs{\~a}o de perdas para cr{\'e}dito massificado},
+ author={Ferreira, Jefferson},
+  school={Ibmec. S{\~a}o Paulo},
+  year={2008},
+  type={Disserta{\c{c}}{\~a}o de Mestrado}
+}
+
+
+
+@techreport{fonseca,
+  title={An{\'a}lise do Desempenho Recente de Fundos de Investimento no Brasil]},
+  author={Fonseca, Nelson and Bressan, Aureliano and Iquiapaza, Robert and Guerra, Jo{\~a}o and others},
+  year={2007},
+  institution={University Library of Munich, Germany}
+}
+
+
+@book{hardin2007generalized,
+  title={Generalized linear models and extensions},
+  author={Hardin, James William and Hilbe, Joseph M and Hilbe, Joseph},
+  year={2007},
+  publisher={Stata press}
+}
+
+
+@article{heller,
+ title={The zero-adjusted inverse Gaussian distribution as a model for insurance claims},
+ author={Heller, Gillian and Stasinopoulos, Mikis and Rigby, Bob and others},
+ booktitle={Proceedings of the 21th International Workshop on Statistical Modelling},
+ volume={226233},
+ year={2006}
+}
+
+
+@article{hoff,
+title={Second stage DEA: Comparison of approaches for modelling the DEA score},
+ author={Hoff, Ayoe},
+ journal={European Journal of Operational Research},
+ volume={181},
+ number={1},
+ pages={425--435},
+ year={2007},
+ publisher={Elsevier}
+}
+
+
+@book{hosmer,
+ title={Applied logistic regression},
+ author={Hosmer Jr, David W and Lemeshow, Stanley},
+ year={2004},
+ publisher={John Wiley \& Sons}
+}
+
+
+@article{hosmer1997,
+ title={A comparison of goodness-of-fit tests for the logistic regression model},
+ author={Hosmer, David W and Hosmer, Trina and Le Cessie, Saskia and Lemeshow, Stanley and others},
+ journal={Statistics in medicine},
+ volume={16},
+ number={9},
+ pages={965--980},
+ year={1997}
+}
+
+
+@article{hosmer1991,
+ title={The importance of assessing the fit of logistic regression models: a case study.},
+ author={Hosmer, David W and Taber, Scott and Lemeshow, Stanley},
+ journal={American journal of public health},
+ volume={81},
+ number={12},
+ pages={1630--1635},
+ year={1991},
+ publisher={American Public Health Association}
+}
+
+@book{jorgensenb,
+ title={The theory of dispersion models},
+ author={Jorgensen, Bent},
+volume={1},
+ year={1997},
+ publisher={Chapman and Hall/CRC}
+}
+
+@book{jong,
+title={Generalized linear models for insurance data},
+author={De Jong, Piet and Heller, Gillian Z and others},
+volume={136},
+year={2008},
+ publisher={Cambridge University Press Cambridge}
+}
+
+@book{johnson,
+title={Continuous univariate distributions},
+author={Johnson, Norman L and Kotz, Samuel and Balakrishnan, Narayanaswamy},
+year={1994},
+volume={1-2},
+publisher={New York: John Wiley \& Sons}
+}
+
+
+@article{jorgensen,
+ title={Fitting Tweedie's compound Poisson model to insurance claims data},
+ author={J{\o}rgensen, Bent and Paes De Souza, Marta C},
+ journal={Scandinavian Actuarial Journal},
+ volume={1994},
+ number={1},
+ pages={69--93},
+ year={1994},
+ publisher={Taylor \& Francis}
+}
+
+@article{klar2012specification,
+  title={Specification tests for the response distribution in generalized linear models},
+  author={Klar, Bernhard and Meintanis, Simos G},
+  journal={Computational Statistics},
+  volume={27},
+  number={2},
+  pages={251--267},
+  year={2012},
+  publisher={Springer}
+}
+
+@book{lawless,
+  title={Statistical models and methods for lifetime data},
+  author={Lawless, Jerald F},
+  volume={362},
+  year={2011},
+  publisher={John Wiley \& Sons}
+}
+
+@book{liu2007,
+title={On goodness-of-fit of logistic regression model},
+author={Liu, Ying},
+year={2007},
+publisher={ProQuest}
+}
+
+@phdthesis{martinez,
+ title={Modelos de regressao beta inflacionados},
+author={Mart{\'i}nez, Raydonal Ospina},
+year={2008},
+ school={Universidade de S{\~a}o Paulo},
+type={Tese de Doutorado em Estat\'istica.}
+}
+
+ @book{mccullagh,
+  title={Generalized linear models},
+  author={McCullagh, Peter and Nelder, John A},
+  edition = {2},
+  year={1989},
+  publisher={CRC press}
+}
+
+@article{mccullagh1985,
+  title={On the asymptotic distribution of Pearson's statistic in linear exponential-family models},
+  author={McCullagh, Peter},
+  journal={International Statistical Review/Revue Internationale de Statistique},
+  pages={61--67},
+  year={1985},
+  publisher={JSTOR}
+}
+
+
+
+@article{nelder72,
+  title={Generalized linear models},
+  author={Nelder, J. A. and  Wedderburn, R. W. M.},
+  journal={Journal of the Royal Statistical Society},
+ volume={10},
+  number={3},
+ pages={370-384},
+  year={1972}
+}
+
+@article{ospina,
+  title={A general class of zero-or-one inflated beta regression models},
+  author={Ospina, Raydonal and Ferrari, Silvia LP},
+  journal={Computational Statistics \& Data Analysis},
+  volume={56},
+  number={6},
+  pages={1609--1623},
+  year={2012},
+  publisher={Elsevier}
+}
+
+@phdthesis{ospina2008,
+title={Modelos de regress{\~a}o beta inflacionados},
+author={Ospina, R},
+school={Instituto de Matem{\'a}tica e Estat{\'\i}stica da Universidade de S{\~a}o Paulo},
+year={2008},
+type={Tese do Programa de P{\'o}s-Gradua{\c{c}}{\~a}o em Estat{\'\i}stica}
+}
+
+@article{ospina2010,
+title={Inflated beta distributions},
+author={Ospina, Raydonal and Ferrari, Silvia LP},
+ journal={Statistical Papers},
+volume={51},
+number={1},
+pages={111--126},
+year={2010},
+ publisher={Springer}
+}
+
+@book{paula,
+title={Modelos de regress{\~a}o: com apoio computacional},
+author={Paula, Gilberto Alvarenga},
+year={2013},
+publisher={IME-USP S{\~a}o Paulo}
+}
+
+@article{pereira2012,
+title={The truncated inflated beta distribution},
+author={Pereira, Gustavo HA and Botter, Denise A and Sandoval, M{\^o}nica C},
+ journal={Communications in Statistics-Theory and Methods},
+ volume={41},
+number={5},
+pages={907--919},
+year={2012},
+publisher={Taylor \& Francis}
+}
+
+@article{pereira2017quantile,
+  title={On quantile residuals in beta regression},
+  author={Pereira, Gustavo H A},
+  journal={Communications in Statistics-Simulation and Computation},
+  volume  = {, in press},
+  number  = {},
+  pages   = {},
+  year={2017}
+}
+
+
+@phdthesis{pereiratese,
+ title={Modelos de regress{\~a}o beta inflacionados truncados},
+author={de Araujo Pereira, Gustavo Henrique},
+school={Instituto de Matem{\'a}tica e Estat{\'\i}stica da Universidade de S{\~a}o Paulo},
+year={2012},
+type={Tese do Programa de P{\'o}s-Gradua{\c{c}}{\~a}o em Estat{\'\i}stica}
+}
+
+
+@article{pereira,
+title={A new residual in zero inflated regression models},
+author={Pereira, Gustavo HA and Botter, Denise A and Sandoval, M{\^o}nica C},
+journal={Proceedings of the 21th Simp\'osio Nacional de Probabilidade e Estat\'istica.},
+ volume={""},
+number={""},
+pages={""},
+year={2014}
+}
+
+@book{pace,
+title={Principles of statistical inference: from a Neo-Fisherian perspective},
+author={Pace, Luigi and Salvan, Alessandra},
+volume={4},
+year={1997},
+publisher={World Scientific}
+}
+
+
+@article{pierce1986residuals,
+  title={Residuals in generalized linear models},
+  author={Pierce, Donald A and Schafer, Daniel W},
+  journal={Journal of the American Statistical Association},
+  volume={81},
+  number={396},
+  pages={977--986},
+  year={1986},
+  publisher={Taylor \& Francis Group}
+}
+
+
+
+@phdthesis{pousinho,
+title={Pagamentos de sinistros},
+author={Pousinho, Andr{\'e} Pereira},
+year={2013},
+school={Instituto Superior de Economia e Gest{\~a}o},
+type={Disserta{\c{c}}{\~a}o de mestrado do  Instituto Superior de Economia e Gest{\~a}o}
+}
+
+
+
+@article{royston,
+  title={The use of cusums and other techniques in modelling continuous covariates in logistic regression},
+  author={Royston, Patrick},
+  journal={Statistics in medicine},
+  volume={11},
+  number={8},
+  pages={1115--1129},
+  year={1992},
+  publisher={Wiley Online Library}
+}
+
+
+@article{resti,
+  title={Estimation of claim cost data using zero adjusted gamma and inverse Gaussian regression models},
+  author={Resti, Yuliai and Ismail, Noriszura  and Jamaan, Saiful Hafizah },
+  journal={Journal of Mathematics and Statistics},
+ volume={9},
+  number={3},
+  pages={186-192},
+  year={2013}
+}
+
+@article{rigby2005,
+  title={Generalized additive models for location, scale and shape},
+  author={Rigby, Robert A and Stasinopoulos, D Mikis},
+  journal={Journal of the Royal Statistical Society: Series C (Applied Statistics)},
+  volume={54},
+  number={3},
+  pages={507--554},
+  year={2005},
+  publisher={Wiley Online Library}
+}
+
+@book{rigby2015,
+ title={Flexible Regression and Smoothing: Using GAMLSS in R},
+ author={Stasinopoulos, D Mikis and Rigby, Robert A and Voudouris, Vlasios and Heller, Gillian and De Bastiani, Fernanda    },
+ year={2017},
+ publisher={Taylor \& Francis}
+}
+
+@incollection{rigby1996,
+  title={Mean and dispersion additive models},
+  author={Rigby, Robert A and Stasinopoulos, Mikis D},
+  booktitle={Statistical theory and computational aspects of smoothing},
+  pages={215--230},
+  year={1996},
+  publisher={Springer}
+}
+
+
+@article{rocha,
+title={Mycoflora and co-occurrence of fumonisins and aflatoxins in freshly harvested corn in different regions of Brazil},
+author={Rocha, Liliana O and Nakai, Viviane K and Braghini, Raquel and Reis, Tatiana A and Kobashigawa, Estela and Corr{\^e}a, Benedito},
+journal={International journal of molecular sciences},
+volume={10},
+number={11},
+ pages={5090--5103},
+year={2009},
+publisher={Molecular Diversity Preservation International}
+}
+
+@article{gamlss2016,
+  title={Package gamlss. data},
+  author={Stasinopoulos, Mikis and Rigby, Bob and Stasinopoulos, Maintainer Mikis},
+  year={2016}
+}
+
+@article{simas2009,
+  title={Adjusted Pearson residuals in exponential family nonlinear models},
+  author={Simas, Alexandre B and Cordeiro, Gauss M},
+  journal={Journal of Statistical Computation and Simulation},
+  volume={79},
+  number={4},
+  pages={411--425},
+  year={2009},
+  publisher={Taylor \& Francis}
+}
+
+@article{stukel88,
+ title={Generalized logistic models},
+author={Stukel, Th{\'e}r{\`e}se A},
+journal={Journal of the American Statistical Association},
+volume={83},
+ number={402},
+pages={426--431},
+year={1988},
+publisher={Taylor \& Francis}
+}
+
+@article{stan,
+  title={Generalized additive models for location scale and shape (GAMLSS) in R},
+  author={Stasinopoulos, D Mikis and Rigby, Robert A},
+  journal={Journal of Statistical Software},
+  volume={23},
+  number={7},
+  pages={1--46},
+  year={2007}
+}
+
+@misc{stasinopoulos08,
+title={Instructions on how to use the GAMLSS package in R, 2008},
+author={Stasinopoulos, DM and Rigby, B and Akantziliotou, C},
+year={2014}
+}
+
+@article{stein,
+  title={Linear models with an inverse gaussian poisson error distribution},
+  author={Stein, Gillian Z and Juritz, June M},
+  journal={Communications in Statistics-Theory and Methods},
+  volume={17},
+  number={2},
+  pages={557--571},
+  year={1988},
+  publisher={Taylor \& Francis}
+}
+
+@article{tong,
+  title={A zero-adjusted gamma model for mortgage loan loss given default},
+  author={Tong, Edward NC and Mues, Christophe and Thomas, Lyn},
+  journal={International Journal of Forecasting},
+  volume={29},
+  number={4},
+  pages={548--562},
+  year={2013},
+  publisher={Elsevier}
+}
+
+
+
+@phdthesis{troiani,
+  title={Aplicai{\c{c}}ao do modelo ZAIG (Zero Adjusted Inverse Gaussian) na an{\'{a}}lise de cart{\~{o}}es de cr{\'{e}}ditos},
+  author={Troiani, Rafae Rodrigues},
+ year={2009},
+  school={ Faculdade Ibmec S{\~a}o Paulo},
+  type={ Disserta{\c{c}}{\~a}o de Mestrado Profissional em Economia.}
+}
+
+@article{urbano2012wald,
+  title={On Wald Residuals in Generalized Linear Models},
+  author={Urbano, Mariana Ragassi and Borges Dem{\'e}trio, Clarice Garcia and Cordeiro, Gauss Moutinho},
+  journal={Communications in Statistics-Theory and Methods},
+  volume={41},
+  number={4},
+  pages={741--758},
+  year={2012},
+  publisher={Taylor \& Francis}
+}
+
+
+@article{venezuela,
+  title={Estimating equations and diagnostic techniques applied to zero-inflated models for panel data},
+  author={Venezuela, Maria Kelly and Artes, Rinaldo and others},
+  journal={Electronic Journal of Statistics},
+  volume={8},
+  number={1},
+  pages={1641--1660},
+  year={2014},
+  publisher={Institute of Mathematical Statistics}
+}
+
+
+
+
+@article{williams,
+  title={Generalized linear model diagnostics using the deviance and single case deletions},
+  author={Williams, DA},
+  journal={Applied Statistics},
+  pages={181--191},
+  year={1987},
+  publisher={JSTOR}
+}
+
+
+
