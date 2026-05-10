@@ -14,6 +14,14 @@ POST_CHANGE_SYNC_DONE: created from local `predict`, `regress`, and `glm` help-f
 
 This master records Stata help-file style patterns to use when rewriting `qresid.sthlp`. It complements `STATA_PACKAGE_STYLE_RULES.md`; it does not override support or API rules.
 
+## Authority and Precedence
+
+For `qresid.sthlp` rewrites, `QRESID_STHLP_FORMAT_MASTER.md` and
+`QRESID_STHLP_CONTENT_MASTER.md` are the controlling masters. This document is
+supporting evidence from local `predict`, `regress`, and `glm` help-file
+inspection. If this document conflicts with either `QRESID_STHLP_*` master, the
+`QRESID_STHLP_*` master controls.
+
 ## Five-Pass Style Audit
 
 | pass | files inspected | finding | rule for `qresid.sthlp` |

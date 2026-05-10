@@ -51,6 +51,17 @@ Antes de cambios publicos, help, examples, pkg o release:
 
 1. `04_RETRIEVAL_CONTEXT/STATA_PACKAGE_STYLE_RULES.md`
 
+Antes de cambios sustanciales en `qresid.sthlp`:
+
+1. `04_RETRIEVAL_CONTEXT/QRESID_STHLP_FORMAT_MASTER.md`
+2. `04_RETRIEVAL_CONTEXT/QRESID_STHLP_CONTENT_MASTER.md`
+3. `04_RETRIEVAL_CONTEXT/STATA_HELP_STYLE_MASTER.md`
+
+Los dos archivos `QRESID_STHLP_*_MASTER.md` mandan para estructura, contenido
+cientifico, formato SMCL, ejemplos, referencias y auditoria del help.
+`STATA_HELP_STYLE_MASTER.md` queda como evidencia de estilo oficial Stata y
+apoyo subordinado si hay contradiccion.
+
 ## 5. Fases del proyecto
 
 1. Fundamentos teoricos y definiciones.
@@ -183,6 +194,8 @@ Detener la tarea si:
 - No hay prompts ni rastros de agente en archivos publicos.
 - Help, examples y claims coinciden con tests existentes.
 - Si se toca documentacion publica, revisar
+  `04_RETRIEVAL_CONTEXT/QRESID_STHLP_FORMAT_MASTER.md`,
+  `04_RETRIEVAL_CONTEXT/QRESID_STHLP_CONTENT_MASTER.md` y
   `04_RETRIEVAL_CONTEXT/STATA_HELP_STYLE_MASTER.md`; si se usa MarkDoc,
   GitHub tooling o Quarto, revisar
   `04_RETRIEVAL_CONTEXT/QRESID_DOCUMENTATION_TOOLING_MASTER.md`.
