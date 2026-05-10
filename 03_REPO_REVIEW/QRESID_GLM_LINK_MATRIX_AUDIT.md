@@ -52,7 +52,7 @@ Families and commands covered:
 | weights | separate benchmark evidence | `EXPERIMENTAL_VALIDATED_SEPARATE_BENCHMARK` for tested direct `fweight`; `GATED_VARIANT` for unclaimed weight types/routes |
 | Official truncated count | validated in separate truncated-count benchmarks, not executed in this family-by-link matrix | `READY_FOR_EXTENSION_PRERELEASE`; evidence is `SEPARATE_BENCHMARK` |
 | Official censored count | validated in separate censored-count benchmarks, not executed in this family-by-link matrix | `READY_FOR_EXTENSION_PRERELEASE`; evidence is `SEPARATE_BENCHMARK` |
-| Hurdle count Poisson/NB | distribution theory documented, no accepted Stata estimator/source gate closed | `GATED_MODEL_FAMILY`; row is `REPORT_SCOPE_ONLY` |
+| Hurdle count Poisson/NB | pinned unweighted Hilbe-Hardin `hplogit`/`hnblogit` validated in separate hurdle-count benchmarks | `READY_FOR_EXTENSION_PRERELEASE`; evidence is `SEPARATE_BENCHMARK`; other hurdle variants remain `GATED_VARIANT` |
 | Stata `churdle` Cragg bounded/continuous | separate continuous/bounded Cragg gate, not count-hurdle support | `GATED_MODEL_FAMILY`; row is `REPORT_SCOPE_ONLY` |
 | quasi, Tweedie, mixed/GLMM/GSEM and external Hilbe-style count models | inventoried only | `FUTURE_PHASE`, `GATED_MODEL_FAMILY` or `NO_OFFICIAL_STATA_COMMAND` |
 

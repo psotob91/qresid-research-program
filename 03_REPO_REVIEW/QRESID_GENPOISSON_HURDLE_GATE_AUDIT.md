@@ -8,21 +8,22 @@ Retrieval policy: load before generalized Poisson or hurdle count work
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: hurdle RQR theory gate created; estimator-equivalence audit added; generalized Poisson remains closed for pinned `st0279` route and hurdle research gate remains open.
+POST_CHANGE_SYNC_DONE: hurdle RQR theory gate created; estimator-equivalence audit added; generalized Poisson remains closed for pinned `st0279` route and pinned hurdle count routes are now implemented for extension prerelease.
 SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix, GLM/link report and math/software evidence matrix reviewed after estimator-equivalence formalization.
 
 ## Decision
 
 `GENERALIZED_POISSON_IMPLEMENTATION_ALLOWED: yes_for_pinned_st0279_unweighted`
 
-`HURDLE_COUNT_IMPLEMENTATION_ALLOWED: no`
+`HURDLE_COUNT_IMPLEMENTATION_ALLOWED: yes_for_pinned_unweighted_hplogit_hnblogit`
 
 `BENCHMARK_RESEARCH_ALLOWED: yes`
 
 This audit originally opened a separate benchmark-first cycle. It now records
 that the pinned Stata Journal `st0279` / `gpoisson` unweighted route passed
-source, PMF/CDF, Stata and R CDF-replay gates. Hurdle count has a documented
-PIT/RQR target but remains research only until a Stata estimator route closes.
+source, PMF/CDF, Stata and R CDF-replay gates. Hurdle count now has accepted
+pinned Stata routes for Hilbe/Hardin `hplogit` and `hnblogit`, limited to
+unweighted Poisson-logit and NB-logit hurdle fits with strict `ml` signatures.
 The stricter estimator-equivalence audit is recorded in
 `QRESID_ESTIMATOR_EQUIVALENCE_AUDIT.md`: estimator-level equality is required
 when claimed; otherwise the route must be explicitly labeled as CDF replay,
@@ -58,12 +59,15 @@ Still required before any additional implementation:
 
 ## Hurdle Count Gate
 
-Candidate Stata route:
+Accepted Stata route:
 
-- No official count-hurdle estimator is claimed in this audit.
+- Hilbe/Hardin external `hplogit` and `hnblogit` ado files are pinned in
+  `04_RETRIEVAL_CONTEXT/EXTERNAL_REPOS/STATA/hurdle_count_hilbe_hardin`.
+- These commands leave `e(cmd)="ml"`, so `qresid` dispatch is restricted to
+  the pinned `e(user)`/`e(title)` and expected `e(b)` equation signatures.
 - `churdle` exists officially, but it is not accepted as a count-hurdle route
   without a separate proof of support, extraction and discrete CDF semantics.
-- External Stata routes require source/version/license pinning.
+- Other external Stata routes require separate source/version/license pinning.
 
 Candidate R routes:
 
@@ -83,12 +87,19 @@ Mathematical target:
 - For `y>0`, `F_low=pi+(1-pi)*F_plus(y-1)` and
   `F_high=pi+(1-pi)*F_plus(y)`.
 
-Required closure before implementation:
+Closed for pinned implementation:
 
-- Stata estimator route identified and pinned or official support proven.
-- Zero process and positive-count process parameters extracted robustly.
+- Stata estimator route identified and pinned for `hplogit`/`hnblogit`.
+- Zero process and positive-count process parameters extracted robustly from
+  stable equations.
 - CDF endpoints reproduce the hurdle mass at zero and positive support.
-- Three convergent datasets for Poisson and NB hurdle candidates.
+- Three convergent datasets passed for Poisson and NB hurdle candidates.
+- Direct `qresid` endpoint/replay checks passed with `uvar()`.
+
+Still gated:
+
+- weights, `svy:`, probit hurdle, `ztpnm`, `churdle`, hurdle generalized
+  Poisson, and any unpinned hurdle route.
 
 ## Censored PIT Note
 
@@ -101,7 +112,8 @@ itself; each route still needs extraction, CDF and benchmark evidence.
 
 ## Release Interpretation
 
-Missing hurdle support remains `MISSING_NOT_BLOCKING` for current package
-validity. Generalized Poisson may be claimed only for the pinned, unweighted
-Stata Journal `gpoisson` route and must retain its external-estimator
-dependency notice.
+Pinned unweighted `hplogit`/`hnblogit` hurdle count support is
+`READY_FOR_EXTENSION_PRERELEASE`. Missing support for other hurdle routes
+remains `MISSING_NOT_BLOCKING` for current package validity. Generalized
+Poisson may be claimed only for the pinned, unweighted Stata Journal
+`gpoisson` route and must retain its external-estimator dependency notice.

@@ -121,7 +121,7 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 ### Fase 2 postergada
 
 - ZIP/ZINB ponderados, correlacionados o no validados.
-- Hurdle.
+- Hurdle fuera de las rutas pinneadas/validadas `hplogit` y `hnblogit`.
 - Truncados/censurados fuera de rutas unweighted ya validadas.
 - PIT o diagnósticos simulados.
 
@@ -234,6 +234,7 @@ Detenerse y no modificar código si:
 - `EVIDENCIA PENDIENTE`: fuente documental clave está pendiente o restringida.
 - `ESTÁNDAR OFICIAL`: Gamma es Fase 1 para modelos no ponderados `glm, family(gamma)` si pasan tests CDF y benchmark R; pesos en Gamma siguen bloqueados por la regla general de pesos.
 - `ESTÁNDAR OFICIAL`: NB mean/constant, `gnbreg`, y fixed-parameter `glm nbinomial #` estan permitidos como extension prerelease experimental cuando benchmarks verdes; `glm nbinomial ml` sigue `HUMAN_DECISION_REQUIRED` o gated.
+- `ESTÁNDAR OFICIAL`: hurdle count `hplogit`/`hnblogit` queda permitido como extension prerelease experimental solo en rutas unweighted con estimadores externos pinneados y firma `ml` estricta.
 - `ESTÁNDAR OFICIAL`: direct `fweight` queda limitado a combinaciones validadas; otros pesos requieren regla final por familia.
 - `ESTÁNDAR OFICIAL`: direct `[pweight=]` puede documentarse solo como diagnostico experimental/model-based/Stata-only; soporte survey/public RC requiere decisión humana explícita.
 - `ESTÁNDAR OFICIAL`: API pública Fase 1 está cerrada; cambios futuros requieren aprobación humana y actualización de help/examples/tests/changelog.

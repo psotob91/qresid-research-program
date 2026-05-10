@@ -8,22 +8,21 @@ Retrieval policy: load before hurdle count implementation or benchmark work
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: hurdle count Stata external ado candidates pinned and audited.
-SUPPORT_MATRIX_SYNC_DONE: support remains not claimed; matrices should show benchmark gate passed and implementation pending.
-SUPPORT_EVIDENCE_INDEX_SYNC: hurdle count benchmark evidence is indexed from `benchmark_hurdle_count_*`.
+POST_CHANGE_SYNC_DONE: hurdle count Stata external ado candidates pinned, audited and implemented for unweighted qresid postestimation.
+SUPPORT_MATRIX_SYNC_DONE: support is claimed only for pinned unweighted hplogit/hnblogit; other hurdle routes remain gated.
+SUPPORT_EVIDENCE_INDEX_SYNC: hurdle count benchmark evidence is indexed from `benchmark_hurdle_count_*` and `benchmark_hurdle_qresid_*`.
 
 ## Decision
 
 `HURDLE_STATA_ADO_PINNING_STATUS: PASS`
 
-`HURDLE_COUNT_IMPLEMENTATION_ALLOWED_IN_QRESID: no_not_in_this_cycle`
+`HURDLE_COUNT_IMPLEMENTATION_ALLOWED_IN_QRESID: yes_for_pinned_unweighted_hplogit_hnblogit`
 
 `HURDLE_COUNT_BENCHMARK_GATE_STATUS: PASS_FOR_HILBE_HARDIN_LOGIT_ROUTES`
 
 The SSC/RePEc Hilbe-Hardin hurdle-count commands are now pinned locally as
-external estimator dependencies. This does not add public `qresid` support yet.
-It closes the previous blocker "no accepted Stata route" for two narrow routes
-and opens a separate implementation cycle.
+external estimator dependencies. The follow-up implementation cycle added
+`qresid` support for the two narrow unweighted routes only.
 
 ## Pinned Files
 
@@ -64,7 +63,5 @@ Not accepted in this cycle:
 
 ## Release Interpretation
 
-The route is now a viable external-estimator benchmark target. `qresid.ado`
-still has no hurdle-count implementation in this cycle, so support remains
-implementation-pending.
-
+The route is now a ready-to-prerelease external-estimator support target for
+unweighted `hplogit` and `hnblogit`. Other hurdle routes remain gated.

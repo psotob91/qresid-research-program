@@ -8,8 +8,8 @@ Retrieval policy: load before external/count estimator benchmarks or CDF replay 
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: estimator equivalence gate created for generalized Poisson and hurdle count decisions.
-SUPPORT_MATRIX_SYNC_DONE: no support claim changed; this audit explains the evidence threshold behind current generalized Poisson readiness and hurdle gating.
+POST_CHANGE_SYNC_DONE: estimator equivalence gate updated after hurdle count implementation.
+SUPPORT_MATRIX_SYNC_DONE: support claim changed for pinned unweighted hplogit/hnblogit; other hurdle routes remain gated.
 SUPPORT_EVIDENCE_INDEX_SYNC: existing evidence index remains the execution source; this audit adds interpretation and prerequisites.
 
 ## Purpose
@@ -34,8 +34,8 @@ but it is not a substitute for analytic CDF endpoint validation.
 |---|---|---|---|---|---|---|---|
 | generalized Poisson GP-0 | pinned Stata Journal `st0279` / `gpoisson` (`gpoisson.ado` 1.1.0, `gpois_lf.ado` 1.0.0) | `VGAM::genpoisson0` / `VGAM::pgenpois0`; `glmmTMB::genpois` approximate candidate | manual generalized-Poisson CDF replay; Dunn-Smyth with `uvar()` | `PARTIAL`: positive-delta CDF matches `VGAM::pgenpois0`; estimator-level equality is not claimed for all routes | yes | `READY_FOR_EXTENSION_PRERELEASE` for pinned unweighted route | Stata estimates `mu` and `delta`; R recomputes endpoints from pinned PMF/CDF. |
 | generalized Poisson weights / `gp2` / other GP ado routes | unpinned or unvalidated Stata routes | route-specific | none established | no | not closed | `GATED_VARIANT` | Requires separate source, license, PMF/CDF and extraction audit. |
-| hurdle count Poisson | pinned SSC/RePEc `hplogit` | `pscl::hurdle(..., dist="poisson")`; `glmmTMB(..., family=truncated_poisson, ziformula=...)`; `VGAM` zero-altered/positive Poisson candidates | `topmodels::qresiduals` candidate; manual hurdle CDF replay | `ESTIMATOR_EQUIVALENT` after sign adjustment of zero equation | yes | `BENCHMARK_GATE_PASSED_IMPLEMENTATION_PENDING` | Source/extraction closed; `qresid.ado` implementation still pending. |
-| hurdle count negative binomial | pinned SSC/RePEc `hnblogit` | `pscl::hurdle(..., dist="negbin")`; `glmmTMB(..., family=truncated_nbinom2, ziformula=...)`; `VGAM` zero-altered/positive NB candidates | `topmodels::qresiduals` candidate; manual hurdle CDF replay | `ESTIMATOR_EQUIVALENT` after sign adjustment of zero equation | yes | `BENCHMARK_GATE_PASSED_IMPLEMENTATION_PENDING` | Source/extraction closed; `qresid.ado` implementation still pending. |
+| hurdle count Poisson | pinned SSC/RePEc `hplogit` | `pscl::hurdle(..., dist="poisson")`; `glmmTMB(..., family=truncated_poisson, ziformula=...)`; `VGAM` zero-altered/positive Poisson candidates | `qresid` hurdle endpoints; manual hurdle CDF replay; `topmodels::qresiduals` candidate | `ESTIMATOR_EQUIVALENT` after sign adjustment of zero equation | yes | `READY_FOR_EXTENSION_PRERELEASE` | Source/extraction and qresid endpoint implementation closed for unweighted route. |
+| hurdle count negative binomial | pinned SSC/RePEc `hnblogit` | `pscl::hurdle(..., dist="negbin")`; `glmmTMB(..., family=truncated_nbinom2, ziformula=...)`; `VGAM` zero-altered/positive NB candidates | `qresid` hurdle endpoints; manual hurdle CDF replay; `topmodels::qresiduals` candidate | `ESTIMATOR_EQUIVALENT` after sign adjustment of zero equation | yes | `READY_FOR_EXTENSION_PRERELEASE` | Source/extraction and qresid endpoint implementation closed for unweighted route. |
 | Stata `churdle` Cragg | official Stata `churdle` | route-specific Cragg/two-part R candidates needed | manual continuous/interval PIT only after route closure | separate model class | route-specific | `GATED_MODEL_FAMILY` | `churdle` is not count hurdle Poisson/NB support. |
 
 ## Generalized Poisson Parameterization
@@ -89,7 +89,6 @@ support: the Stata estimator route must still be accepted or pinned.
 
 Generalized Poisson is ready only for the pinned, unweighted `st0279/gpoisson`
 postestimation route and must keep its external-estimator dependency notice.
-Hurdle count remains `MISSING_NOT_BLOCKING` for current package validity, but
-the pinned Hilbe-Hardin logit routes have passed benchmark gate. The remaining
-blocker is now implementation/dispatcher/help/certification, not estimator
-source or residual theory.
+Hurdle count is `READY_FOR_EXTENSION_PRERELEASE` for pinned unweighted
+Hilbe-Hardin logit routes. Remaining blockers apply only to hurdle weights,
+other zero links, `churdle`, `ztpnm`, unpinned estimators and correlated routes.

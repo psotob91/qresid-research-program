@@ -8,14 +8,14 @@ Retrieval policy: load before hurdle count implementation or benchmark work
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: hurdle RQR theory gate opened and updated after Hilbe-Hardin Stata ado pinning/extraction benchmark.
-SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix, math/software evidence matrix and registry reviewed; qresid support remains implementation-pending.
+POST_CHANGE_SYNC_DONE: hurdle RQR theory gate opened, pinning/extraction benchmark completed, and qresid implementation validated.
+SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix, math/software evidence matrix and registry reviewed; qresid support is ready for pinned unweighted hplogit/hnblogit.
 
 ## Decision
 
-`HURDLE_COUNT_IMPLEMENTATION_ALLOWED: no_not_in_this_cycle`
+`HURDLE_COUNT_IMPLEMENTATION_ALLOWED: yes_for_pinned_unweighted_hplogit_hnblogit`
 
-`HURDLE_COUNT_BENCHMARK_ALLOWED: yes_hplogit_hnblogit_gate_passed`
+`HURDLE_COUNT_BENCHMARK_ALLOWED: yes_hplogit_hnblogit_qresid_passed`
 
 `CHURDLE_IS_COUNT_HURDLE: no`
 
@@ -29,8 +29,8 @@ leave `e(cmd)="ml"` and require route-specific dispatch.
 Estimator-level benchmarks must be attempted before residual benchmarks. If
 the R and Stata estimators are not equivalent, the route may only use
 `R_CDF_REPLAY` after a Stata estimator exports all fitted CDF parameters
-robustly. Until that happens, hurdle remains gated even though its PIT/RQR
-formula is closed.
+robustly. This is closed for pinned unweighted `hplogit` and `hnblogit`;
+other hurdle routes remain gated.
 
 ## Count Hurdle RQR Target
 
@@ -65,13 +65,13 @@ approximate, as in other fitted-model quantile residuals.
 
 ## Required Stata Closure
 
-Before implementation, these route-specific items must close:
+For active support, these route-specific items are closed:
 
 - external Stata hurdle-count ado is source/version/license pinned and
   extraction is audited. This is now complete for `hplogit` and `hnblogit`;
-- future `qresid` dispatcher policy must handle `e(cmd)="ml"` safely;
-- public help/examples/certification must be added in a separate
-  implementation cycle.
+- `qresid` dispatcher handles `e(cmd)="ml"` with pinned-source signatures;
+- public help/examples/certification were updated for the pinned unweighted
+  routes only.
 
 `churdle` is not that route. It is official Stata Cragg hurdle regression for
 bounded/continuous outcomes and receives a separate gate.
@@ -106,9 +106,9 @@ Move to `READY_FOR_EXTENSION_PRERELEASE` only after a Stata estimator route is
 accepted, three datasets pass, the CDF endpoints are reproducible, and public
 docs/examples/certification/matrices are synchronized.
 
-Until implementation, hurdle count remains `MISSING_NOT_BLOCKING` for current
-package validity and `BENCHMARK_GATE_PASSED_IMPLEMENTATION_PENDING` for the
-pinned Hilbe-Hardin logit routes.
+After implementation, hurdle count is `READY_FOR_EXTENSION_PRERELEASE` for the
+pinned unweighted Hilbe-Hardin logit routes. Other hurdle routes remain
+`MISSING_NOT_BLOCKING` or gated for current package validity.
 
 ## Sources
 

@@ -31,7 +31,7 @@ Familias objetivo:
 Familias/modelos:
 
 - ZIP/ZINB fuera de las rutas unweighted ya validadas en extension prerelease.
-- Hurdle.
+- Hurdle fuera de las rutas pinneadas/validadas `hplogit` y `hnblogit`.
 - Truncados/censurados fuera de las rutas unweighted ya validadas en extension prerelease.
 - PIT o diagnósticos simulados.
 - Modelos `me*` simples solo si se define CDF condicional, marginal o simulada.
@@ -55,6 +55,9 @@ Rutas experimentales locales actualmente permitidas por evidencia:
 - censored count `cpoisson` sin pesos en rutas validadas localmente;
 - generalized Poisson mediante Stata Journal `st0279`/`gpoisson` sin pesos en
   rutas validadas localmente; requiere estimador externo pinneado/instalado;
+- hurdle count mediante Hilbe/Hardin `hplogit`/`hnblogit` sin pesos en rutas
+  validadas localmente; requiere estimador externo pinneado/instalado y firma
+  `ml` estricta;
 - direct `fweight` solo en combinaciones `READY_FOR_EXTENSION_PRERELEASE` validadas por benchmarks;
 - direct `[pweight=]` solo como diagnostico model-based/Stata-only, no `svy:`.
 
@@ -144,7 +147,8 @@ Opciones:
 | ZIP/ZINB | `zip`, `zinb` | extension prerelease | `EXPERIMENTAL_VALIDATED_LOCAL`: rutas no ponderadas validadas localmente; pesos y extensiones correlacionadas siguen gated. |
 | Truncados/censurados oficiales | `tpoisson`, `ztp`, `tnbreg`, `ztnb`, `cpoisson` | extension prerelease | `EXPERIMENTAL_VALIDATED_LOCAL`: rutas no ponderadas validadas localmente; pesos y variantes no probadas siguen gated. |
 | Generalized Poisson | Stata Journal `st0279`/`gpoisson` | extension prerelease | `READY_FOR_EXTENSION_PRERELEASE`: ruta externa pinneada, no ponderada, con CDF GP-0 y benchmarks locales; otros estimadores GP siguen gated. |
-| Hurdle y otros truncados/censurados no validados | `churdle` y rutas no probadas | 2 | `EVIDENCIA PENDIENTE`: extraccion y CDF pendientes. |
+| Hurdle count pinneado | `hplogit`, `hnblogit` | extension prerelease | `READY_FOR_EXTENSION_PRERELEASE`: solo rutas unweighted Hilbe/Hardin pinneadas; otros hurdle siguen gated. |
+| Hurdle y otros truncados/censurados no validados | `churdle`, `ztpnm` y rutas no probadas | 2 | `EVIDENCIA PENDIENTE`: extraccion y CDF pendientes. |
 | GLMM/GSEM | `me*`, `xt*`, `gsem`, `fmm` | 2/3 | `EVIDENCIA PENDIENTE`: preferir diseño simulado. |
 
 ---
@@ -396,7 +400,7 @@ No iniciar implementación Fase 1 hasta que:
 - API pública Fase 1 queda cerrada: `qresid newvarname [if] [in], ...`; `family()` es condicional, `replace` no se expone, y `savev()` queda separado de `saveu()`.
 - Inverse Gaussian queda validada solo para rutas listadas en la matriz viva; nuevas variantes requieren gate CDF/benchmark.
 - Confirmar estrategia para Tweedie, COM-Poisson y generalized Poisson.
-- Confirmar diseno Fase 2 para hurdle, truncados/censurados ponderados o no validados y para ZIP/ZINB ponderados o correlacionados.
+- Confirmar diseno Fase 2 para hurdle fuera de `hplogit`/`hnblogit`, truncados/censurados ponderados o no validados y para ZIP/ZINB ponderados o correlacionados.
 - Confirmar si GLMM/GSEM se abordarán solo por simulación.
 - Confirmar licencia y datasets antes de incluir casebank o datos externos.
 

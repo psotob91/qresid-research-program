@@ -8,7 +8,7 @@ Retrieval policy: load before extension implementation, benchmark or support-sta
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: math/software evidence matrix updated after hurdle RQR theory gate creation and estimator-equivalence audit; hurdle count has closed distribution-level PIT/CDF formulas but no accepted Stata estimator route.
+POST_CHANGE_SYNC_DONE: math/software evidence matrix updated after hurdle implementation; hurdle count has closed distribution-level PIT/CDF formulas and ready-to-prerelease support for pinned unweighted hplogit/hnblogit routes.
 SUPPORT_MATRIX_SYNC_DONE: support matrix, unified extension matrix, glossary and registry were reconciled with this evidence layer.
 
 ## Purpose
@@ -33,7 +33,7 @@ It separates three different ideas:
 | `cpoisson` | Censored discrete PIT interval: left, right and uncensored intervals | `ANALYTIC_CDF_CLOSED` for tested left, right and two-sided censoring | `VGAM::cens.poisson` candidate; base R `ppois` CDF replay used | manual interval PIT/RQR via `ppois` | no supplementary code required | `STATA_INTERNAL_VALIDATION` plus `R_CDF_REPLAY` | possible, but not needed for analytic support | no; now ready for extension prerelease |
 | generalized Poisson | Generalized Poisson GP-0 PMF/CDF from pinned Stata Journal `gpoisson`/`st0279` | `ANALYTIC_CDF_CLOSED` for pinned unweighted route | `VGAM::pgenpois0` for positive delta; `glmmTMB::genpois` future approximate candidate | manual PIT/RQR from analytic CDF replay; no separate RQR package authority needed for accepted route | Stata Journal source pinned locally; no external code copied into `qresid` | `STATA_EXTERNAL_ADO_VALIDATION`; `R_CDF_REPLAY`; positive-delta `R_EXACT_BENCHMARK` | yes for local extension prerelease | no; accepted route is claimed with external-estimator dependency |
 | estimator-equivalence gate | Route-level check that Stata and R estimate the same fitted distribution before residual benchmarking, or else R only replays CDF endpoints from Stata-exported parameters | `AUDIT_LAYER_CLOSED` | route-specific; see `QRESID_ESTIMATOR_EQUIVALENCE_AUDIT.md` | route-specific `statmod`, `topmodels`, package-native RQR or manual CDF replay | no code copied | `ESTIMATOR_EQUIVALENT`, `CDF_REPLAY_ONLY`, `APPROX_ESTIMATOR_BENCHMARK`, or gated | yes | no; this is an evidence rule |
-| hurdle count Poisson/NB | Dunn-Smyth randomized PIT for discrete distributions with atoms; hurdle CDF `P(Y=0)=pi`, `F(y)=pi+(1-pi)F_plus(y)` for `y>0` | `ANALYTIC_CDF_CLOSED_FOR_DISTRIBUTION`; Stata estimator/source/extraction closed for pinned Hilbe-Hardin logit routes | `pscl::hurdle` 1.5.9 exact estimator benchmark after sign-adjusted zero equation; `glmmTMB` and `VGAM` supporting candidates | manual PIT/RQR; `topmodels::qresiduals` documents general PIT/RQR infrastructure; DHARMa simulation only as sanity | SSC/RePEc `hplogit` and `hnblogit` pinned locally under GPL v3; `churdle` is separate Cragg continuous/bounded | `STATA_EXTERNAL_ADO_VALIDATION`; `R_EXACT_BENCHMARK`; `R_CDF_REPLAY`; implementation pending | possible as sanity only | no, because route is not claimed by `qresid.ado` yet |
+| hurdle count Poisson/NB | Dunn-Smyth randomized PIT for discrete distributions with atoms; hurdle CDF `P(Y=0)=pi`, `F(y)=pi+(1-pi)F_plus(y)` for `y>0` | `ANALYTIC_CDF_CLOSED_FOR_DISTRIBUTION`; Stata estimator/source/extraction closed for pinned Hilbe-Hardin logit routes | `pscl::hurdle` 1.5.9 exact estimator benchmark after sign-adjusted zero equation; `glmmTMB` and `VGAM` supporting candidates | `qresid` endpoint replay; manual PIT/RQR; `topmodels::qresiduals` documents general PIT/RQR infrastructure; DHARMa simulation only as sanity | SSC/RePEc `hplogit` and `hnblogit` pinned locally under GPL v3; `churdle` is separate Cragg continuous/bounded | `READY_FOR_EXTENSION_PRERELEASE`; `STATA_EXTERNAL_ADO_VALIDATION`; `R_EXACT_BENCHMARK`; `R_CDF_REPLAY` | possible as sanity only | no |
 | Stata `churdle` Cragg hurdle | interval PIT for bounded/continuous hurdle models can be defined route-specifically | `CHURDLE_CRAGG_GATE_OPEN`; not a count-hurdle Poisson/NB route | route-specific R Cragg/two-part candidates needed | manual continuous/interval PIT only after extraction/CDF closure | official Stata `churdle` files exist locally; no support claim or benchmark yet | `STATA_INTERNAL_VALIDATION` only after separate Cragg gate | possible as sanity only | no, because route is not claimed |
 | DHARMa/glmmTMB sanity | Simulated PIT residuals for fitted count models | `DHARMA_SIMULATION_ONLY` | `glmmTMB` installed; DHARMa 0.4.7 installed locally | DHARMa simulation-based scaled residuals | no supplementary code copied | `SIMULATION_SANITY_CHECK` only | yes; latest script status `PASS_SIMULATION_SANITY_CHECK_ONLY` | no; not used for analytic claims |
 
@@ -46,9 +46,8 @@ It separates three different ideas:
   with local extension-prerelease evidence.
 - Generalized Poisson is ready only for the pinned unweighted `st0279`
   postestimation route.
-- Hurdle count now has distribution-level PIT/RQR formulas documented, but
-  remains an open research gate because no Stata count-hurdle estimator route is
-  accepted or pinned.
+- Hurdle count now has distribution-level PIT/RQR formulas documented and
+  pinned unweighted `hplogit`/`hnblogit` routes ready for extension prerelease.
 - Stata `churdle` is an official Cragg continuous/bounded hurdle route and must
   not be treated as count-hurdle Poisson/NB support.
 - DHARMa/glmmTMB can help future simulation sanity checks, but cannot replace

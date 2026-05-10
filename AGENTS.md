@@ -85,6 +85,8 @@ Extension prerelease experimental:
 - censored count: `cpoisson` solo sin pesos y en rutas validadas localmente;
 - generalized Poisson: Stata Journal `st0279`/`gpoisson` solo sin pesos y en
   rutas validadas localmente; requiere estimador externo pinneado/instalado;
+- hurdle count: `hplogit` y `hnblogit` Hilbe/Hardin solo sin pesos, con
+  estimadores externos pinneados/instalados y firma `ml` estricta;
 - direct `[pweight=]`: diagnostico model-based/Stata-only, no `svy:` ni soporte survey exacto.
 
 `Extension prerelease experimental` no equivale a public RC ni soporte estable SSC. Mantener claims y help alineados con matriz de soporte, benchmarks y audit reports activos.
@@ -94,7 +96,7 @@ Extension prerelease experimental:
 No implementar como soporte activo en Fase 1:
 
 - Tweedie;
-- hurdle;
+- hurdle fuera de las rutas pinneadas/validadas `hplogit` y `hnblogit`;
 - truncados/censurados fuera de las rutas unweighted ya validadas en extension prerelease;
 - COM-Poisson;
 - generalized Poisson fuera de la ruta pinneada `st0279`/`gpoisson` validada;

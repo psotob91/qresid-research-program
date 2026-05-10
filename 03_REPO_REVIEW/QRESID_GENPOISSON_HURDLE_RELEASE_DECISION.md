@@ -8,16 +8,16 @@ Retrieval policy: load before generalized Poisson or hurdle release decisions
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: generalized Poisson and hurdle release decision recorded after estimator-equivalence audit.
+POST_CHANGE_SYNC_DONE: generalized Poisson and hurdle release decision recorded after estimator-equivalence audit; pinned hurdle count implementation status reconciled after qresid dispatcher and endpoint tests.
 SUPPORT_MATRIX_SYNC_DONE: current support, unified extension, GLM/link, glossary and registry remain aligned with this decision.
 
 ## Decision
 
 `GENERALIZED_POISSON_RELEASE_DECISION: READY_FOR_EXTENSION_PRERELEASE`
 
-`HURDLE_COUNT_RELEASE_DECISION: KEEP_GATED_MISSING_NOT_BLOCKING`
+`HURDLE_COUNT_RELEASE_DECISION: READY_FOR_EXTENSION_PRERELEASE_FOR_PINNED_UNWEIGHTED_HILBE_HARDIN_ROUTES`
 
-`QRESID_ADO_CHANGE_REQUIRED: no`
+`QRESID_ADO_CHANGE_REQUIRED: implemented_for_pinned_hurdle_routes`
 
 ## Generalized Poisson
 
@@ -38,27 +38,24 @@ correlated models, hurdle generalized Poisson, or public SSC stable support.
 
 ## Hurdle Count Poisson/NB
 
-Hurdle count models should not be promoted yet. The distribution-level
-mathematics is adequate for PIT/RQR, and R packages provide useful estimator
-and CDF references, but `qresid` is a Stata postestimation command and still
-needs a Stata estimator route:
+Pinned Hilbe/Hardin hurdle count models may be promoted for local extension
+prerelease under a narrow claim:
 
-- `pscl::hurdle` is an R estimator/reference, not a Stata route;
-- `glmmTMB` can fit hurdle-like non-correlated models and support simulation
-  sanity checks, but it does not authorize Stata support;
-- `VGAM` provides useful distribution/CDF pieces;
-- `churdle` is a different Cragg bounded/continuous model and must stay in a
-  separate gate.
+- unweighted `hplogit` Poisson-logit hurdle;
+- unweighted `hnblogit` NB-logit hurdle;
+- external ado files must be installed or on `adopath`;
+- `qresid` recognizes the fits through strict `e(user)`, `e(title)` and
+  `e(b)` equation signatures because both commands leave `e(cmd)="ml"`;
+- R validation uses sign-adjusted `pscl::hurdle` estimator comparison and
+  manual CDF replay for Dunn-Smyth endpoints.
 
-The next implementation step for hurdle is therefore not `qresid.ado`; it is
-source/version/license pinning or official proof of a Stata count-hurdle
-estimator plus extraction of `pi`, positive-count `mu`, and ancillary
-parameters.
+This is not a claim for `churdle`, probit hurdle, `ztpnm`, hurdle generalized
+Poisson, weights, `svy:`, correlated models, or unpinned external routes.
 
-## Required Future Gate For Hurdle Promotion
+## Required Future Gate For Additional Hurdle Promotion
 
-Before hurdle can move to `READY_FOR_EXTENSION_PRERELEASE`, the following must
-all pass:
+Before any additional hurdle route can move to `READY_FOR_EXTENSION_PRERELEASE`,
+the following must all pass:
 
 1. Stata count-hurdle estimator route accepted or external ado pinned.
 2. Extractor audit for zero part, positive count part, support and ancillary
@@ -77,6 +74,6 @@ This decision freezes the current split:
 
 - generalized Poisson: validated local extension-prerelease support for a
   pinned external estimator route;
-- hurdle count: theory documented and benchmark design ready, but support not
-  claimed.
-
+- hurdle count: pinned unweighted `hplogit`/`hnblogit` routes ready for local
+  extension prerelease; all other hurdle variants remain gated or missing not
+  blocking.
