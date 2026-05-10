@@ -168,6 +168,8 @@ Opciones:
 
 `ESTÁNDAR OFICIAL`: detectar `e(wtype)` y `e(wexp)`. No aplicar una regla global `sqrt(w_i)` al residuo final. Los pesos solo se activan cuando su semántica por familia esté documentada y testeada; ver `03_REPO_REVIEW/WEIGHTS_RQR_EVIDENCE_REVIEW.md`.
 
+`ESTÁNDAR OFICIAL`: `pweight` no es soporte RQR estándar en Fase 1. Puede investigarse solo como diagnóstico experimental/survey en `PWEIGHT_SURVEY_DIAGNOSTIC`, sin equivalencia exacta con R base `glm(weights=)`, sin claim público y sin implementación hasta decisión humana explícita.
+
 ### Factor variables
 
 `ESTÁNDAR OFICIAL`: no reconstruir manualmente la matriz de diseño para Fase 1. Usar `predict` para preservar factor variables, interacciones y transformaciones del modelo.

@@ -37,6 +37,8 @@ This matrix defines benchmarkable and excluded combinations before any implement
 
 Matching convergence or coefficients alone is not sufficient.
 
+`PWEIGHT_DIAGNOSTIC_LAYERS` means pweight work compares Stata sample, positive weights, coefficients, fitted values and optional R `survey` diagnostics. It does not certify exact individual-CDF RQR support.
+
 ## 3. Dataset Catalog
 
 | dataset_id | purpose | design rule |
@@ -52,6 +54,11 @@ Matching convergence or coefficients alone is not sufficient.
 | `WEIGHT_GLM_PRIOR` | GLM prior/analytic weight check | Positive noninteger weights with stable Gaussian/Poisson/Gamma fits. |
 | `WEIGHT_GAMMA_DISPERSION` | Weighted Gamma CDF/dispersion | Positive response, positive weights, moderate dispersion. |
 | `WEIGHT_REJECT_CASES` | Rejection behavior | iweight/pweight fits used only to verify future controlled rejection. |
+| `PWEIGHT_SURVEY_GAUSSIAN` | pweight Gaussian diagnostic | Positive sampling weights, stable continuous outcome, no extreme leverage. |
+| `PWEIGHT_SURVEY_POISSON` | pweight Poisson diagnostic | Positive sampling weights, moderate counts, stable log mean. |
+| `PWEIGHT_SURVEY_BINOMIAL` | pweight Bernoulli/binomial diagnostic | Positive sampling weights, no separation, probabilities away from 0/1. |
+| `PWEIGHT_SURVEY_GAMMA` | pweight Gamma diagnostic | Positive response, positive weights, moderate dispersion. |
+| `PWEIGHT_STATA_ONLY_DIAGNOSTIC` | pweight no-equivalent audit | Same data run only as Stata diagnostic when R equivalence is not defensible. |
 | `SCALE_GAUSS_STABLE` | Gaussian scale modes | Stable Gaussian GLM with known residual scale behavior. |
 | `SCALE_GAMMA_STABLE` | Gamma scale modes | Positive Gamma response with stable shape/scale estimates. |
 
@@ -98,12 +105,20 @@ If a model fails to converge, design an alternative dataset before blocking the 
 | grouped_binomial_alias | `binreg, n(nvar) or` | `glm(cbind(y,n-y), binomial("logit"))` | logit | none | none | default | `GBINOM_CONST_TRIALS` | yes, after grouped GLM logit passes | `ALL_REQUIRED_LAYERS` | `RESEARCH_BENCHMARK_ONLY` |
 | grouped_binomial_alias | `binreg, n(nvar) rr` | `glm(cbind(y,n-y), binomial("log"))` | log | none | none | default | `GBINOM_CONST_TRIALS` | yes, after grouped GLM log passes | `ALL_REQUIRED_LAYERS` | `RESEARCH_BENCHMARK_ONLY` |
 | grouped_binomial_alias | `binreg, n(nvar) rd` | `glm(cbind(y,n-y), binomial("identity"))` | identity | none | none | default | `GBINOM_CONST_TRIALS` | yes, after grouped GLM identity passes | `ALL_REQUIRED_LAYERS` | `RESEARCH_BENCHMARK_ONLY` |
+| pweight_diagnostic | `regress` | R `survey` diagnostic or Stata-only diagnostic | identity | pweight | none | residual variance/default | `PWEIGHT_SURVEY_GAUSSIAN` | yes | `PWEIGHT_DIAGNOSTIC_LAYERS` | `PWEIGHT_DIAGNOSTIC_ONLY` |
+| pweight_diagnostic | `poisson` | R `survey` diagnostic or Stata-only diagnostic | log | pweight | none | default | `PWEIGHT_SURVEY_POISSON` | yes | `PWEIGHT_DIAGNOSTIC_LAYERS` | `PWEIGHT_DIAGNOSTIC_ONLY` |
+| pweight_diagnostic | `logit` | R `survey` diagnostic or Stata-only diagnostic | logit | pweight | none | default | `PWEIGHT_SURVEY_BINOMIAL` | yes | `PWEIGHT_DIAGNOSTIC_LAYERS` | `PWEIGHT_DIAGNOSTIC_ONLY` |
+| pweight_diagnostic | `logistic` | R `survey` diagnostic or Stata-only diagnostic | logit | pweight | none | default | `PWEIGHT_SURVEY_BINOMIAL` | yes | `PWEIGHT_DIAGNOSTIC_LAYERS` | `PWEIGHT_DIAGNOSTIC_ONLY` |
+| pweight_diagnostic | `glm, family(gaussian)` | R `survey` diagnostic or Stata-only diagnostic | identity/log/inverse | pweight | none | default/scale diagnostic | `PWEIGHT_SURVEY_GAUSSIAN` | yes | `PWEIGHT_DIAGNOSTIC_LAYERS` | `PWEIGHT_DIAGNOSTIC_ONLY` |
+| pweight_diagnostic | `glm, family(poisson)` | R `survey` diagnostic or Stata-only diagnostic | log/identity/sqrt | pweight | none | default | `PWEIGHT_SURVEY_POISSON` | yes | `PWEIGHT_DIAGNOSTIC_LAYERS` | `PWEIGHT_DIAGNOSTIC_ONLY` |
+| pweight_diagnostic | `glm, family(binomial)` | R `survey` diagnostic or Stata-only diagnostic | logit/probit/cloglog/log/identity | pweight | none | default | `PWEIGHT_SURVEY_BINOMIAL` | yes | `PWEIGHT_DIAGNOSTIC_LAYERS` | `PWEIGHT_DIAGNOSTIC_ONLY` |
+| pweight_diagnostic | `glm, family(gamma)` | R `survey` diagnostic if available; otherwise Stata-only diagnostic | log/identity/inverse | pweight | none | scale diagnostic | `PWEIGHT_SURVEY_GAMMA` | yes | `PWEIGHT_DIAGNOSTIC_LAYERS` | `PWEIGHT_DIAGNOSTIC_ONLY` |
 
 ## 5. Excluded With Reason
 
 | model_family | stata_command | link | weight_type | exposure_offset | dispersion_option | exclusion_status | reason | dataset_action |
 |---|---|---|---|---|---|---|---|---|
-| all | any supported command | any | pweight | any | any | `NO_R_EQUIVALENT` | Survey/design interpretation has no simple individual-CDF R base equivalent. | Use `WEIGHT_REJECT_CASES` only for future controlled rejection tests. |
+| all | any supported command | any | pweight | any | any | `NO_EXACT_RQR_SUPPORT` | Survey/design interpretation has no simple individual-CDF R base equivalent; diagnostic research is allowed separately. | Use pweight diagnostic datasets, not exact R/Stata validation. |
 | all | any supported command | any | iweight | any | any | `REJECT_FOR_NOW` | No clear individual distribution for RQR; estimation weight does not define residual CDF. | Use `WEIGHT_REJECT_CASES` only for future controlled rejection tests. |
 | poisson | `poisson` | log | aweight | none | default | `STATA_NOT_SUPPORTED` | Stata rejects `aweight` for `poisson`. | Exclude. |
 | bernoulli | `logit` | logit | aweight | none | default | `STATA_NOT_SUPPORTED` | Stata rejects `aweight` for `logit`. | Exclude. |
@@ -125,6 +140,7 @@ If a model fails to converge, design an alternative dataset before blocking the 
 4. GLM Gaussian/Poisson/Gamma `fweight` and Gamma/Gaussian `aweight` scale/dispersion candidates.
 5. NB offset/exposure and fixed-theta `glm, family(nbinomial #)` as research-only.
 6. `binreg` aliases after the corresponding grouped `glm` links pass.
+7. pweight survey/model-based diagnostics in a separate worktree; never as support implementation.
 
 ## 7. Promotion Rule
 

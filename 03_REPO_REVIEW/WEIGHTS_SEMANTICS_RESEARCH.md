@@ -125,7 +125,7 @@ R `glm(weights=)` is not a one-to-one equivalent for Stata `pweight`/survey inte
 | `fweight` | benchmark candidate | Possible frequency/replication semantics; must decide whether output residual represents collapsed row or expanded observations. |
 | `aweight` | benchmark candidate only for `regress`/`glm` | Can map to prior/analytic weighting in some GLM contexts; dispersion/CDF effects must be family-specific. |
 | `iweight` | reject for now | Affects estimation but does not define a clear individual distribution for RQR. |
-| `pweight` | reject for now | Probability/survey design weights do not map to simple individual CDF residuals in R base GLM. |
+| `pweight` | diagnostic research only | Probability/survey design weights do not map to simple individual CDF residuals in R base GLM, but may be studied as survey/model-based diagnostics. |
 
 ## 8. Family-Specific Initial Recommendations
 
@@ -139,16 +139,16 @@ R `glm(weights=)` is not a one-to-one equivalent for Stata `pweight`/survey inte
 
 ## 9. Rejected Or Deferred
 
-Reject for Fase weights:
+Reject for Fase weights support:
 
-- `pweight` support;
+- `pweight` standard RQR support;
 - `iweight` support;
 - any public claim that all Stata weight types are supported;
 - any rule that multiplies the final residual by `sqrt(w_i)` globally.
 
 Defer:
 
-- survey-style diagnostics;
+- survey-style diagnostics as a separate `PWEIGHT_SURVEY_DIAGNOSTIC` phase;
 - weighted NB;
 - weighted grouped binomial until grouped binomial itself is closed.
 
@@ -161,5 +161,14 @@ Next step should be benchmark-only:
 1. `fweight` frequency expansion for Gaussian/Poisson.
 2. `glm gamma` analytic/prior-weight candidate, if scale mapping closes.
 3. grouped-binomial semantics for binomial weights/trials.
+4. pweight survey/model-based diagnostic research only, not implementation.
 
 Only after those pass should a narrow implementation plan be created.
+
+## 11. Pweight Diagnostic Phase
+
+`PWEIGHT_IMPLEMENTATION_ALLOWED: no`
+
+`PWEIGHT_DIAGNOSTIC_BENCHMARK_ALLOWED: yes`
+
+Pweights may be investigated in a separate survey-diagnostic worktree. R base `glm(weights=)` must not be used as exact pweight equivalence. Acceptable outcomes are `PWEIGHT_DIAGNOSTIC_ONLY`, `PWEIGHT_STATA_ONLY_DIAGNOSTIC` or `PWEIGHT_HUMAN_DECISION_REQUIRED`.
