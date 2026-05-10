@@ -279,12 +279,12 @@
         </tr>
         <tr>
           <td>Generalized Poisson</td>
-          <td><code>gnpoisson</code> candidate, not official</td>
+          <td>Stata Journal <code>gpoisson</code>/<code>st0279</code> candidate; <code>gnpoisson</code> SSC candidate if source/version/license pins cleanly; not official</td>
           <td>no</td>
-          <td>SSC/Stata Journal source must be pinned; do not confuse with local <code>gtools/gpoisson.ado</code></td>
+          <td>Stata Journal/SSC source must be pinned; do not confuse with local <code>gtools/gpoisson.ado</code></td>
           <td><span class="badge gate">GATED_MODEL_FAMILY</span></td>
-          <td>possible with VGAM after parameter mapping</td>
-          <td>STATA_EXTERNAL_ADO_VALIDATION; possible R_EXACT_BENCHMARK</td>
+          <td>possible with <code>VGAM::genpoisson*</code> or <code>glmmTMB::genpois</code> after parameter mapping</td>
+          <td>STATA_EXTERNAL_ADO_VALIDATION; possible R_EXACT_BENCHMARK or R_APPROX_BENCHMARK</td>
           <td>pending PMF/CDF</td>
           <td>no</td>
           <td>no</td>
@@ -292,8 +292,22 @@
           <td>Pin source/version/license and map PMF/CDF before implementation.</td>
         </tr>
         <tr>
+          <td>Hurdle Poisson/NB</td>
+          <td>external route required unless official Stata count-hurdle support is proven; <code>churdle</code> is not accepted without separate proof</td>
+          <td>no official Stata route confirmed</td>
+          <td>external research required</td>
+          <td><span class="badge gate">GATED_MODEL_FAMILY</span></td>
+          <td><code>glmmTMB</code> truncated count families plus zero component; <code>VGAM</code> zero-altered and positive-count candidates</td>
+          <td>NO_OFFICIAL_STATA_COMMAND; STATA_EXTERNAL_ADO_VALIDATION if source pinned</td>
+          <td>pending</td>
+          <td>no</td>
+          <td>no</td>
+          <td>Research candidate only; absence does not invalidate qresid because no support is claimed.</td>
+          <td>Close hurdle mass-at-zero, positive-count CDF, Stata extractor and R mapping before touching <code>qresid.ado</code>.</td>
+        </tr>
+        <tr>
           <td>Other Hilbe-style external counts</td>
-          <td>Hurdle Poisson/NB; generalized Waring; Sichel/PIG; COM-Poisson; double Poisson; beta-binomial/count-binomial variants</td>
+          <td>generalized Waring; Sichel/PIG; COM-Poisson; double Poisson; beta-binomial/count-binomial variants</td>
           <td>no official Stata route confirmed</td>
           <td>external research required</td>
           <td><span class="badge gate">GATED_MODEL_FAMILY</span></td>

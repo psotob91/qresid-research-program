@@ -8,7 +8,7 @@ Retrieval policy: load before count-model extension planning
 
 Date: 2026-05-10
 
-POST_CHANGE_SYNC_DONE: count-model coverage plan created and registered as a live extension-planning reference.
+POST_CHANGE_SYNC_DONE: count-model coverage plan updated after generalized Poisson and hurdle research gates were opened.
 SUPPORT_MATRIX_SYNC_DONE: unified extension matrix, support matrix, glossary and registry were reconciled for count-model coverage terminology.
 
 ## Purpose
@@ -61,9 +61,9 @@ matrix.
 
 | family | possible_stata_route | official_stata_command | R_candidate | current_status | validation_type | required_gate |
 |---|---|---|---|---|---|---|
-| Generalized Poisson | `gnpoisson` SSC/Stata Journal candidate | no | `VGAM::genpoisson` | gated model family | `STATA_EXTERNAL_ADO_VALIDATION`; possible `R_EXACT_BENCHMARK` | Pin source/version/license; verify PMF/CDF/support. |
+| Generalized Poisson | Stata Journal `gpoisson` / `st0279` candidate; any SSC route must be pinned | no | `VGAM::genpoisson0/1/2`; `glmmTMB::genpois` | gated model family | `STATA_EXTERNAL_ADO_VALIDATION`; possible `R_EXACT_BENCHMARK` or `R_APPROX_BENCHMARK` | Pin source/version/license; verify PMF/CDF/support and parameter mapping before touching `qresid.ado`. |
 | NB-P / alternative NB variants | `nbregp` or Stata Journal/user-written source if found | no | route-specific | gated model family | `STATA_EXTERNAL_ADO_VALIDATION` | Identify estimator, parameterization and CDF. |
-| Hurdle Poisson/NB | external research if no official Stata estimator is identified | no official route confirmed | `pscl`, `VGAM`, `countreg`/other packages | gated model family | `NO_OFFICIAL_STATA_COMMAND` until source closes | Separate hurdle mass at zero from positive-count CDF before support. |
+| Hurdle Poisson/NB | external research if no official Stata count-hurdle estimator is identified; `churdle` requires separate proof before use | no official count route confirmed | `glmmTMB` truncated count families plus zero component; `VGAM::zapoisson`, `VGAM::zanegbinomial`, positive-count families | gated model family | `NO_OFFICIAL_STATA_COMMAND` until source closes; possible `STATA_EXTERNAL_ADO_VALIDATION` | Separate hurdle mass at zero from positive-count CDF before support. |
 | Generalized Waring | external research | no | specialist packages/research code | gated model family | `NO_OFFICIAL_STATA_COMMAND` | Establish estimator and CDF source first. |
 | Sichel / Poisson-inverse Gaussian | external research | no official route confirmed | R specialist packages | gated model family | `NO_OFFICIAL_STATA_COMMAND` | Pin source and PMF/CDF; avoid confusing with inverse Gaussian GLM. |
 | COM-Poisson | external research | no | `COMPoissonReg`/other packages | gated model family | `NO_OFFICIAL_STATA_COMMAND` | Normalizing constant and CDF strategy required. |
@@ -88,11 +88,17 @@ matrix.
    if no R link equivalent exists; keep grouped-binomial weights separate.
 
 4. Generalized Poisson chapter:
-   verify `gnpoisson` source through SSC/Stata Journal or official archive; do
-   not confuse it with unrelated local `gtools/gpoisson.ado`; map to
-   `VGAM::genpoisson` only after PMF/CDF/support match.
+   verify Stata Journal `gpoisson` / `st0279` source through an official
+   archive or SSC route with source/version/license pinning; do not confuse it
+   with unrelated local `gtools/gpoisson.ado`; map to `VGAM::genpoisson*` and
+   `glmmTMB::genpois` only after PMF/CDF/support match.
 
-5. Hilbe external models:
+5. Hurdle count chapter:
+   do not treat official `churdle` as count-hurdle support without a separate
+   proof; identify a Stata estimator route or pinned external ado, then map the
+   hurdle CDF against `glmmTMB` or `VGAM` candidates.
+
+6. Hilbe external models:
    create one research report per family and do not touch `qresid.ado` until
    source, CDF, metadata and benchmark strategy are closed.
 

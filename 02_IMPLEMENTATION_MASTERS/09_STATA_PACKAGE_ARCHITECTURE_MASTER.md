@@ -46,14 +46,14 @@ Familias/modelos:
 
 Rutas experimentales locales actualmente permitidas por evidencia:
 
-- inverse Gaussian `glm, family(igaussian)` para links validados localmente;
+- inverse Gaussian `glm, family(igaussian)` para links `READY_FOR_EXTENSION_PRERELEASE` listados en la matriz viva;
 - grouped binomial `glm, family(binomial trials)` y `binreg, n(trials)` aliases validados;
 - NB2 `nbreg, dispersion(mean)` incluyendo `offset()` y `exposure()`;
 - NB variants `nbreg, dispersion(constant)`, `gnbreg`, y fixed-parameter `glm, family(nbinomial #)`;
 - zero-inflated count `zip` y `zinb` sin pesos, incluyendo rutas validadas de `offset()` y `exposure()` del componente de conteo;
 - truncated count `tpoisson`, `ztp`, `tnbreg`, y `ztnb` sin pesos en rutas validadas localmente;
 - censored count `cpoisson` sin pesos en rutas validadas localmente;
-- direct `fweight` solo en combinaciones validadas por benchmarks;
+- direct `fweight` solo en combinaciones `READY_FOR_EXTENSION_PRERELEASE` validadas por benchmarks;
 - direct `[pweight=]` solo como diagnostico model-based/Stata-only, no `svy:`.
 
 `ESTÁNDAR OFICIAL`: estas rutas deben permanecer separadas de Fase 1 estable y de public RC hasta decision humana de release policy.
@@ -137,7 +137,7 @@ Opciones:
 | Poisson | `poisson`, `glm` | 1 | `ESTÁNDAR OFICIAL` |
 | Negative binomial | `nbreg`, `glm` si aplica | 1 | `RECOMENDACIÓN OPERATIVA`: requiere validar NB1/NB2, `alpha/theta/k`. |
 | Gamma | `glm` | 1 | `ESTÁNDAR OFICIAL`: Fase 1 activa; requiere validar `y > 0`, `mu > 0`, `phi > 0`, `shape = 1/phi`, `scale = mu*phi`, CDF y benchmark R. |
-| Inverse Gaussian | `glm` | extension prerelease | `EXPERIMENTAL_VALIDATED_LOCAL`: CDF y benchmarks locales cerrados para rutas listadas en la matriz viva; no public RC. |
+| Inverse Gaussian | `glm` | extension prerelease | `READY_FOR_EXTENSION_PRERELEASE`: CDF y benchmarks locales cerrados para rutas listadas en la matriz viva; no public RC. |
 | Tweedie | `glm`/externos | futura | `EVIDENCIA PENDIENTE`: CDF aproximada/no cerrada. |
 | ZIP/ZINB | `zip`, `zinb` | extension prerelease | `EXPERIMENTAL_VALIDATED_LOCAL`: rutas no ponderadas validadas localmente; pesos y extensiones correlacionadas siguen gated. |
 | Truncados/censurados oficiales | `tpoisson`, `ztp`, `tnbreg`, `ztnb`, `cpoisson` | extension prerelease | `EXPERIMENTAL_VALIDATED_LOCAL`: rutas no ponderadas validadas localmente; pesos y variantes no probadas siguen gated. |

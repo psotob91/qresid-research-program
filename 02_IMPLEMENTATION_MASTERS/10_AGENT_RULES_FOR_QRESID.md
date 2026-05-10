@@ -136,14 +136,14 @@ Cuando haya conflicto, aplicar esta jerarquía tentativa y marcar el conflicto s
 
 ### Extension prerelease experimental
 
-- inverse Gaussian `glm` solo en rutas validadas localmente.
+- inverse Gaussian `glm` solo en rutas `READY_FOR_EXTENSION_PRERELEASE` listadas en la matriz viva.
 - grouped binomial `glm, family(binomial trials)` y `binreg, n()` aliases validados.
 - NB2 `nbreg, dispersion(mean)` con no-offset, `offset()` y `exposure()`.
 - NB variants `nbreg, dispersion(constant)`, `gnbreg`, y fixed-parameter `glm, family(nbinomial #)`; `glm nbinomial ml` sigue gated.
 - zero-inflated count `zip` y `zinb` sin pesos, con rutas validadas localmente.
 - truncated count `tpoisson`, `ztp`, `tnbreg`, y `ztnb` sin pesos, con rutas validadas localmente.
 - censored count `cpoisson` sin pesos, con rutas validadas localmente.
-- direct `fweight` solo en combinaciones validadas.
+- direct `fweight` solo en combinaciones `READY_FOR_EXTENSION_PRERELEASE` validadas.
 - direct `[pweight=]` solo como diagnostico model-based/Stata-only, no `svy:`.
 
 `ESTÁNDAR OFICIAL`: estas rutas pueden documentarse como experimentales locales si los benchmarks y matrices vivas estan sincronizados. No son public RC ni soporte estable SSC.

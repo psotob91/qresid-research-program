@@ -75,9 +75,9 @@ Fase 1 base/estable:
 
 Extension prerelease experimental:
 
-- inverse Gaussian: `glm, family(igaussian)` solo para rutas validadas localmente;
+- inverse Gaussian: `glm, family(igaussian)` solo para rutas `READY_FOR_EXTENSION_PRERELEASE` listadas en la matriz viva;
 - grouped binomial: `glm, family(binomial trials)` y `binreg, n(trials)` aliases validados;
-- direct `fweight`: solo familias/comandos listados como validados en la matriz viva;
+- direct `fweight`: solo familias/comandos `READY_FOR_EXTENSION_PRERELEASE` listados como validados en la matriz viva;
 - NB2 `nbreg, dispersion(mean)`: incluye rutas validadas de `offset()` y `exposure()`;
 - NB variants: `nbreg, dispersion(constant)`, `gnbreg`, y `glm, family(nbinomial #)` solo para rutas validadas localmente; `glm nbinomial ml` sigue gated;
 - zero-inflated count: `zip` y `zinb` solo sin pesos y en rutas validadas localmente, incluidas pruebas de `offset()` y `exposure()` del componente de conteo;
