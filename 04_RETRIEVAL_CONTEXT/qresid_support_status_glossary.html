@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>qresid Support Status Glossary</title>
+  <style>
+    :root { color-scheme: light; --ink:#17202a; --muted:#5d6d7e; --line:#d7dbdd; --bg:#f7f9f9; --card:#fff; --blue:#1f618d; --green:#1e8449; --amber:#9a6700; --red:#922b21; }
+    body { margin:0; font-family: "Segoe UI", Arial, sans-serif; color:var(--ink); background:var(--bg); }
+    header { padding:28px 36px 18px; background:#fff; border-bottom:1px solid var(--line); }
+    main { padding:24px 36px 42px; }
+    h1 { margin:0 0 8px; font-size:28px; }
+    h2 { margin-top:30px; font-size:20px; }
+    p { max-width:1000px; line-height:1.45; }
+    .meta { color:var(--muted); font-size:13px; }
+    .toolbar { display:flex; gap:12px; align-items:center; margin:18px 0; }
+    input { width:min(680px, 100%); padding:10px 12px; border:1px solid var(--line); border-radius:6px; font-size:15px; }
+    table { width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--line); }
+    th, td { border-bottom:1px solid var(--line); padding:9px 10px; text-align:left; vertical-align:top; font-size:13px; }
+    th { position:sticky; top:0; background:#edf3f8; z-index:1; }
+    tr:hover td { background:#fbfcfc; }
+    code { background:#eef2f3; padding:1px 4px; border-radius:4px; }
+    .pill { display:inline-block; padding:2px 7px; border-radius:999px; font-size:12px; font-weight:600; }
+    .ready { color:#fff; background:var(--green); }
+    .experimental { color:#fff; background:var(--blue); }
+    .diagnostic { color:#fff; background:var(--amber); }
+    .block { color:#fff; background:var(--red); }
+    .footnote { margin-top:24px; padding:16px 18px; background:#fff; border-left:4px solid var(--blue); border-radius:4px; }
+    a { color:var(--blue); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>qresid Support Status Glossary</h1>
+    <div class="meta">Live glossary for support, benchmark, release and validity terms. Date: 2026-05-10.</div>
+    <p>This page explains what terms such as <code>experimental</code>, <code>diagnostic only</code>, and <code>missing not blocking</code> mean for qresid. It is designed for quick release/support decisions.</p>
+    <p><a href="../03_REPO_REVIEW/qresid_current_feature_support_matrix.html">Open feature support matrix</a> | <a href="../qresid/qresid.sthlp">Open qresid.sthlp</a> | <a href="../03_REPO_REVIEW/QRESID_EXTENSION_PROMOTION_DECISION.md">Open promotion decision</a></p>
+  </header>
+  <main>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search: experimental, pweight, F_low, public RC, exact benchmark...">
+      <span id="count" class="meta"></span>
+    </div>
+    <h2>Support and Validity Terms</h2>
+    <table id="glossary">
+      <thead><tr><th>Term</th><th>Plain meaning</th><th>Technical meaning</th><th>What it allows</th><th>What it does not allow</th><th>Where used</th><th>Authority</th></tr></thead>
+      <tbody>
+        <tr><td><code>SUPPORTED_TESTED</code></td><td>Ready within the stated package scope.</td><td>Implemented, tested, benchmarked where needed, documented, and covered by examples/certification.</td><td><span class="pill ready">use in prerelease</span></td><td>Public RC or SSC claim without release policy review.</td><td>Feature matrix, help, release audit.</td><td>AGENTS, 09, 10, testing rules.</td></tr>
+        <tr><td><code>READY_FOR_EXTENSION_PRERELEASE</code></td><td>Ready for local extension prerelease.</td><td>Local Stata/R or diagnostic validation passed and public docs match evidence.</td><td><span class="pill ready">tag local prerelease</span></td><td>Public RC claim.</td><td>Feature matrix, promotion decision.</td><td>Extension release audit.</td></tr>
+        <tr><td><code>EXPERIMENTAL_VALIDATED_LOCAL</code></td><td>Works locally, but label it experimental.</td><td>Implemented and locally validated, not yet stable/public RC support.</td><td><span class="pill experimental">document as experimental</span></td><td>Presenting as stable, SSC-ready, or universally validated.</td><td>Feature matrix, help, README.</td><td>Extension release audit, registry.</td></tr>
+        <tr><td><code>DIAGNOSTIC_ONLY</code></td><td>Useful for diagnosis, not exact standard support.</td><td>Model-based or Stata-only route lacking exact R-equivalent validation.</td><td><span class="pill diagnostic">diagnostic use</span></td><td>Exact R/Stata or survey-standard claim.</td><td>pweight status, feature matrix.</td><td>Pweight research plan.</td></tr>
+        <tr><td><code>STATA_ONLY_DIAGNOSTIC</code></td><td>Stata diagnostic evidence only.</td><td>Stata checks passed; R is not a pointwise benchmark authority.</td><td><span class="pill diagnostic">Stata diagnostic evidence</span></td><td>Exact R benchmark claim.</td><td>Pweight checkers.</td><td>Weights matrix, pweight plan.</td></tr>
+        <tr><td><code>GATED_RESEARCH</code></td><td>Research/benchmark first.</td><td>Needs parametrization, CDF, extraction or benchmark closure before implementation/claim.</td><td>Research planning.</td><td>Support claim or implementation without gate.</td><td>Extension plans.</td><td>AGENTS, 10.</td></tr>
+        <tr><td><code>EVIDENCE_PENDING</code></td><td>Evidence is missing.</td><td>Needed CDF, extractor, parameter mapping, benchmark or source is unresolved.</td><td>Research request or controlled error.</td><td>Support claim.</td><td>Support matrix, registry.</td><td>AGENTS, source log.</td></tr>
+        <tr><td><code>FUTURE_PHASE</code></td><td>Out of current scope.</td><td>Feature belongs to a later phase or public release track.</td><td>Describe as deferred.</td><td>Blocking current validity if not claimed.</td><td>Feature matrix.</td><td>09, registry.</td></tr>
+        <tr><td><code>MISSING_NOT_BLOCKING</code></td><td>Missing but harmless.</td><td>qresid does not implement the route and docs do not claim it.</td><td>Proceed with current scope.</td><td>Treat absence as validity failure.</td><td>Feature matrix.</td><td>Release blockers.</td></tr>
+        <tr><td><code>BLOCKS_PUBLIC_RC</code></td><td>Blocks public release only.</td><td>Policy/evidence/docs must be resolved before public RC/SSC/SJ.</td><td>Local prerelease can continue.</td><td>Public RC tag or public release claim.</td><td>Release blockers.</td><td>Extension release blockers.</td></tr>
+        <tr><td><code>BLOCKS_CURRENT_VALIDITY</code></td><td>Serious validity problem.</td><td>A claimed route is untested, contradicted, or failing.</td><td>Stop and re-audit.</td><td>Promotion/release.</td><td>Feature matrix, audits.</td><td>Release audit.</td></tr>
+        <tr><td><code>PIT</code></td><td>CDF-to-uniform step.</td><td>Probability integral transform; continuous: <code>U=F(y)</code>; discrete: randomized within CDF jump.</td><td>Explain uniformization.</td><td>Calling PIT itself the final normal residual.</td><td>Help, formulas.</td><td>07, numerical rules.</td></tr>
+        <tr><td><code>RQR</code></td><td>Normal-scale Dunn-Smyth residual.</td><td><code>invnormal(U)</code> after PIT/randomized PIT.</td><td>Normal-scale diagnostic residuals.</td><td>Exact finite-sample normality with estimated parameters.</td><td>Help, tests.</td><td>Dunn-Smyth theory, 07.</td></tr>
+        <tr><td><code>Dunn-Smyth residual</code></td><td>Another name for RQR.</td><td>Randomized quantile residual from Dunn and Smyth.</td><td>Synonym for RQR.</td><td>Residuals not based on fitted CDF/PIT.</td><td>Help, glossary.</td><td>Theory master.</td></tr>
+        <tr><td><code>F_low</code></td><td>Lower CDF endpoint.</td><td><code>P(Y&lt;y)</code> or <code>F(y-)</code>.</td><td>Audit discrete CDF jumps.</td><td>Ignoring <code>F_high</code>.</td><td>Help, benchmarks.</td><td>Numerical rules.</td></tr>
+        <tr><td><code>F_high</code></td><td>Upper CDF endpoint.</td><td><code>P(Y&lt;=y)</code> or <code>F(y)</code>.</td><td>Audit discrete/continuous CDF.</td><td>Ignoring lower endpoint for discretes.</td><td>Help, benchmarks.</td><td>Numerical rules.</td></tr>
+        <tr><td><code>U</code></td><td>Final PIT uniform.</td><td>Value sent to <code>invnormal()</code>.</td><td>Save via <code>saveu()</code>.</td><td>Confusing with base draw <code>V</code>.</td><td>Help, ado returns.</td><td>09, benchmark mapping.</td></tr>
+        <tr><td><code>V</code></td><td>Base uniform draw.</td><td>Uniform on [0,1] used in <code>U=F_low+V*(F_high-F_low)</code>.</td><td>Save via <code>savev()</code> or supply through <code>uvar()</code>.</td><td>Cross-language RNG equality claim.</td><td>Help, benchmark.</td><td>Benchmark mapping.</td></tr>
+        <tr><td><code>uvar()</code></td><td>User-supplied uniforms.</td><td>External <code>V</code> used for exact discrete R/Stata benchmark comparisons.</td><td>Exact pointwise discrete residual comparison.</td><td>Replacing CDF validation.</td><td>API, examples.</td><td>09, 10.</td></tr>
+        <tr><td><code>seed()</code></td><td>Stata RNG seed.</td><td>Sets Stata RNG before internal uniforms.</td><td>Reproducibility inside Stata.</td><td>Exact equality with R RNG.</td><td>API, examples.</td><td>09, 10.</td></tr>
+        <tr><td><code>R equivalent</code></td><td>R route for comparison.</td><td>R package/function used as benchmark reference.</td><td>R/Stata benchmark when aligned.</td><td>Assuming all Stata options map exactly to R.</td><td>Support matrix.</td><td>Benchmark mapping.</td></tr>
+        <tr><td><code>offset</code></td><td>Additive model term.</td><td>Usually enters the linear predictor directly.</td><td>Use if <code>predict</code> carries it correctly.</td><td>Duplicating offset manually.</td><td>Support matrix.</td><td>Extraction rules.</td></tr>
+        <tr><td><code>exposure</code></td><td>Exposure denominator/time.</td><td>Usually becomes log-offset in count models.</td><td>Tested log-link count routes.</td><td>Assuming non-log exposure equivalence.</td><td>Support matrix.</td><td>Extraction rules.</td></tr>
+        <tr><td><code>weights</code></td><td>Weighted estimation metadata.</td><td>Stata <code>e(wtype)</code>/<code>e(wexp)</code>; semantics depend on family/type.</td><td>Family/type-specific support after evidence.</td><td>Global <code>sqrt(w_i)</code> rule.</td><td>Weights docs, matrix.</td><td>Weights research.</td></tr>
+      </tbody>
+    </table>
+    <div class="footnote">
+      <strong>Footnote.</strong> PIT transforms an observation through the fitted CDF to the uniform scale. RQR/Dunn-Smyth residuals transform that PIT value to normal scale with <code>invnormal()</code>. For discrete outcomes, <code>F_low</code> and <code>F_high</code> define the CDF jump around the observed value. <code>uvar()</code> supplies the same uniform draws to Stata and R so randomized discrete residuals can be compared exactly. Missing functionality does not invalidate qresid if the package does not claim to support it.
+    </div>
+  </main>
+  <script>
+    const input = document.getElementById('search');
+    const rows = [...document.querySelectorAll('#glossary tbody tr')];
+    const count = document.getElementById('count');
+    function filter() {
+      const q = input.value.trim().toLowerCase();
+      let shown = 0;
+      rows.forEach(row => {
+        const hit = row.innerText.toLowerCase().includes(q);
+        row.style.display = hit ? '' : 'none';
+        if (hit) shown++;
+      });
+      count.textContent = `${shown} / ${rows.length} terms`;
+    }
+    input.addEventListener('input', filter);
+    filter();
+  </script>
+</body>
+</html>

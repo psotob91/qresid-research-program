@@ -20,6 +20,7 @@ Run this checklist after any change that touches:
 - tests, certification scripts or benchmarks;
 - public API, options, returned results, outputs or help;
 - supported families, commands, CDF/PIT/RNG logic or extraction rules;
+- support status, experimental/diagnostic classification, feature matrix, public claims or release validity semaphore;
 - retrieval maps, lifecycle status, source logs or terminology;
 - MCP protocols, readiness, setup logs or execution workflows;
 - audit/review snapshots, roadmaps, changelogs or release notes.
@@ -58,6 +59,7 @@ If uncertain, add a short `sync_notes` entry in the registry rather than rewriti
 | cambio en `qresid.ado` | `09`, `10`, testing rules, help/changelog | tests, help, changelog | si |
 | cambio en API publica | `09`, `.sthlp`, README, tests, style rules | `09`, help, README, tests, changelog | si |
 | cambio en familia soportada | `09`, benchmark, testing, retrieval, extraction rules | `09`, tests, benchmark map, help | si |
+| cambio en soporte/status/claims | support glossary, feature matrix, terminology, registry, help/README/changelog | `QRESID_SUPPORT_STATUS_GLOSSARY.md`, `QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md`, HTML derivados | si |
 | cambio en retrieval | `AGENTS`, retrieval map, lifecycle rules, registry | retrieval map, registry | si |
 | cambio en MCP | execution protocols, readiness checklist, resolution log | readiness checklist, setup log | si |
 | cambio menor editorial | registry/lifecycle only if status changes | normalmente ninguno | no |
@@ -93,10 +95,17 @@ When a snapshot finding is resolved:
 - [ ] Cambio codigo?
 - [ ] Cambio API?
 - [ ] Cambio familia soportada?
+- [ ] Cambio status experimental/diagnostico?
+- [ ] Cambio semaforo de validez o release?
 - [ ] Cambio benchmark?
+- [ ] Cambio equivalente R o benchmark R-Stata?
 - [ ] Cambio testing?
 - [ ] Cambio retrieval?
 - [ ] Cambio lifecycle status?
+- [ ] Debe actualizarse `QRESID_SUPPORT_STATUS_GLOSSARY.md`?
+- [ ] Debe actualizarse `qresid_support_status_glossary.html`?
+- [ ] Debe actualizarse `QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md`?
+- [ ] Debe actualizarse `qresid_current_feature_support_matrix.html`?
 - [ ] Debe actualizarse changelog?
 - [ ] Debe actualizarse help?
 - [ ] Debe actualizarse readiness checklist?
@@ -110,5 +119,11 @@ Every final change summary should state one of:
 - `POST_CHANGE_SYNC_DONE`
 - `POST_CHANGE_SYNC_NOT_REQUIRED`
 - `POST_CHANGE_SYNC_PENDING_HUMAN_DECISION`
+
+For support, release, prerelease, benchmark or public-claim changes, also state one of:
+
+- `SUPPORT_MATRIX_SYNC_DONE`
+- `SUPPORT_MATRIX_SYNC_NOT_REQUIRED`
+- `SUPPORT_MATRIX_SYNC_PENDING_HUMAN_DECISION`
 
 Never claim a sync was completed if tests, Stata, R or MCP evidence was required but not executed.

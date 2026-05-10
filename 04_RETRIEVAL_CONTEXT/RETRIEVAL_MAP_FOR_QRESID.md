@@ -34,6 +34,8 @@ Regla central: leer el mínimo contexto suficiente, priorizar documentos Markdow
 | `SOURCE_ACCESS_LOG.md` | Registro de fuentes disponibles, pendientes, restringidas o superseded usadas por retrieval y benchmarking | Leer antes de afirmar soporte documental o agregar nuevas referencias |
 | `STATA_PACKAGE_STYLE_RULES.md` | Reglas editoriales, estructura SSC/Stata Journal, packaging y limpieza pública del repositorio | Leer antes de editar `.ado`, `.sthlp`, examples, certification o releases |
 | `CANONICAL_TERMINOLOGY_FOR_QRESID.md` | Glosario operativo y terminos canonicos para fases, soporte, benchmark, RQR/PIT, extraction y MCP | Leer ante ambiguedad semantica o preparacion MCP |
+| `QRESID_SUPPORT_STATUS_GLOSSARY.md` | Glosario vivo de estados de soporte, experimental, diagnostico, validez y release | Leer para preguntas sobre soporte, release, prerelease, matriz de funcionalidades o claims publicos |
+| `03_REPO_REVIEW/QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md` | Matriz viva de funcionalidades: implementado, benchmark R, experimental, diagnostico, faltante y bloqueante | Leer para responder que tiene `qresid`, que falta y que invalida o no el paquete |
 | `DOCUMENT_LIFECYCLE_RULES.md` | Reglas de lifecycle, estados, superseding, anti-drift y anti-loop retrieval | Leer antes de crear auditorias, reviews, roadmaps o snapshots |
 | `DOCUMENT_STATUS_REGISTRY.md` | Registro vigente de status, autoridad, superseding y politica de retrieval por documento | Leer antes de cargar snapshots, reportes `03_REPO_REVIEW/` o planes historicos |
 
@@ -86,6 +88,7 @@ Regla central: leer el mínimo contexto suficiente, priorizar documentos Markdow
 | Preparar MCP / readiness | `AGENTS.md`, `RETRIEVAL_MAP_FOR_QRESID.md`, `CANONICAL_TERMINOLOGY_FOR_QRESID.md`, `03_REPO_REVIEW/MCP_READINESS_CHECKLIST.md`, `03_REPO_REVIEW/PRE_MCP_RESOLUTION_LOG.md`, `05_MCP_STATA_EXECUTION/README_MCP_STATA.md` | protocolos Stata/R/Codex si se ejecutara localmente | `qresid_plan_rearmado_retrieval_mcp.md` salvo auditoria historica |
 | Verificar trazabilidad documental | `SOURCE_ACCESS_LOG.md`, `PROJECT_BRIEF_QRESID.md` | documentos metodológicos específicos | tests y benchmarking |
 | Preparar release público | `AGENTS.md`, `10_AGENT_RULES_FOR_QRESID.md`, `09_STATA_PACKAGE_ARCHITECTURE_MASTER.md`, `STATA_PACKAGE_STYLE_RULES.md`, `PROJECT_BRIEF_QRESID.md`, `08_TESTING_QC_BENCHMARK_MASTER.md` | archivos implementados por familia | teoría no usada |
+| Consultar soporte, validez o prerelease | `AGENTS.md`, `DOCUMENT_STATUS_REGISTRY.md`, `QRESID_SUPPORT_STATUS_GLOSSARY.md`, `03_REPO_REVIEW/QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md` | `QRESID_EXTENSION_PROMOTION_DECISION.md`, release blockers/checklists si aplica | snapshots superseded |
 
 ---
 

@@ -152,3 +152,14 @@ Detener la tarea si:
 - Modelos fuera de fase fallan con mensaje claro.
 - No hay prompts ni rastros de agente en archivos publicos.
 - Help, examples y claims coinciden con tests existentes.
+
+## 13. Matriz viva de soporte y glosario
+
+Despues de cualquier cambio que afecte soporte implementado, benchmarks, status experimental/diagnostico, help, README, changelog, release readiness o claims publicos:
+
+- actualizar `04_RETRIEVAL_CONTEXT/QRESID_SUPPORT_STATUS_GLOSSARY.md` y `04_RETRIEVAL_CONTEXT/qresid_support_status_glossary.html` si cambio la semantica de algun termino;
+- actualizar `03_REPO_REVIEW/QRESID_CURRENT_FEATURE_SUPPORT_MATRIX.md` y `03_REPO_REVIEW/qresid_current_feature_support_matrix.html` si cambio una funcionalidad, benchmark, status, semaforo de validez o claim;
+- si no aplica, registrar explicitamente `SUPPORT_MATRIX_SYNC_NOT_REQUIRED` en el resumen de cierre;
+- no reescribir snapshots historicos para sincronizar esta matriz; el registry y los reportes vivos mandan.
+
+Toda respuesta final sobre soporte, release, prerelease, validez del paquete o funcionalidades disponibles debe incluir enlaces al glosario HTML y a la matriz HTML para consulta rapida.
