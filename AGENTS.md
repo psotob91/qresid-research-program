@@ -50,6 +50,7 @@ Antes de tests, benchmarks o certificacion:
 Antes de cambios publicos, help, examples, pkg o release:
 
 1. `04_RETRIEVAL_CONTEXT/STATA_PACKAGE_STYLE_RULES.md`
+2. `04_RETRIEVAL_CONTEXT/QRESID_PUBLIC_RELEASE_ASSET_POLICY.md`
 
 Antes de cambios sustanciales en `qresid.sthlp`:
 
@@ -125,7 +126,10 @@ Usar error controlado o stub si una ruta fuera de fase aparece en codigo.
 
 ## 8. Reglas obligatorias Stata/Mata
 
-- Todo ado/do publico debe declarar `version`.
+- Todo ado/do publico debe declarar `version 15.0`, salvo que una auditoria
+  documentada demuestre que una version mayor es indispensable. No bajar de
+  Stata 15.0 ni subir el piso minimo sin repetir la auditoria de compatibilidad.
+- Todo runner de release debe probar con `set varabbrev off`.
 - Usar `syntax`, no macros posicionales fragiles.
 - Usar `marksample` y cruzar con `e(sample)`.
 - Usar `tempvar`, `tempname` y `tempfile` para objetos internos.
@@ -205,6 +209,16 @@ Detener la tarea si:
   automaticamente con `qresid/scripts/build_ssc_submission.ps1`.
   No armar el ZIP SSC a mano ni mezclar docs internas, logs, benchmarks o
   fuentes externas en el adjunto SSC.
+- `qresid.pkg` y `stata.toc` son metadatos para instalacion desde GitHub/net
+  install. No son requeridos ni deseables dentro del ZIP de envio SSC, salvo
+  solicitud explicita de SSC/RePEc.
+- Una vez que una version es aceptada por SSC, sus artefactos instalables
+  aceptados (`qresid.ado`, `qresid.sthlp` y el paquete servido por SSC) quedan
+  congelados para esa version. Cambiar `ado`, `sthlp` o metadata instalable
+  requiere nueva version o revision SSC; los cambios de estado publico se hacen
+  en README/docs GitHub y release notes.
+- El ZIP SSC no se versiona dentro de `qresid/` ni del root. Se genera localmente
+  y, si corresponde, se adjunta como asset del GitHub Release.
 
 ## 13. Matriz viva de soporte y glosario
 

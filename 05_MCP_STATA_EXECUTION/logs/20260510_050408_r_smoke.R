@@ -1,8 +1,0 @@
-cat('R_VERSION_START\n')
-cat(R.version.string, '\n')
-cat('R_VERSION_END\n')
-cat('SESSION_INFO_START\n')
-print(sessionInfo())
-cat('SESSION_INFO_END\n')
-out <- data.frame(component='Rscript', status='SMOKE_PASSED', version=R.version.string, timestamp=format(Sys.time(), '%Y-%m-%d %H:%M:%S %Z'))
-write.csv(out, file='C:/qresid-research-program/05_MCP_STATA_EXECUTION/logs/20260510_050408_r_smoke.csv', row.names=FALSE)

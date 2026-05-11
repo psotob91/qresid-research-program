@@ -26,6 +26,11 @@ Regla central: ningún claim de soporte debe aparecer en el paquete si no existe
 
 ## 2. Reglas de ado-style
 
+- `ESTANDAR OFICIAL`: `qresid` declara y prueba compatibilidad minima con
+  Stata 15.0. Todo ado/do publico debe usar `version 15.0`, salvo evidencia
+  documentada de que una version mayor es necesaria.
+- `ESTANDAR OFICIAL`: todo release se prueba con `set varabbrev off`, siguiendo
+  la recomendacion SSC/RePEc de C. F. Baum.
 - `ESTÁNDAR OFICIAL`: la primera línea ejecutable del programa debe ser `version #`.
 - `ESTÁNDAR OFICIAL`: `qresid` debe ser comando de postestimación y declararse `program qresid, rclass` salvo rediseño explícito.
 - `ESTÁNDAR OFICIAL`: usar `syntax`, no macros posicionales.
@@ -40,7 +45,7 @@ Snippet mínimo:
 
 ```stata
 program qresid, rclass
-    version 19.0
+    version 15.0
     syntax newvarname [if] [in] [, SEED(integer) UVAR(varname numeric) ///
         SAVEU(name) SAVEFLO(name) SAVEFHI(name) ]
 
@@ -121,7 +126,7 @@ Reglas editoriales:
 Ejemplo mínimo:
 
 ```stata
-version 19.0
+version 15.0
 clear
 set obs 100
 set seed 12345
@@ -179,8 +184,10 @@ Checklist mínimo:
 
 - [ ] `qresid.ado` instala y corre desde carpeta limpia.
 - [ ] `qresid.sthlp` abre sin errores.
-- [ ] `qresid.pkg` lista solo archivos necesarios.
-- [ ] `stata.toc` actualizado.
+- [ ] `qresid.ado` y ejemplos publicos declaran `version 15.0`.
+- [ ] Tests de release corren con `set varabbrev off`.
+- [ ] `qresid.pkg` lista solo archivos necesarios para GitHub/net install.
+- [ ] `stata.toc` actualizado para GitHub/net install.
 - [ ] El repositorio GitHub conserva README, docs, examples, tests,
       benchmarks, `qresid.pkg`, `stata.toc`, changelog y evidencia pública
       limpia para instalación/documentación.
@@ -248,7 +255,10 @@ Checklist adicional:
 - [ ] `.sthlp` coincide con la sintaxis real.
 - [ ] README no contradice `.sthlp`.
 - [ ] `qresid.pkg` instala exactamente lo necesario.
+- [ ] `qresid.pkg` y `stata.toc` no entran en el ZIP SSC.
 - [ ] `qresid/scripts/build_ssc_submission.ps1` generó y validó el staging SSC.
-- [ ] `qresid/release/SSC_SUBMISSION_MANIFEST.md` coincide con el artefacto
-      generado y con la política GitHub/SSC vigente.
+- [ ] El ZIP SSC queda fuera de Git y se adjunta al GitHub Release solo como
+      asset, si corresponde.
+- [ ] Si la version ya fue aceptada por SSC, `qresid.ado`, `qresid.sthlp` y
+      metadata instalable aceptada no cambian salvo nueva version o revision.
 - [ ] `certification/master.do` corre desde cero.

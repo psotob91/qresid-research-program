@@ -67,12 +67,16 @@ Rutas experimentales locales actualmente permitidas por evidencia:
 
 ## 3. Estructura final esperada del paquete
 
+`ESTANDAR OFICIAL`: la version minima publica de `qresid` es Stata 15.0.
+Todo ado/do publico debe declarar `version 15.0`, y los runners de release
+deben ejecutarse con `set varabbrev off`.
+
 | Ruta | Responsabilidad | Regla |
 |---|---|---|
 | `qresid.ado` | Comando público de postestimación | `ESTÁNDAR OFICIAL`: `version`, `program qresid, rclass`, `syntax`, dispatcher y returned results. |
 | `qresid.sthlp` | Ayuda oficial | `ESTÁNDAR OFICIAL`: sintaxis, opciones, ejemplos, stored results, métodos breves, limitaciones. |
-| `qresid.pkg` | Instalación SSC | `ESTÁNDAR OFICIAL`: listar solo archivos públicos necesarios. |
-| `stata.toc` | Índice Stata | `ESTÁNDAR OFICIAL`: descripción breve, sin texto interno. |
+| `qresid.pkg` | Instalacion GitHub/net install | `ESTANDAR OFICIAL`: listar solo `qresid.ado` y `qresid.sthlp`; no se envia a SSC salvo solicitud explicita. |
+| `stata.toc` | Indice GitHub/net install | `ESTANDAR OFICIAL`: descripcion breve, sin texto interno; no se envia a SSC salvo solicitud explicita. |
 | `README.md` | Entrada pública GitHub | `RECOMENDACIÓN OPERATIVA`: estado de soporte, instalación y ejemplos mínimos. |
 | `examples/` | Ejemplos ejecutables | `ESTÁNDAR OFICIAL`: `version`, datos pequeños o oficiales, `set seed` si aplica. |
 | `tests/` | Unit, integration y R benchmarks | `ESTÁNDAR OFICIAL`: separar familias, capas y outputs. |
@@ -97,6 +101,18 @@ ejemplo público corto sin dependencias externas. README, docs, tests,
 certification, benchmarks, imágenes, logs, audits, fuentes externas,
 `qresid.pkg` y `stata.toc` quedan fuera del ZIP SSC salvo solicitud explícita
 de SSC/RePEc.
+
+`ESTANDAR OFICIAL`: despues de aceptacion SSC, los artefactos instalables de la
+version aceptada quedan congelados. Para `v1.0.0`, no modificar
+`qresid.ado`, `qresid.sthlp` ni metadata instalable aceptada sin abrir una nueva
+version o revision formal. El estado "available from SSC" se comunica en
+README/docs GitHub y GitHub Release, no mediante parche silencioso del help
+aceptado.
+
+`ESTANDAR OFICIAL`: los ZIP de envio SSC son artefactos locales o assets del
+GitHub Release; no se trackean en el repositorio. La fuente publica de GitHub
+mantiene codigo, docs, tests y metadata de instalacion, pero nunca staging,
+checksums, manifests temporales ni release notes generadas.
 
 ---
 

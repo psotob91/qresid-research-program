@@ -3,11 +3,16 @@
 
 # Generated diagrams and binary presentation artifacts
 mermaid-diagram.png
+qresid-logo.png
 02_IMPLEMENTATION_MASTERS/*.html
 02_IMPLEMENTATION_MASTERS/*.pdf
 
 # Logs, caches, and temporary outputs
 *.log
+*.zip
+*.sha256
+release/
+releases/
 *.tmp
 *.temp
 *.bak
